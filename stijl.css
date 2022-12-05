@@ -1,0 +1,86 @@
+html
+{
+	background-color: Gray;
+}
+
+header 
+{
+	font-size: 4em;
+	font-family: Arial;
+	text-align: center;
+	color: rgb(123,123,255);
+	background-color: rgb(88,88,88);
+}
+
+.grid-container 
+{
+	display: block;
+	float: left;
+	width: 20%;
+	border-style: solid;
+	border-color: Green;
+	display: grid;
+	background-color: rgb(55,55,55);
+	padding: 0px 0px 15px 0px;
+}
+
+.grid-hoofditem 
+{
+	display: block;
+	text-align: center;
+	font-size: 2em;
+	color: Pink;
+	margin: 25px;
+}
+
+.grid-item 
+{
+	text-align: center;
+	font-size: large;
+	color: rgb(222,222,222);
+	display: block;
+	margin: 0px 10px;
+	padding: 5px;
+	border: 1px solid Green;
+	background-color: rgb(22,22,22);
+}
+
+.spelletjesKant
+{
+	width: 750px;
+	text-align: center;
+	font-size: 2em;
+	color: rgb(255,88,185);
+	display: block;
+	align-content: center;
+}
+
+input[type="button"]
+{
+	width: 75px;
+	height: 35px;
+	background: linear-gradient(to right, rgb(25,0,175), rgb(25,175,0));
+	color: Ivory;
+	margin: 10px 5px;
+	
+	align-content: center;
+}
+
+iframe
+{
+	display: inline;
+	width: 350px;
+	height: 400px;
+	margin: 20px;
+	border-color: Green;
+}
+
+
+
+
+
+
+
+
+
+

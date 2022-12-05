@@ -1,151 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="description" content="De eerste opdrahct van WebApplicatie: de clientkant. Van de OPen Universiteit.">
-    <meta name="author" content="Martin van Diest">
-    <meta name="keywords" content="OU, HTML, CSS, Javascript">
-    <link rel="stylesheet" href="style.css">
+	<title>Mijn spelletjessite</title>
+	
+	<link rel="stylesheet" type="text/css" href="stijl.css">
+
 </head>
-	<body>
-		<article>
-			<header>
-				<nav class="tabs">
-					<ul>
-						<li class="tab active">Welkom</li>
-						<li class="tab">Inloggen</li>
-						<li class="tab">Snake</li>
-                        <li class="tab">Boter-Kaas-Eieren</li>
-                        <li class="tab">Sudoku</li>
-					</ul>
-				</nav>
-				<h1>De tags binnen de head</h1>
-				<nav class="breadcrumbs">
-					<ul>
-						<li class="crumb">Welkom</li>
-						<li class="crumb">Inloggen</li>
-						<li class="crumb">Snake</li>
-						<li class="crumb">Boter-Kaas-Eieren</li>
-                        <li class="crumb active">Sudoku</li>
-					</ul>
-				</nav>
-			</header>
-			<section class="introduction">
-				<h2>Introductie</h2>
-				<figure>
-					<figcaption>Zo ziet de head van een pagina er uit</figcaption>
-					<img src="html.jpg" width="400"  height="300" alt="code voor de head van een HTML-pagina" />
-				</figure>
-				<aside>De <a href="http://www.w3.org/TR/html5/" title="HTML5 specificatie">specificatie</a> vindt u bij het W3C</aside>
-				<p>Op deze pagina behandelen we een aantal elementen van de head. Hier alvast een referentie:</p>
-				<table>
-					<caption>De elementen van de head</caption>
-					<thead>
-						<tr>
-							<th>Element</th>
-							<th>Beschrijving</th>
-							<th>Verplicht</th>
-							<th>Begin- en eindtag</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>head</td>
-							<td>Begrenzing head</td>
-							<td>V</td>
-							<td>V</td>
-						</tr>
-						<tr>
-							<td><a href="#titletag">title</a></td>
-							<td>Titel</td>
-							<td>V</td>
-							<td>V</td>
-						</tr>
-						<tr>
-							<td><a href="metatag">meta</a></td>
-							<td>Metadata</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>link</td>
-							<td>Link naar andere documenten</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td>script</td>
-							<td>JavaScript</td>
-							<td>-</td>
-							<td>V</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>
-			<section>
-				<h2>De head tag</h2>
-				...
-			</section>
-			<section>
-				<h2 id="titletag">De title tag</h2>
-				<p>De <strong>title-tag</strong> is verplicht aanwezig: wanneer u een HTML-pagina zonder title-tag valideert, zult u een foutmelding te zien krijgen.</p>
-				<p>De structuur van deze tag is simpel: een <em>begintag</em>, een <em>eindtag</em>, en de titel komt daartussen.</p>
-				<p>Een voorbeeld van het gebruik van deze tag is: <code>&lt;title&gt;De titel van een pagina&lt;/title&gt;</code></p>
-				<p>Zoals u hier kunt zien, gebruiken zoekmachines het title-element om een titel te geven aan zoekresultaten: <img src="title-tags.png" width="400" height="222" alt="rood omcirkelde titels van zoekresultaten" /></p>
-			</section>
-			<section>
-				<h2 id="metatag">De meta tag</h2>
-				<figure>
-					<figcaption>On-line les over HTML5 Meta tags</figcaption>
-					<iframe width="560" height="315" src="http://www.youtube.com/embed/Rq6cxnaPEFI" allowfullscreen></iframe>
-				</figure>
-				<section>
-				<h3>Namen van Metadata</h3>
-				<p>Zoals u hier kunt zien, gebruiken zoekmachines het meta-element met als name description om een beschrijving te geven bij zoekresultaten: <img src="meta-description.png" width="400" height="222" alt="rood omcirkelde beschrijvingen van zoekresultaten"></p>
-					<table>
-						<thead>
-							<tr>
-								<th>Naame</th>
-								<th>Beschrijving</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>author</td>
-								<td>Auteur</td>
-							</tr>
-							<tr>
-								<td>description</td>
-								<td>Beschrijving</td>
-							</tr>
-							<tr>
-								<td>keywords</td>
-								<td>Steekwoorden</td>
-							</tr>
-						</tbody>
-					</table>
-				</section>
-			</section>
-			<aside class="sidebar">
-				<nav>
-					<h2>Menu</h2>
-					<ul role="menu">
-						<li>item 1</li>
-						<li>item 2</li>
-						<li>item 3</li>
-					</ul>
-				</nav>
-				<section>
-					<h2>Links</h2>
-				</section>
-				<section>
-					<h2>Zoeken</h2>
-				</section>
-			</aside>
-			<footer>
-				<address>Open Universiteit Nederland</address>
-			</footer>
-		</article>
+<body>
+	<header>Mijn spelletjessite</header>
+
+  <div class="grid-container">
+    <div class="grid-hoofditem">Mijn spelletjes</div>
+  <div class="grid-item">Welkom</div>
+  <div class="grid-item">Inloggen</div>
+  <div class="grid-item">Snake</div>  
+  <div class="grid-item">Boter-kaas-eieren</div>
+  <div class="grid-item">Sudoku</div>
+  <div class="grid-item">Master mind</div>  
+  <div class="grid-item">Galgje</div>
+  <div class="grid-item">Cryptogrammen</div> 
+</div>
+
+	<div class="spelletjesKant">Titel van spel + 2 knoppen + iframe <br>
+	
+		<input type="button" name="Start" value="start">
+		<input type="button" name="Stop" value="stop">
+		<br>
+
+		<iframe src=""></iframe>
+	</div>
+
+
 </body>
 </html>

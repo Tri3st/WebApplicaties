@@ -1,0 +1,25 @@
+/*** Generiek ***/
+
+body {
+    background-color: Ivory;
+    color: #333;
+    font-family: Roboto, Helvetica, sans-serif;
+}
+
+
+
+/*** Specifiek ***/
+.introduction {
+    float: right;
+}
+
+.tabs {
+    float:left;
+
+}
+
+footer {
+    clear: both;
+}
+
+

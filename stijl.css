@@ -21,7 +21,7 @@ header
 	border-color: Green;
 	display: grid;
 	background-color: rgb(55,55,55);
-	padding: 0px 0px 15px 0px;
+	padding: 0 0 15px 0;
 }
 
 .grid-hoofditem 
@@ -39,7 +39,7 @@ header
 	font-size: large;
 	color: rgb(222,222,222);
 	display: block;
-	margin: 0px 10px;
+	margin: 0 10px;
 	padding: 5px;
 	border: 1px solid Green;
 	background-color: rgb(22,22,22);

@@ -1,54 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
 	<title>Mijn spelletjessite</title>
-	
-	<link rel="stylesheet" type="text/css" href="stijl.css">
-
+    <meta charset="utf-8">
+    <meta name="description" content="Spelletjessite met spelletjes. Opdracht voor de Open Universiteit">
+    <meta name="keywords" content="HTML, CSS, Javascript, Open, Universiteit">
+    <meta name="author" content="Martin van Diest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
+    <div class="container">
+        <div class="top">
+            <header>
+                <h1>Mijn Spelletjes Site</h1>
+            </header>
 
-<<<<<<< HEAD
-    <header>Mijn spelletjessite</header>
-      <div class="grid-container">
-      <div class="grid-hoofditem">Mijn spelletjes</div>
-      <div class="grid-item">Welkom</div>
-      <div class="grid-item">Inloggen</div>
-      <div class="grid-item">Snake</div>
-      <div class="grid-item">Boter-kaas-eieren</div>
-      <div class="grid-item">Sudoku</div>
-      <div class="grid-item">Master mind</div>
-      <div class="grid-item">Galgje</div>
-      <div class="grid-item">Cryptogrammen</div>
+            <nav class="breadcrumbs">
+                <ul class="breadcrumbs">
+                    <li class="crumb">Welkom / </li>
+                    <li class="crumb">Inloggen / </li>
+                    <li class="crumb active-crumb">Snake / </li>
+                    <li class="crumb">Sudoku / </li>
+                    <li class="crumb">Boter-Kaas-Eieren / </li>
+                    <li class="crumb">Galgje / </li>
+                    <li class="crumb">
+                        <form class="crumb crumb-search">
+                            <input type="search" name="q" placeholder="Zoeken ..">
+                            <input type="submit" value="Zoek!">
+                        </form>
+                    </li>
+                </ul>
+
+
+            </nav>
+        </div>
+        <div class="main">
+            <nav class="navigation">
+                <ul>
+                    <li class="nav"><a href="#">Welkom</a></li>
+                    <li class="nav"><a href="#">Inloggen</a></li>
+                    <li class="nav active"><a href="#">Snake</a></li>
+                    <li class="nav"><a href="#">Sudoku</a></li>
+                    <li class="nav"><a href="#">Boter-Kaas-Eieren</a></li>
+                    <li class="nav"><a href="#">Galgje</a></li>
+                </ul>
+            </nav>
+
+
+            <main class="content">
+                <h2 class="content-header">Welkom</h2>
+                <article class="content-article">
+                    <iframe class="content-iframe" src="./snake.html"></iframe>
+                </article>
+
+            </main>
+        </div>
+        <div class="bottom">
+            <footer>Martin van Diest &#169; 2022</footer>
+        </div>
     </div>
-=======
-  <nav class="grid-container">
-    <nav class="grid-hoofditem">Mijn spelletjes</nav>
-  <nav class="grid-item">Welkom</nav>
-  <nav class="grid-item">Inloggen</nav>
-  <nav class="grid-item">Snake</nav>  
-  <nav class="grid-item">Boter-kaas-eieren</nav>
-  <nav class="grid-item">Sudoku</nav>
-  <nav class="grid-item">Master mind</nav>  
-  <nav class="grid-item">Galgje</nav>
-  <nav class="grid-item">Cryptogrammen</nav> 
-</nav>
->>>>>>> 02e1cf19ebd1fabe5e123f6a7487f7cb58456981
 
-	<article class="spelletjesKant">Titel van spel + 2 knoppen + iframe 
-		<br>
-	
-		<input type="button" name="Start" value="start">
-		<input type="button" name="Stop" value="stop">
-		<br>
-
-		<iframe src=""></iframe>
-<<<<<<< HEAD
-	</div>
-=======
-	</article>
-
-
->>>>>>> 02e1cf19ebd1fabe5e123f6a7487f7cb58456981
+    <script src="./script.js"></script>
 </body>
 </html>

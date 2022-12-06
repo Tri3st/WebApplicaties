@@ -61,12 +61,13 @@ a:hover, a:active {
     margin: 1em auto;
     width: 60em;
     height: 25em;
-    border: 1px solid black;
     display: flex;
+    flex-direction: column;
 }
 .content-iframe {
     width: 100%;
-    margin: 1em auto;
+    height: 100%;
+    margin: 0 auto;
 }
 
 .breadcrumbs {
@@ -86,8 +87,21 @@ a:hover, a:active {
 .crumb-search {
     margin-left: 1em;
 }
-
+.bottom {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
 footer {
+    font-size: x-small;
+}
+.validator {
     text-align: center;
     font-size: x-small;
+    margin: 0 0.2em;
+}
+.validated {
+    color: green;
+    font-weight: bold;
+    margin-left: 1em;
 }

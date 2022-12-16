@@ -1,68 +1,72 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-	<title>Mijn spelletjessite</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Spelletjessite met spelletjes. Opdracht voor de Open Universiteit">
-    <meta name="keywords" content="HTML, CSS, Javascript, Open, Universiteit">
+    <meta charset="UTF-8">
     <meta name="author" content="Martin van Diest">
+    <meta name="keywords" content="">
+    <meta name="descrtiption" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="./style.css">
+	<title>Mijn spelletjessite</title>
+    <link rel="icon" href="img/favicon-32x32.png" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
 </head>
-<body>
-    <div class="container">
-        <div class="top">
-            <header>
-                <h1>Mijn Spelletjes Site</h1>
+<body class="container">
+	<header>
+        <h1>Mijn Spelletjes Site</h1>
+        <div>
+            <ul class="breadcrumbs">
+                <li class="crumb active-crumb">Welkom /</li>
+                <li class="crumb">Inloggen /</li>
+                <li class="crumb">Snake /</li>
+                <li class="crumb">Boter-Kaas-Eieren /</li>
+                <li class="crumb">Sudoku /</li>
+                <li class="crumb">Master Mind /</li>
+                <li class="crumb">Galgje /</li>
+                <li class="crumb">Cryptogram /</li>
+                <li class="crumb-search"><input type="text"><input type="submit" value="ZOEK"></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="main">
+        <nav class="menu">
+            <ul>
+                <li id="button1" class="nav active">Welkom</li>
+                <li id="button2" class="nav">Inloggen</li>
+                <li id="button3" class="nav">Snake</li>
+                <li id="button4" class="nav">Boter-Kaas-Eieren</li>
+                <li id="button5" class="nav">Sudoku</li>
+                <li id="button6" class="nav">Master Mind</li>
+                <li id="button7" class="nav">Galgje</li>
+                <li id="button8" class="nav">Cryptogram</li>
+            </ul>
+        </nav>
+        <article class="content">
+            <header class="content-header">
+                <h3>WELKOM</h3>
             </header>
+            <section class="content-section">
+                <iframe id="iframe1" class="content-iframe" src="welkom.html"></iframe>
+            </section>
+        </article>
 
-            <nav class="breadcrumbs">
-                <ul class="breadcrumbs">
-                    <li class="crumb">Welkom / </li>
-                    <li class="crumb">Inloggen / </li>
-                    <li class="crumb active-crumb">Snake / </li>
-                    <li class="crumb">Sudoku / </li>
-                    <li class="crumb">Boter-Kaas-Eieren / </li>
-                    <li class="crumb">Galgje / </li>
-                    <li class="crumb">
-                        <form class="crumb crumb-search">
-                            <input type="search" name="q" placeholder="Zoeken ..">
-                            <input type="submit" value="Zoek!">
-                        </form>
-                    </li>
-                </ul>
+    </main>
 
-
-            </nav>
+    <footer class="bottom">
+        <div class="footer-margin">Martin van Diest &copy;2022</div>
+        <div class="footer-margin">|</div>
+        <div class="footer-margin validator">
+            CSS - Validated <span class="validated">V</span>
         </div>
-        <div class="main">
-            <nav class="navigation">
-                <ul>
-                    <li class="nav"><a href="#">Welkom</a></li>
-                    <li class="nav"><a href="#">Inloggen</a></li>
-                    <li class="nav active"><a href="#">Snake</a></li>
-                    <li class="nav"><a href="#">Sudoku</a></li>
-                    <li class="nav"><a href="#">Boter-Kaas-Eieren</a></li>
-                    <li class="nav"><a href="#">Galgje</a></li>
-                </ul>
-            </nav>
-
-
-            <main class="content">
-                <article class="content-article">
-                    <h2 class="content-header">Snake</h2>
-                    <iframe id="iframe1" class="content-iframe" src="./snake.html"></iframe>
-                </article>
-
-            </main>
+        <div class="footer-margin">|</div>
+        <div class="footer-margin validator">
+            HTML - Validated <span class="validated">V</span>
         </div>
-        <div class="bottom">
-            <footer>= Martin van Diest &#169; 2022 =</footer>
-            <p class="validator">CSS - validated<span class="validated">V</span></p>
-            <p class="validator">HTML - validated<span class="validated">V</span></p>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-    <script src="./script.js"></script>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -52,6 +52,11 @@ const myButtons = [
 
 ]
 
+
+/**
+ * Initialisatie van de pagina. Navigatie via de buttons, aanpassing van iframe titel,
+ * iframe src attribuut en aanpassen van de breadcrumbs.
+ */
 $( document ).ready(() => {
     console.log('READY!');
 
@@ -60,25 +65,15 @@ $( document ).ready(() => {
     const iframe = $('#iframe1');
     const breadcrumbs = $('.crumb');
 
-    console.log(breadcrumbs)
-
     buttons.click((button) => {
-        // zet de iframe op de juiste html-pagina
-        console.log(button);
-        console.log(button.target.id);
 
+        // zet de iframe-src zo, dat deze naar de juiste html-pagina wijst.
         const index = myButtons.findIndex((el) => el.buttonId === button.target.id);
-        console.log(index);
         iframe.attr('src', myButtons[index].ref);
 
         // pas de breadcrumbs aan
         breadcrumbs.removeClass("active-crumb");
-
-        const activeCrumb = breadcrumbs[index];
-        console.log(activeCrumb)
-
-        // activeCrumb.addClass("active-crumb");
-
+        $(`#crumb${index + 1}`).addClass("active-crumb");
 
         // Pas de header aan van de content frame
         $('.content-header').text(myButtons[index].name);

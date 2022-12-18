@@ -117,17 +117,6 @@ ul {
     margin: 0 1em;
 }
 
-.validator {
-    text-align: center;
-    font-size: x-small;
-    margin: 0 0.2em;
-}
-.validated {
-    color: green;
-    font-weight: bold;
-    margin-left: 1em;
-}
-
 /*** Welkom.html ***/
 
 /*** Snake.html ***/

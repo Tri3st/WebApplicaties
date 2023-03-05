@@ -22,12 +22,12 @@ var snake,
 	width,                    // breedte van het tekenveld
 	height,                   // hoogte van het tekenveld
 	xMax,                     // maximale waarde van x = width - R
-	ymax,                     // maximale waarde van y = height - R
+	yMax,                     // maximale waarde van y = height - R
 	direction = UP;
 
 	
 $(document).ready(function() {
-	$("#startSnake").click(init);  
+	$("#startSnake").click(init);
 	$("#stopSnake").click(stop);
 });
 
@@ -36,11 +36,14 @@ $(document).ready(function() {
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
 function init() {
-  foods = [];
+    width = $('#mySnakeCanvas')[0].width;
+    height = $('#mySnakeCanvas')[0].height;
+    xMax = width - R;
+    yMax = height - R;
 	createStartSnake();
-  createFood();
-  draw();
-  // startTimer();
+    createFoods();
+    draw();
+    // startTimer();
 }
 
 /**
@@ -64,63 +67,56 @@ function move(direction) {
   @desc Teken de slang en het voedsel
 */
 function draw() {
-	var canvas = $("#mySnakeCanvas").clearCanvas();
-  for (var i = 0; i < foods.length; i++) {
-    var food = foods[i];
-    canvas.drawArc({
-      fillStyle: food.color,
-      x: food.x, y: food.y,
-      radius: food.radius
-    });
-  }
-  for (var i = 0; i < snake.segments.length; i++) {
-    var segment = snake.segments[i];
-    canvas.drawArc({
-      fillStyle: segment.color,
-      x: segment.x, y: segment.y,
-      radius: segment.radius
-    });
-  }
+    var myCanvas = $('#mySnakeCanvas').get(0);
+    const ctx = myCanvas.getContext('2d');
+    for (var i = 0; i < foods.length; i++) {
+        var food = foods[i];
+        drawElement(food, ctx);
+    }
+    for (var i = 0; i < snake.segments.length; i++) {
+        var segment = snake.segments[i];
+        drawElement(segment, ctx);
+    }
 }
 /***************************************************************************
  **                 Constructors                                          **
  ***************************************************************************/
 /**
    @constructor Snake
-   @param {[Element] segments een array met aaneengesloten slangsegmenten
+   @param {[Element]} segments een array met aaneengesloten slangsegmenten
                    Het laatste element van segments wordt de kop van de slang 
 */ 
 function Snake(segments) {
-	this.segments = segments;
-  this.head = segments[segments.length - 1];
-  this.head.color = HEAD;
-  this.tail = segments[0];
-  this.tail.color = SNAKE;
-  this.direction = UP;
-  this.canMove = function(direction) {
-    var head = this.head;
-    switch (direction) {
-      case UP:    return head.y > YMIN;
-      case DOWN:  return head.y < ymax;
-      case LEFT:  return head.x > XMIN;
-      case RIGHT: return head.x < xMax;
-    }
-  }
-  this.doMove = function(direction) {
-    var head = this.head;
-    switch (direction) {
-      case UP:    head.y -= STEP; break;
-      case DOWN:  head.y += STEP; break;
-      case LEFT:  head.x -= STEP; break;
-      case RIGHT: head.x += STEP; break;
-    }
-    this.segments.push(head);
-    this.head = this.segments.pop();
+    this.segments = segments;
+    this.head = segments[segments.length - 1];
     this.head.color = HEAD;
+    this.tail = segments[0];
     this.tail.color = SNAKE;
-    this.tail = this.segments.shift();
-    this.segments.push(this.tail);
-    this.tail.color = SNAKE;
+    this.direction = UP;
+    this.canMove = function(direction) {
+        var head = this.head;
+        switch (direction) {
+            case UP:    return head.y > YMIN;
+            case DOWN:  return head.y < yMax;
+            case LEFT:  return head.x > XMIN;
+            case RIGHT: return head.x < xMax;
+        }
+    }
+    this.doMove = function(direction) {
+        var head = this.head;
+        switch (direction) {
+            case UP:    head.y -= STEP; break;
+            case DOWN:  head.y += STEP; break;
+            case LEFT:  head.x -= STEP; break;
+            case RIGHT: head.x += STEP; break;
+        }
+        this.segments.push(head);
+        this.head = this.segments.pop();
+        this.head.color = HEAD;
+        this.tail.color = SNAKE;
+        this.tail = this.segments.shift();
+        this.segments.push(this.tail);
+        this.tail.color = SNAKE;
   }
 
 }
@@ -133,10 +129,19 @@ function Snake(segments) {
    @param {string} color kleur van het element
 */ 
 function Element(radius, x, y, color) {
-		this.radius = radius;
+    this.radius = radius;
     this.x = x;
     this.y = y;
     this.color = color;
+    this.collidesWithOneOf = function(elements) {
+        elements.forEach((element) => {
+            // TODO implement
+            if (element === true) {
+                return true;
+            }
+        })
+        return false;
+    }
 }
 /***************************************************************************
  **                 Hulpfuncties                                          **
@@ -179,8 +184,8 @@ function createFood(x, y) {
   @param {Element} element een Element object
   @param  {dom object} canvas het tekenveld
 */
- function drawElement(element, canvas) {
-	canvas.drawArc({
+ function drawElement(element, context) {
+	context.drawArc({
 		draggable : false,
 		fillStyle : element.color,
 		x : element.x,

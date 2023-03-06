@@ -13,9 +13,11 @@ const R        = 10,          // straal van een element
 	  
 	  SLEEPTIME = 500,        // aantal milliseconde voor de timer
 
-      SNAKE   = "DarkRed" ,   // kleur van een slangsegment
+      SNAKE   = "DarkRed" ,    // kleur van een slangsegment
       FOOD    = "Olive",       // kleur van voedsel
-	  HEAD    = "DarkOrange"   // kleur van de kop van de slang
+	  HEAD    = "DarkOrange",  // kleur van de kop van de slang
+      MAINTEXT = "Black",
+      ALERTTEXT = "Red"
 	
 var snake,
 	foods = [],		          // voedsel voor de slang
@@ -44,7 +46,13 @@ function init() {
 	snake = createStartSnake();
     foods = createFoods();
     draw();
+    // laat startTekst zien en wacht op eerste keyPress
+    const beginText = new textWindow("Klaar om te beginnen.\nDruk pijl om te beginnen.", MAINTEXT);
+    beginText.drawWindow();
+
     // startTimer();
+    // lees events (keypress) en beweeg slang in de juiste richting
+
 }
 
 /**
@@ -165,6 +173,30 @@ function Element(radius, x, y, color) {
         return false;
     }
 }
+
+/**
+ * @constructor textWindow
+ * @description Klasse die een tekstvernster laat zien op het beeldscherm.
+ *
+ * @param {string} text de tekst die weergegeven moet worden.
+ * @param {string} color één van de kleur constanten. (MAINTEXT of ALLERTTEXT)
+ */
+function textWindow(text, color) {
+    this.text = text
+    this.x = Math.floor(width / 2);
+    this.y = Math.floor(height / 2);
+    this.color = color;
+    this.drawWindow = function() {
+        // TODO moet nog even gemaakt worden zodat je meerdere regels kunt meegeven. die dan
+        //      mooi onder elkaar neergezet worden.
+        var myCanvas = $('#mySnakeCanvas').get(0);
+        const ctx = myCanvas.getContext('2d');
+        ctx.font = "24px Comic Sans MS";
+        ctx.fillStyle = color;
+        ctx.textAlign = "center";
+        ctx.fillText(this.text, this.x, this.y);
+    }
+}
 /***************************************************************************
  **                 Hulpfuncties                                          **
  ***************************************************************************/
@@ -182,7 +214,7 @@ function createStartSnake() {
 }
 /**
   @function createSegment(x,y) -> Element
-  @desc Slangsegment creeren op een bepaalde plaats
+  @description Slangsegment creeren op een bepaalde plaats
   @param {number} x x-coordinaat middelpunt
   @param {number} y y-coordinaart middelpunt
   @return: {Element} met straal R en color SNAKE
@@ -192,7 +224,7 @@ function createSegment(x, y) {
 }
 /**
   @function createFood(x,y) -> Element
-  @desc Voedselelement creeren op een bepaalde plaats
+  @description Voedselelement creeren op een bepaalde plaats
   @param {number} x x-coordinaat middelpunt
   @param {number} y y-coordinaart middelpunt
   @return: {Element} met straal R en color FOOD
@@ -202,7 +234,7 @@ function createFood(x, y) {
 }
 /**
   @function drawElement(element, canvas) -> void
-  @desc Een element tekenen 
+  @description Een element tekenen
   @param {Element} element een Element object
   @param  {dom object} canvas het tekenveld
 */

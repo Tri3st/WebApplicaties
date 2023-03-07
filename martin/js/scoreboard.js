@@ -18,9 +18,14 @@ async function drawTable() {
     var tableBody = $('<table></table>').append($("<tbdody>"))
         .append(tableHeader)
     $.each(scores, function(index, score) {
-        let row = $('<tr></tr>');
+        let row = $(`<tr class=\"row${index}\"></tr>`);
         $.each(score, function(i, value) {
-            let rowData = $('<td></td>').text(value);
+            let rowData;
+            if (i === 'date'){
+                rowData = $(`<td class=\"row${index}data${i}\"></td>`).text(formatDate(value));
+            } else {
+                rowData = $(`<td class=\"row${index}data${i}\"></td>`).text(value);
+            }
             row.append(rowData);
         });
         tableBody.append(row);
@@ -51,6 +56,12 @@ const getScores = function () {
             console.log("Er ging iets fout in getScores (scoreboard.js)!");
             console.error(error);
         });
+}
+
+const formatDate = function(someDate) {
+    let tempDate = someDate.split("T")
+    tempDate = tempDate[0].split("-");
+    return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;
 }
 
 export {drawTable};

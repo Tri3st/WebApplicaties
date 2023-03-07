@@ -58,7 +58,15 @@ function init() {
     beginText.drawWindow();
 
     // startTimer();
+    const pijlLinks = $('#pijl-links').click(goLeft);
+    const pijlRechts = $('#pijl-rechts').click(goRight);
+    const pijlOmhoog = $('#pijl-omhoog').click(goUp);
+    const pijlOmlaag = $('#pijl-omlaag').click(goDown);
+
+    move("UP");
+
     // lees events (keypress) en beweeg slang in de juiste richting
+
 
 }
 
@@ -286,3 +294,18 @@ function createFoods() {
    return tempFoods;
 }
 
+function goLeft() {
+    snake.direction = 'LEFT';
+}
+
+function goRight() {
+    snake.direction = 'RIGHT';
+}
+
+function goUp() {
+    snake.direction = 'UP';
+}
+
+function goDown() {
+    snake.direction = 'DOWN';
+}

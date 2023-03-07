@@ -5,24 +5,36 @@
 
 /*** SPECIFIEK ***/
 
-.snake-article {
+.snake-section {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.snake-header {
-    text-align: center;
-}
-
-.mainboard {
-
-}
-
 .scoreboard {
+    width: 100%;
+    margin-left: 20px;
+    alignment: center;
+}
+
+.main-board {
+    display: flex;
+    flex-direction: row;
+}
+
+.aside {
     width: 33%;
-    display: inline-block;
-    vertical-align: top;
+    display: flex;
+    flex-direction: column;
+    vertical-align: center;
+}
+
+.besturing {
+    display: block;
+    alignment: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
 }
 
 #mySnakeCanvas {
@@ -33,9 +45,12 @@
     border: 0.0625em solid #000000;
 }
 
-.snakeButtons {
+.snake-buttons {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    padding: 0 5px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #startSnake, #stopSnake {
@@ -46,5 +61,17 @@
 table, th, tr, td {
     border: 1px solid black;
     border-collapse: collapse;
+}
+
+thead {
+    background-color: lightgray;
+}
+
+tbody {
+    table-layout: inherit;
+}
+
+th, td {
+    width: 33%;
     padding: 2px 5px;
 }

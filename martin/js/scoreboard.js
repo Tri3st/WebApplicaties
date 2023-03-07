@@ -13,10 +13,8 @@ async function drawTable() {
     console.log("inside drawTable() >>>");
     const scores = await getScores();
     console.log("scores: ", scores)
-    const tableHeader = $('<tr></tr>')
-        .append('<th>Naam</th><th>Score</th><th>Datum</th>')
-    var tableBody = $('<table></table>').append($("<tbdody>"))
-        .append(tableHeader)
+    const tableHeaderHTML = '<tr><th>Naam</th><th>Score</th><th>Datum</th></tr>';
+    var tableMain = $('<table></table>').append(tableHeaderHTML);
     $.each(scores, function(index, score) {
         let row = $(`<tr class=\"row${index}\"></tr>`);
         $.each(score, function(i, value) {
@@ -28,10 +26,10 @@ async function drawTable() {
             }
             row.append(rowData);
         });
-        tableBody.append(row);
+        tableMain.append(row);
     })
     // add table to DOM
-    $('#scoreboard').append(tableBody);
+    $('#scoreboard').append($(tableMain));
 }
 
 /**

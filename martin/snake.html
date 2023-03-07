@@ -13,9 +13,18 @@
                 <input id="stopSnake" type="submit" value="Stop">
             </div>
             <div class="main-board">
-                <div id="scoreboard" class="scoreboard">
-                    <!-- Hier wordt met jQuery de scoreboard tabel in geplakt. -->
-                </div>
+                <aside class="aside">
+                    <div id="scoreboard" class="scoreboard">
+                        <!-- Hier wordt met jQuery de scoreboard tabel in geplakt. -->
+                    </div>
+                    <div class="besturing">
+                        <table>
+                            <tr><td></td><td id="pijl-omhoog">🔼</td><td></td></tr>
+                            <tr><td id="pijl-links">◀</td><td></td><td id="pijl-rechts">▶</td></tr>
+                            <tr><td></td><td id="pijl-omlaag">🔽</td><td></td></tr>
+                        </table>
+                    </div>
+                </aside>
                 <canvas id="mySnakeCanvas" width="600" height="480"></canvas>
             </div>
         </section>

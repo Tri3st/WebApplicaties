@@ -1,3 +1,9 @@
+import {drawTable} from "./scoreboard.js";
+/**
+ * @module snake
+ * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
+ */
+
 const R        = 10,          // straal van een element
       STEP     = 2*R,         // stapgrootte
                               // er moet gelden: WIDTH = HEIGHT
@@ -29,6 +35,7 @@ var snake,
 
 	
 $(document).ready(function() {
+    drawTable();
 	$("#startSnake").click(init);
 	$("#stopSnake").click(stop);
 });

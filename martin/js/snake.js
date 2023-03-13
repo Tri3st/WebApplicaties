@@ -23,7 +23,8 @@ const R        = 10,          // straal van een element
       FOOD    = "Olive",       // kleur van voedsel
 	  HEAD    = "DarkOrange",  // kleur van de kop van de slang
       MAINTEXT = "Black",
-      ALERTTEXT = "Red"
+      ALERTTEXT = "Red",
+      MAIN_BG = 'Gray'
 	
 var snake,
 	foods = [],		          // voedsel voor de slang
@@ -31,9 +32,10 @@ var snake,
 	height,                   // hoogte van het tekenveld
 	xMax,                     // maximale waarde van x = width - R
 	yMax,                     // maximale waarde van y = height - R
+    snakeTimer,
 	direction = UP;
 
-	
+
 $(document).ready(function() {
     drawTable();
 	$("#startSnake").click(init);
@@ -53,17 +55,27 @@ function init() {
 	snake = createStartSnake();
     foods = createFoods();
     draw();
-    // laat startTekst zien en wacht op eerste keyPress
-    const beginText = new textWindow("Klaar om te beginnen.\nDruk pijl om te beginnen.", MAINTEXT);
-    beginText.drawWindow();
+    jQuery(document).keydown(function(e) {
+        console.log("KEYDOWN >>>", e.which);
+        switch(e.which) {
+            case 37:
+                direction = LEFT;
+                break;
+            case 38:
+                direction = UP;
+                break;
+            case 39:
+                direction = RIGHT;
+                break;
+            case 40:
+                direction = DOWN;
+                break;
+        }
+    });
 
-    // startTimer();
-    const pijlLinks = $('#pijl-links').click(goLeft);
-    const pijlRechts = $('#pijl-rechts').click(goRight);
-    const pijlOmhoog = $('#pijl-omhoog').click(goUp);
-    const pijlOmlaag = $('#pijl-omlaag').click(goDown);
-
-    move("UP");
+    snakeTimer = setInterval(() => {
+        move(direction);
+    }, SLEEPTIME);
 
     // lees events (keypress) en beweeg slang in de juiste richting
 
@@ -91,15 +103,13 @@ function move(direction) {
   @description Teken de slang en het voedsel
 */
 function draw() {
-    var myCanvas = $('#mySnakeCanvas').get(0);
-    const ctx = myCanvas.getContext('2d');
     for (var i = 0; i < foods.length; i++) {
         var food = foods[i];
-        drawElement(food, ctx);
+        drawElement(food);
     }
     for (var i = 0; i < snake.segments.length; i++) {
         var segment = snake.segments[i];
-        drawElement(segment, ctx);
+        drawElement(segment);
     }
 }
 /***************************************************************************
@@ -180,36 +190,14 @@ function Element(radius, x, y, color) {
     this.color = color;
     this.collidesWithOneOf = function(elements) {
         elements.forEach((element) => {
+            console.log(this.x, this.y);
+            console.log(element.x, element.y);
             // TODO implement
-            if (Math.abs(this.x - element.x) >= 2 * R || Math.abs(this.y - element.y) >= 2 * R) {
+            if (Math.abs(this.x - element.x) <= 2 * R || Math.abs(this.y - element.y) <= 2 * R) {
                 return true;
             }
         })
         return false;
-    }
-}
-
-/**
- * @constructor textWindow
- * @description Klasse die een tekstvernster laat zien op het beeldscherm.
- *
- * @param {string} text de tekst die weergegeven moet worden.
- * @param {string} color één van de kleur constanten. (MAINTEXT of ALLERTTEXT)
- */
-function textWindow(text, color) {
-    this.text = text
-    this.x = Math.floor(width / 2);
-    this.y = Math.floor(height / 2);
-    this.color = color;
-    this.drawWindow = function() {
-        // TODO moet nog even gemaakt worden zodat je meerdere regels kunt meegeven. die dan
-        //      mooi onder elkaar neergezet worden.
-        var myCanvas = $('#mySnakeCanvas').get(0);
-        const ctx = myCanvas.getContext('2d');
-        ctx.font = "24px Comic Sans MS";
-        ctx.fillStyle = color;
-        ctx.textAlign = "center";
-        ctx.fillText(this.text, this.x, this.y);
     }
 }
 /***************************************************************************
@@ -254,13 +242,13 @@ function createFood(x, y) {
   @param  {dom object} canvas het tekenveld
 */
  function drawElement(element, context) {
-     const x = element.x;
-     const y = element.y;
-     const radius = element.radius;
-     context.fillStyle = element.color;
-     context.beginPath();
-     context.arc(x, y, radius, 0, (2 * Math.PI), false);
-     context.fill();
+     $('#mySnakeCanvas').drawArc({
+         draggable: false,
+         fillStyle: element.color,
+         x: element.x,
+         y: element.y,
+         radius: element.radius
+     });
 }
 
 /**
@@ -308,4 +296,8 @@ function goUp() {
 
 function goDown() {
     snake.direction = 'DOWN';
+}
+
+function stop() {
+    clearInterval(snakeTimer);
 }

@@ -8,4 +8,7 @@ $( document ).ready(() => {
     const username = $('#username-input');
     const password = $('#password-input');
 
+    $('#inlogBTN').click(() => {
+
+    })
 });

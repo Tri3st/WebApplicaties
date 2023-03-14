@@ -162,12 +162,12 @@ function Snake(segments) {
                 break;
         }
         this.segments.push(head);
-        this.head = this.segments.pop();
+        this.segments.shift();
+        this.head = this.segments[this.segments.length - 1];
+        this.tail = this.segments[0];
         this.head.color = HEAD;
         this.tail.color = SNAKE;
-        this.tail = this.segments.shift();
-        this.segments.push(this.tail);
-        this.tail.color = SNAKE;
+
   }
 
 }

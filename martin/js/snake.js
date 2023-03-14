@@ -282,22 +282,6 @@ function createFoods() {
    return tempFoods;
 }
 
-function goLeft() {
-    snake.direction = 'LEFT';
-}
-
-function goRight() {
-    snake.direction = 'RIGHT';
-}
-
-function goUp() {
-    snake.direction = 'UP';
-}
-
-function goDown() {
-    snake.direction = 'DOWN';
-}
-
 function stop() {
     clearInterval(snakeTimer);
 }

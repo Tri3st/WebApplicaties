@@ -59,15 +59,19 @@ function init() {
         console.log("KEYDOWN >>>", e.which);
         switch(e.which) {
             case 37:
+                if (direction !== RIGHT)
                 direction = LEFT;
                 break;
             case 38:
+                if (direction !== DOWN)
                 direction = UP;
                 break;
             case 39:
+                if (direction !== LEFT)
                 direction = RIGHT;
                 break;
             case 40:
+                if (direction !== UP)
                 direction = DOWN;
                 break;
         }
@@ -91,10 +95,11 @@ function init() {
 function move(direction) {
 	if (snake.canMove(direction)) {
 		snake.doMove(direction);
-		draw();
+        draw();
 	}
 	else {
 		console.log("snake cannot move " + direction);
+        clearInterval(snakeTimer);
 	}
 }
 
@@ -103,6 +108,7 @@ function move(direction) {
   @description Teken de slang en het voedsel
 */
 function draw() {
+    $('#mySnakeCanvas').clearCanvas();
     for (var i = 0; i < foods.length; i++) {
         var food = foods[i];
         drawElement(food);
@@ -131,20 +137,20 @@ function Snake(segments) {
     this.tail.color = SNAKE;
     this.direction = direction;
     this.canMove = function(direction) {
-        var head = this.head;
+        let head2 = this.head;
         switch (direction) {
             case UP:
-                return head.y > YMIN;
+                return head2.y - STEP > YMIN;
             case DOWN:
-                return head.y < yMax;
+                return head2.y + STEP < yMax;
             case LEFT:
-                return head.x > XMIN;
+                return head2.x - STEP > XMIN;
             case RIGHT:
-                return head.x < xMax;
+                return head2.x + STEP < xMax;
         }
     }
     this.doMove = function(direction) {
-        var head = this.head;
+        let head = this.head;
         switch (direction) {
             case UP:
                 head.y -= STEP;
@@ -167,7 +173,7 @@ function Snake(segments) {
         this.tail = this.segments[0];
         this.head.color = HEAD;
         this.tail.color = SNAKE;
-
+        console.log(this.segments);
   }
 
 }
@@ -190,10 +196,10 @@ function Element(radius, x, y, color) {
     this.color = color;
     this.collidesWithOneOf = function(elements) {
         elements.forEach((element) => {
-            console.log(this.x, this.y);
-            console.log(element.x, element.y);
             // TODO implement
-            if (Math.abs(this.x - element.x) <= 2 * R || Math.abs(this.y - element.y) <= 2 * R) {
+            if (Math.abs(this.x - element.x) === 0 && Math.abs(this.y - element.y) === 0) {
+                console.log(this.x, this.y, element.x, element.y);
+                console.log("COLLISSION!!");
                 return true;
             }
         })
@@ -211,7 +217,7 @@ function Element(radius, x, y, color) {
   @return: slang volgens specificaties
 */
 function createStartSnake() {
-	var segments   = [createSegment(R + width/2, R + height/2), 
+	var segments   = [createSegment(R + width/2, R + height/2),
 	                  createSegment(R + width/2, height/2 - R)];
      return new Snake(segments);
 }
@@ -239,9 +245,8 @@ function createFood(x, y) {
   @function drawElement(element, canvas) -> void
   @description Een element tekenen
   @param {Element} element een Element object
-  @param  {dom object} canvas het tekenveld
 */
- function drawElement(element, context) {
+ function drawElement(element) {
      $('#mySnakeCanvas').drawArc({
          draggable: false,
          fillStyle: element.color,
@@ -273,7 +278,11 @@ function createFoods() {
         tempFoods = [];
    //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
    while (i < NUMFOODS ) {
-     food = createFood(XMIN + getRandomInt(0, xMax), YMIN + getRandomInt(0, yMax));
+     const xsteps = (xMax - (2 * XMIN)) / STEP
+     const xval = XMIN + (getRandomInt(0, xsteps) * STEP);
+     const ysteps = (yMax - (2 * YMIN)) / STEP;
+     const yval = YMIN + (getRandomInt(0, ysteps) * STEP);
+     food = createFood(xval, yval);
      if (!food.collidesWithOneOf(snake.segments) && !food.collidesWithOneOf(tempFoods) ) {
          tempFoods.push(food);
        i++

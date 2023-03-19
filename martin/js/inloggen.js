@@ -10,5 +10,15 @@ $( document ).ready(() => {
 
     $('#inlogBTN').click(() => {
 
+    });
+    $('#registerBTN').click(() => {
+    if (username !== '' && password !== '') {
+            const user = {
+                username: username.toString(),
+                password: password.toString()
+            };
+            console.log(user)
+            localStorage.setItem(`${username}`, `${password}`);
+        }
     })
 });

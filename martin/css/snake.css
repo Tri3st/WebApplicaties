@@ -58,6 +58,10 @@
     margin: 0.5em auto;
 }
 
+.pijl-aktief {
+    background-color: lightgreen;
+}
+
 table, th, tr, td {
     border: 1px solid black;
     border-collapse: collapse;

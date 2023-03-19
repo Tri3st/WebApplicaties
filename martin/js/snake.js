@@ -54,29 +54,35 @@ function init() {
     yMax = height - R;
 	snake = createStartSnake();
     foods = createFoods();
-    draw();
     jQuery(document).keydown(function(e) {
-        console.log("KEYDOWN >>>", e.which);
+        $('.pijl').removeClass('pijl-aktief');
         switch(e.which) {
             case 37:
-                if (direction !== RIGHT)
-                direction = LEFT;
+                if (direction !== RIGHT){
+                    direction = LEFT;
+                    $('#pijl-links').addClass('pijl-aktief');
+                }
                 break;
             case 38:
-                if (direction !== DOWN)
-                direction = UP;
+                if (direction !== DOWN) {
+                    direction = UP;
+                    $('#pijl-omhoog').addClass('pijl-aktief');
+                }
                 break;
             case 39:
-                if (direction !== LEFT)
-                direction = RIGHT;
+                if (direction !== LEFT) {
+                    direction = RIGHT;
+                    $('#pijl-rechts').addClass('pijl-aktief');
+                }
                 break;
             case 40:
-                if (direction !== UP)
-                direction = DOWN;
+                if (direction !== UP){
+                    direction = DOWN;
+                    $('#pijl-omlaag').addClass('pijl-aktief');
+                }
                 break;
         }
     });
-
     snakeTimer = setInterval(() => {
         move(direction);
     }, SLEEPTIME);
@@ -113,8 +119,8 @@ function draw() {
         var food = foods[i];
         drawElement(food);
     }
-    for (var i = 0; i < snake.segments.length; i++) {
-        var segment = snake.segments[i];
+    for (var j = 0; j < snake.segments.length; j++) {
+        var segment = snake.segments[j];
         drawElement(segment);
     }
 }
@@ -137,20 +143,20 @@ function Snake(segments) {
     this.tail.color = SNAKE;
     this.direction = direction;
     this.canMove = function(direction) {
-        let head2 = this.head;
+        let head2 = Object.assign({}, this.head);
         switch (direction) {
             case UP:
-                return head2.y - STEP > YMIN;
+                return head2.y - STEP >= YMIN;
             case DOWN:
-                return head2.y + STEP < yMax;
+                return head2.y + STEP <= yMax;
             case LEFT:
-                return head2.x - STEP > XMIN;
+                return head2.x - STEP >= XMIN;
             case RIGHT:
-                return head2.x + STEP < xMax;
+                return head2.x + STEP <= xMax;
         }
     }
     this.doMove = function(direction) {
-        let head = this.head;
+        let head = Object.assign({}, this.head); // Maak een deep-copy van het object.
         switch (direction) {
             case UP:
                 head.y -= STEP;
@@ -167,15 +173,24 @@ function Snake(segments) {
             default:
                 break;
         }
+        this.head.color = SNAKE;
         this.segments.push(head);
-        this.segments.shift();
         this.head = this.segments[this.segments.length - 1];
+        // Als de slang een 'food' raakt, halen we deze uit de foods array.
+        // Ook doen we dan geen shift, omdat de slang langer wordt.
+        // TODO als de slang zichzelf raakt (bijv als deze heel lang is)
+        if (this.head.collidesWithOneOf(foods)) {
+            const foodIndex = foods.findIndex((food) => food.x === head.x && food.y === head.y);
+            foods.splice(foodIndex, 1);
+        } else {
+           this.segments.shift();
+        }
         this.tail = this.segments[0];
         this.head.color = HEAD;
-        this.tail.color = SNAKE;
-        console.log(this.segments);
   }
-
+    this.toString = function () {
+        return this.segments.join(" - ");
+    }
 }
 
 /**
@@ -195,15 +210,17 @@ function Element(radius, x, y, color) {
     this.y = y;
     this.color = color;
     this.collidesWithOneOf = function(elements) {
+        let result = false;
         elements.forEach((element) => {
-            // TODO implement
             if (Math.abs(this.x - element.x) === 0 && Math.abs(this.y - element.y) === 0) {
-                console.log(this.x, this.y, element.x, element.y);
-                console.log("COLLISSION!!");
-                return true;
+                console.debug("COLLISSION WITH FOOD element ", element.x, element.y)
+                result = true;
             }
         })
-        return false;
+        return result;
+    }
+    this.toString = function () {
+        return `(${this.x},${this.y})`;
     }
 }
 /***************************************************************************

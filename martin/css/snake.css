@@ -58,6 +58,14 @@
     margin: 0.5em auto;
 }
 
+#infoBox {
+    padding: 5px;
+    border: 1px solid red;
+    margin-top: 5px;
+    border-radius: 5px;
+    visibility: hidden;
+}
+
 .pijl-aktief {
     background-color: lightgreen;
 }

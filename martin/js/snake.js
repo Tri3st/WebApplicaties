@@ -1,4 +1,5 @@
 import {drawTable} from "./scoreboard.js";
+import {textMessage, textToggle} from './TextMessages.js';
 /**
  * @module snake
  * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
@@ -187,6 +188,7 @@ function Snake(segments) {
         }
         this.tail = this.segments[0];
         this.head.color = HEAD;
+        checkGameIsOver();
   }
     this.toString = function () {
         return this.segments.join(" - ");
@@ -310,4 +312,19 @@ function createFoods() {
 
 function stop() {
     clearInterval(snakeTimer);
+}
+
+function checkGameIsOver(){
+    // checkt alleen of de slang bots met 4e segment of meer
+    // minder is gewoon niet mogelijk
+    const botsBareSlang = snake.segments.slice(0,-4);
+
+    if (snake.head.collidesWithOneOf(botsBareSlang)){
+        textMessage("Je hebt de slang geraakt!", 'GAMEOVER');
+        stop();
+    }
+    if (foods.length === 0) {
+        textMessage("Al het voedsel is weg! Je hebt gewonnen!!", 'WINNING');
+        stop();
+    }
 }

@@ -51,6 +51,10 @@ const myButtons = [
     },
 
 ]
+let loggedInUser = localStorage.getItem('`currentLoggedIn');
+if (!loggedInUser) loggedInUser = 'NOG NIET INGELOGD';
+
+let all_users = [];
 
 
 /**

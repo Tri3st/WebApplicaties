@@ -1,0 +1,26 @@
+.inlog-article {
+    width: 60%;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+form input {
+    margin: 5px;
+    padding: 5px;
+}
+
+form label {
+    width: 60px;
+}
+
+.infoBox {
+    border: 1px dotted red;
+    border-radius: 5px;
+    visibility: hidden;
+}

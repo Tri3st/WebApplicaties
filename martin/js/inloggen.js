@@ -7,8 +7,15 @@ let all_users = [];
 $( document ).ready(() => {
     console.log('READY!');
 
-
-    let  currentLoggedin;
+    let  currentLoggedin = localStorage.getItem('currentLoggedIn');
+    if (currentLoggedin) {
+         $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`);
+         $('#inlogBTN').attr('disabled', 'disabled');
+         $('#logoutBTN').removeAttr('disabled');
+    } else {
+         $('#logoutBTN').attr('disabled', 'disabled');
+         $('#inlogBTN').removeAttr('disabled');
+    }
     const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
 
     $('#inlogBTN').click(() => {
@@ -21,13 +28,15 @@ $( document ).ready(() => {
         if (usersArray.map((user) => user.username).includes(`${username}`)){
             console.log("login succesvol")
             if (usersArray.findIndex((user) => user.username === username && user.password === password)){
-
                 const infoBoxBericht = "Succesvol ingelogd";
                 $('#username-input').val('');
                 $('#password-input').val('');
                 $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
                 $('.infoBox').css('visibility', 'visible');
                 localStorage.setItem('currentLoggedIn', username)
+                $('#inlogBTN').attr('disabled', 'disabled');
+                $('#logoutBTN').removeAttr('disabled');
+                $('#username').html(`Ingelogd als : <span class="ingelogde-user">${username}</span>`);
             }
         }
     });
@@ -54,4 +63,9 @@ $( document ).ready(() => {
             localStorage.setItem('all_users', JSON.stringify(usersArray));
         }
     })
+    $('#logoutBTN').click(() => {
+        localStorage.setItem('currentLoggedIn', '')
+        $('#logoutBTN').attr('disabled', 'disabled');
+        $('#inlogBTN').removeAttr('disabled');$('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
+    });
 });

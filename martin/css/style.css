@@ -118,6 +118,15 @@ ul {
     margin: 0 1em;
 }
 
+.ingelogd {
+    margin-left: auto;
+}
+
+.ingelogde-user {
+    font-weight: bold;
+    color: black;
+}
+
 /*** Welkom.html ***/
 
 /*** Snake.html ***/

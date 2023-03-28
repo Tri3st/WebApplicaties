@@ -51,8 +51,8 @@ const myButtons = [
     },
 
 ]
-let loggedInUser = localStorage.getItem('`currentLoggedIn');
-if (!loggedInUser) loggedInUser = 'NOG NIET INGELOGD';
+let loggedInUser = localStorage.getItem('currentLoggedIn');
+if (!loggedInUser) loggedInUser = '';
 
 let all_users = [];
 
@@ -63,6 +63,7 @@ let all_users = [];
  */
 $( document ).ready(() => {
     console.log('READY!');
+    $('#username').html(`Ingelogd als : <span class="ingelogde-user">${loggedInUser}</span>`);
 
 
     const buttons = $('.nav');

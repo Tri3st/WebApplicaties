@@ -1,4 +1,5 @@
 // Hier komt de code voor de pagina te staan
+import {drawTable} from "./scoreboard.js";
 
 const myButtons = [
     {
@@ -62,7 +63,7 @@ let all_users = [];
  * iframe src attribuut en aanpassen van de breadcrumbs.
  */
 $( document ).ready(() => {
-    console.log('READY!');
+    console.log('READY! in script.js');
     $('#username').html(`Ingelogd als : <span class="ingelogde-user">${loggedInUser}</span>`);
 
 

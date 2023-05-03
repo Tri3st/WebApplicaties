@@ -1,5 +1,5 @@
-import {drawTable} from "./scoreboard.js";
 import {textMessage, textToggle} from './TextMessages.js';
+import {drawTable} from "./scoreboard.js";
 /**
  * @module snake
  * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
@@ -36,12 +36,11 @@ var snake,
     snakeTimer,
 	direction = UP;
 
-
-$(document).ready(function() {
-    drawTable();
+$( document ).ready(() => {
 	$("#startSnake").click(init);
 	$("#stopSnake").click(stop);
-});
+})
+
 
 /**
  * @function init()
@@ -49,6 +48,8 @@ $(document).ready(function() {
  *       genereer voedsel, en teken alles
 */
 function init() {
+    console.log("inside INIT()");
+    drawTable();
     width = $('#mySnakeCanvas')[0].width;
     height = $('#mySnakeCanvas')[0].height;
     xMax = width - R;
@@ -328,3 +329,5 @@ function checkGameIsOver(){
         stop();
     }
 }
+
+export {init, stop };

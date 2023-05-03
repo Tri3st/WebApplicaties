@@ -48,6 +48,7 @@ const getScores = function () {
         .then((json) => {
             // scores = json;
             scores = JSON.parse(json);
+            console.log(scores);
             return scores;
         })
         .catch((error) => {

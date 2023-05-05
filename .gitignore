@@ -1,4 +1,4 @@
 .idea/
 martin/.dockerignore
 martin/node_modules/
-martin/package*.*
+martin/package-lock.*

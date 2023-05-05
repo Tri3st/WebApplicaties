@@ -1,6 +1,6 @@
 /**
  *
- * @module TextMessages
+ * @module textMessages
  */
 
 /**

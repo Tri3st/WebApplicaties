@@ -1,5 +1,5 @@
 import {drawTable} from "./scoreboard.js";
-import {textMessage, textToggle} from './TextMessages.js';
+import {textMessage, textToggle} from './textMessages.js';
 /**
  * @module snake
  * @description Module met functies, klassen en hulpfuncties voor de snake pagina.

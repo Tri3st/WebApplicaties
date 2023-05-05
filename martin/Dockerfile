@@ -8,9 +8,9 @@ RUN mkdir /app
 
 WORKDIR /app
 
-RUN npm run generate-docs
-
 COPY . .
+
+RUN npm run generate-docs
 
 EXPOSE 8090
 

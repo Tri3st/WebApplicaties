@@ -25,3 +25,7 @@ En steeds de veranderingen hier naar de branch 'martin' pushen.
 Laat maar weten wat je ervan vindt zover.
 
 MARTIN
+
+## DOCS
+
+De JS-DOCS worden automatisch gegenereerd en zijn te zien als je naar http://localhost:80/docs navigeert in je browser.

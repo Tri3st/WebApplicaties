@@ -133,7 +133,7 @@ function draw() {
    @description Klasse Snake met 2 functies:
                     - canMove : controlleer of slang niet van het canvas af loopt.
                     - doMove  : doe de beweging
-   @param {[Element]} segments een array met aaneengesloten slangsegmenten
+   @param {array} segments een array met aaneengesloten slangsegmenten
                    Het laatste element van segments wordt de kop van de slang 
 */ 
 function Snake(segments) {

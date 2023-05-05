@@ -66,12 +66,12 @@ $( document ).ready(() => {
 
 });
 
-const init = init() {
-
+const init = function() {
+    // TODO
 };
 
 const logIn = function() {
-
+    // TODO
 };
 
 const logOut = function (){
@@ -83,7 +83,7 @@ const logOut = function (){
 };
 
 const register = function() {
-
+    // TODO
 }
 
 export {init, logIn, logOut, register};

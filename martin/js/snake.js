@@ -317,12 +317,14 @@ function stop() {
 function checkGameIsOver(){
     // checkt alleen of de slang bots met 4e segment of meer
     // minder is gewoon niet mogelijk
-    const botsBareSlang = snake.segments.slice(0,-4);
-
-    if (snake.head.collidesWithOneOf(botsBareSlang)){
-        textMessage("Je hebt de slang geraakt!", 'GAMEOVER');
-        stop();
+    if(snake.segments.length > 4){
+        const botsBareSlang = snake.segments.slice(0,-4);
+        if (snake.head.collidesWithOneOf(botsBareSlang)){
+            textMessage("Je hebt de slang geraakt!", 'GAMEOVER');
+            stop();
+        }
     }
+
     if (foods.length === 0) {
         textMessage("Al het voedsel is weg! Je hebt gewonnen!!", 'WINNING');
         stop();

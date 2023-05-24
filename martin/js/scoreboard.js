@@ -37,7 +37,7 @@ async function drawTable() {
  * @description haalt de scores uit de API (in dit geval van disk, tot de API klaar is) en zet ze
  *              in een array van Objecten met de vorm :
  *              {string} name, {number} score, {date} date
- * @returns {[object]} array score Objecten
+ * @returns {array} array score Objecten
  */
 const getScores = function () {
     var scores;

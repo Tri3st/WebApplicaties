@@ -1,0 +1,24 @@
+{
+  "name": "webapps",
+  "version": "1.0.0",
+  "description": "Opdracht van de OU",
+  "main": "index.js",
+  "scripts": {
+    "generate-docs": "jsdoc -c ./jsdoc/conf.json",
+    "test": "qunit"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Martin van Diest",
+  "license": "ISC",
+  "devDependencies": {
+    "jsdoc": "^4.0.2",
+    "qunit": "^2.19.4"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

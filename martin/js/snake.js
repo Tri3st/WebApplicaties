@@ -1,5 +1,5 @@
-import {textMessage, textToggle} from './TextMessages.js';
 import {drawTable} from "./scoreboard.js";
+import {textMessage, textToggle} from './textMessages.js';
 /**
  * @module snake
  * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
@@ -134,7 +134,7 @@ function draw() {
    @description Klasse Snake met 2 functies:
                     - canMove : controlleer of slang niet van het canvas af loopt.
                     - doMove  : doe de beweging
-   @param {[Element]} segments een array met aaneengesloten slangsegmenten
+   @param {array} segments een array met aaneengesloten slangsegmenten
                    Het laatste element van segments wordt de kop van de slang 
 */ 
 function Snake(segments) {
@@ -318,12 +318,14 @@ function stop() {
 function checkGameIsOver(){
     // checkt alleen of de slang bots met 4e segment of meer
     // minder is gewoon niet mogelijk
-    const botsBareSlang = snake.segments.slice(0,-4);
-
-    if (snake.head.collidesWithOneOf(botsBareSlang)){
-        textMessage("Je hebt de slang geraakt!", 'GAMEOVER');
-        stop();
+    if(snake.segments.length > 4){
+        const botsBareSlang = snake.segments.slice(0,-4);
+        if (snake.head.collidesWithOneOf(botsBareSlang)){
+            textMessage("Je hebt de slang geraakt!", 'GAMEOVER');
+            stop();
+        }
     }
+
     if (foods.length === 0) {
         textMessage("Al het voedsel is weg! Je hebt gewonnen!!", 'WINNING');
         stop();

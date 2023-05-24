@@ -63,9 +63,27 @@ $( document ).ready(() => {
             localStorage.setItem('all_users', JSON.stringify(usersArray));
         }
     })
+
+});
+
+const init = function() {
+    // TODO
+};
+
+const logIn = function() {
+    // TODO
+};
+
+const logOut = function (){
     $('#logoutBTN').click(() => {
         localStorage.setItem('currentLoggedIn', '')
         $('#logoutBTN').attr('disabled', 'disabled');
         $('#inlogBTN').removeAttr('disabled');$('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
     });
-});
+};
+
+const register = function() {
+    // TODO
+}
+
+export {init, logIn, logOut, register};

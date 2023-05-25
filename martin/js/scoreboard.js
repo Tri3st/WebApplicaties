@@ -67,5 +67,3 @@ const formatDate = function(someDate) {
     tempDate = tempDate[0].split("-");
     return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;
 }
-
-export {drawTable};

@@ -1,8 +1,9 @@
-import {textMessage} from "../js/textMessages";
+const textMessage = require('../js/TextMessages').textMessage;
 
 const {test} = QUnit;
 
 QUnit.module("textMessage");
+
 test("of een WIN bericht wordt getoond", (assert) => {
     textMessage("Dit is een win test.", "WINNING");
     const boxWin = $('#infoBox').html();

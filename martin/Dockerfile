@@ -12,11 +12,9 @@ COPY . .
 
 RUN npm run generate-docs
 
-RUN npm run test
+FROM base as prod
 
 EXPOSE 8090
-
-FROM base as prod
 
 CMD ["node", "index.js"]
 

@@ -41,5 +41,3 @@ const textToggle = function() {
     if (box.css("visibility") === 'hidden') box.css('visibility', 'visible');
     else box.css('visibility', 'hidden');
 }
-
-export {textMessage, textToggle};

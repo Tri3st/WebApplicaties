@@ -40,6 +40,7 @@ async function drawTable() {
  * @returns {array} array score Objecten
  */
 const getScores = function () {
+<<<<<<< HEAD
     var scores;
     return fetch('./js/scores.json', {headers: {'Content-Type': 'application/json'}})
         .then((response) => {
@@ -55,6 +56,10 @@ const getScores = function () {
             console.log("Er ging iets fout in getScores (scoreboard.js)!");
             console.error(error);
         });
+=======
+    const scores = import("./scores.json");
+    return scores;
+>>>>>>> dfd2d9fa3b53e121a6114e2a4377854ae5470051
 }
 
 const formatDate = function(someDate) {

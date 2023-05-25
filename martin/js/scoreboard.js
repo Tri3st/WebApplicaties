@@ -40,26 +40,9 @@ async function drawTable() {
  * @returns {array} array score Objecten
  */
 const getScores = function () {
-<<<<<<< HEAD
-    var scores;
-    return fetch('./js/scores.json', {headers: {'Content-Type': 'application/json'}})
-        .then((response) => {
-            return response.text()
-        })
-        .then((json) => {
-            // scores = json;
-            scores = JSON.parse(json);
-            console.log(scores);
-            return scores;
-        })
-        .catch((error) => {
-            console.log("Er ging iets fout in getScores (scoreboard.js)!");
-            console.error(error);
-        });
-=======
-    const scores = import("./scores.json");
+    // const scores = import("./scores.json");
+    console.log(scores);
     return scores;
->>>>>>> dfd2d9fa3b53e121a6114e2a4377854ae5470051
 }
 
 const formatDate = function(someDate) {
@@ -67,3 +50,5 @@ const formatDate = function(someDate) {
     tempDate = tempDate[0].split("-");
     return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;
 }
+
+export {drawTable};

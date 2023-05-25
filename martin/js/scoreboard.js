@@ -9,7 +9,7 @@
  * @description Tekent de tabel voor de scores dynamisch. Haalt tevens de data uit de API (voor nu uit een data
  *              file).
  */
-async function drawTable() {
+export async function drawTable() {
     console.log("inside drawTable() >>>");
     const scores = await getScores();
     console.log("scores: ", scores)
@@ -50,5 +50,3 @@ const formatDate = function(someDate) {
     tempDate = tempDate[0].split("-");
     return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;
 }
-
-export {drawTable};

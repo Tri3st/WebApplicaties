@@ -1,6 +1,4 @@
-import { drawTable } from "../js/scoreboard";
-const QUnit = require("qunit");
-const $ = require("jquery");
+import {drawTable} from "../js/scoreboard";
 
 QUnit.module("dashboard drawTable fucntie");
 

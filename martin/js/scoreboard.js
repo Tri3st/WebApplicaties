@@ -40,20 +40,8 @@ async function drawTable() {
  * @returns {array} array score Objecten
  */
 const getScores = function () {
-    var scores;
-    return fetch('./js/scores.json', {headers: {'Content-Type': 'application/json'}})
-        .then((response) => {
-            return response.text()
-        })
-        .then((json) => {
-            // scores = json;
-            scores = JSON.parse(json);
-            return scores;
-        })
-        .catch((error) => {
-            console.log("Er ging iets fout in getScores (scoreboard.js)!");
-            console.error(error);
-        });
+    const scores = import("./scores.json");
+    return scores;
 }
 
 const formatDate = function(someDate) {

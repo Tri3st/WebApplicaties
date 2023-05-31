@@ -26,7 +26,8 @@ function drawTable() {
  */
 function getScores () {
     let scores = [];
-    fetch('../js/scores.json', {
+    fetch('../js/model/scores.json', {
+        method: 'GET',
         headers: {
             'Accept': 'application/json',
         }})

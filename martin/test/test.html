@@ -4,40 +4,41 @@
     <meta charset="utf-8">
     <title>Scoreboard Test Suite</title>
     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.19.4.css">
-    <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://code.jquery.com/qunit/qunit-2.19.4.js"></script>
     <script type="module" src="../js/controller/scoreboard.js"></script>
-<!--    <script type="module" src="testScoreboard.js"></script>-->
+    <script type="module" src="testScoreboard.js"></script>
   </head>
   <body>
     <div id="qunit"></div>
-    <div id="qunit-fixture"></div>
+    <div id="qunit-fixture">
 
-    <!-- Alles hieronder wordt voor iedere test gereset -->
-    <article class="snake-article">
-          <section class="snake-section">
-              <div class="snake-buttons">
-                  <input id="startSnake" type="submit" value="Start">
-                  <input id="stopSnake" type="submit" value="Stop">
-              </div>
-              <div class="main-board">
-                  <aside class="aside">
-                      <div id="scoreboard" class="scoreboard">
-                          <!-- Hier wordt met jQuery de scoreboard tabel in geplakt. -->
-                      </div>
-                      <div class="besturing">
-                          <table>
-                              <tr><td></td><td id="pijl-omhoog" class="pijl">&uarr;</td><td></td></tr>
-                              <tr><td id="pijl-links" class="pijl">&larr;</td><td></td><td id="pijl-rechts" class="pijl">&rarr;</td></tr>
-                              <tr><td></td><td id="pijl-omlaag" class="pijl">&darr;</td><td></td></tr>
-                          </table>
-                      </div>
-                      <div id="infoBox">
-                      </div>
-                  </aside>
-                  <canvas id="mySnakeCanvas" width="600" height="480"></canvas>
-              </div>
-          </section>
-      </article>
+        <!-- Alles hieronder wordt voor iedere test gereset -->
+        <article class="snake-article">
+              <section class="snake-section">
+                  <div class="snake-buttons">
+                      <input id="startSnake" type="submit" value="Start">
+                      <input id="stopSnake" type="submit" value="Stop">
+                  </div>
+                  <div class="main-board">
+                      <aside class="aside">
+                          <div id="scoreboard" class="scoreboard">
+                              <!-- Hier wordt met jQuery de scoreboard tabel in geplakt. -->
+                          </div>
+                          <div class="besturing">
+                              <table>
+                                  <tr><td></td><td id="pijl-omhoog" class="pijl">&uarr;</td><td></td></tr>
+                                  <tr><td id="pijl-links" class="pijl">&larr;</td><td></td><td id="pijl-rechts" class="pijl">&rarr;</td></tr>
+                                  <tr><td></td><td id="pijl-omlaag" class="pijl">&darr;</td><td></td></tr>
+                              </table>
+                          </div>
+                          <div id="infoBox">
+                          </div>
+                      </aside>
+                      <canvas id="mySnakeCanvas" width="600" height="480"></canvas>
+                  </div>
+              </section>
+          </article>
+    </div>
   </body>
 </html>

@@ -1,6 +1,6 @@
 import {getScores, formatDate} from "../js/controller/scoreboard.js";
 
-QUnit.module("dashboard drawTable fucntie");
+QUnit.module("dashboard drawTable functie");
 
 QUnit.test("of de tabel met scores correct opgehaald wordt.", (assert) => {
     const expected = `[
@@ -26,5 +26,10 @@ QUnit.test("of de tabel met scores correct opgehaald wordt.", (assert) => {
   }
 ]`;
     const actual = getScores();
+    console.log("scores : ", actual);
     assert.equal(actual, expected);
+});
+
+QUnit.test("something else", (assert) => {
+    assert.equal(1, 1);
 });

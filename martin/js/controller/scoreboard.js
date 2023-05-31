@@ -4,16 +4,17 @@
  */
 
 
-import {showScoreboard} from "../view/messages";
+import {showScoreboard} from "../view/messages.js";
 
 /**
  * @function drawTable
  * @description Tekent de tabel voor de scores dynamisch. Haalt tevens de data uit de API (voor nu uit een data
  *              file).
  */
-export async function drawTable() {
-    const scores = getScores();
-    showScoreboard(scores);
+function drawTable() {
+    const scores = getScores().then(() => {
+        showScoreboard(scores);
+    });
 }
 
 /**
@@ -23,11 +24,12 @@ export async function drawTable() {
  *              {string} name, {number} score, {date} date
  * @returns {array} array score Objecten
  */
-export function getScores () {
+function getScores () {
     let scores = [];
-    fetch('../js/scores.json', {headers: {
-        'Accept': 'application/json',
-    }})
+    fetch('../js/scores.json', {
+        headers: {
+            'Accept': 'application/json',
+        }})
     .then((response) => {
         return response.json();
     })
@@ -38,8 +40,10 @@ export function getScores () {
     return scores;
 }
 
-export function formatDate (someDate) {
+function formatDate (someDate) {
     let tempDate = someDate.split("T")
     tempDate = tempDate[0].split("-");
     return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;
 }
+
+export {drawTable, getScores, formatDate};

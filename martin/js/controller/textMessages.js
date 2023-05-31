@@ -1,7 +1,9 @@
 /**
- *
  * @module textMessages
+ * @description houdt zich bezig met de verwerking van de berichten.
  */
+
+import {showMessage} from "../view/messages";
 
 /**
  * @function textMessage
@@ -12,8 +14,7 @@
  * @param {string} message Bericht wat moet worden weergegeven.
  * @param {string} type Type: 'GAMEOVER' of 'WINNING'
  */
-const textMessage = function (message, type) {
-    const box = $('#infoBox');
+export function textMessage(message, type) {
     let head;
     switch (type) {
         case 'GAMEOVER':
@@ -25,19 +26,5 @@ const textMessage = function (message, type) {
         default:
             break;
     }
-    const header = '<h3>' + head + '</h3>';
-    const inside = '<p>' + message + '</p>';
-    box.html(header + inside);
-    box.css("visibility", "visible");
-}
-
-/**
- * @function textToggle
- * @description Laten zien of niet laten zien van het bericht.
- *
- */
-const textToggle = function() {
-    const box = $('#infoBox');
-    if (box.css("visibility") === 'hidden') box.css('visibility', 'visible');
-    else box.css('visibility', 'hidden');
+    showMessage(head, message);
 }

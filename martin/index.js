@@ -14,6 +14,10 @@ router.get("/", (req, res) => {
     res.sendFile(path + 'index.html');
 });
 
+router.get("/test/", (req, res) => {
+    res.sendFile(path + '/test/test.html');
+});
+
 app.use(express.static(path));
 app.use('/', router);
 

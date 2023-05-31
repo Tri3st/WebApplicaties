@@ -1,4 +1,4 @@
-const textMessage = require('../js/TextMessages').textMessage;
+const textMessage = require('../js/controller/textMessages').textMessage;
 
 const {test} = QUnit;
 

@@ -15,8 +15,7 @@
   "author": "Martin van Diest",
   "license": "ISC",
   "devDependencies": {
-    "jsdoc": "^4.0.2",
-    "qunit": "^2.19.4"
+    "jsdoc": "^4.0.2"
   },
   "dependencies": {
     "express": "^4.18.2"

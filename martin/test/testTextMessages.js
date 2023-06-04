@@ -1,8 +1,6 @@
-const textMessage = require('../js/controller/textMessages').textMessage;
+import {textMessage} from '../js/presenter/textMessages.js';
 
-const {test} = QUnit;
-
-QUnit.module("textMessage");
+QUnit.module("textMessages textMessage functie");
 
 test("of een WIN bericht wordt getoond", (assert) => {
     textMessage("Dit is een win test.", "WINNING");

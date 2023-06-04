@@ -29,3 +29,17 @@ MARTIN
 ## DOCS
 
 De JS-DOCS worden automatisch gegenereerd en zijn te zien als je naar http://localhost:80/docs navigeert in je browser.
+
+## MVP
+
+### Model
+
+Je domein. Server communicatie of data. 
+
+### (Passive) View
+
+DOM manipulatie (via jquery) en HTML 
+
+## presenter
+
+Event-Handling, User Interactie

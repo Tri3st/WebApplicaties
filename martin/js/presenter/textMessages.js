@@ -3,7 +3,7 @@
  * @description houdt zich bezig met de verwerking van de berichten.
  */
 
-import {showMessage} from "../view/messages";
+import {showMessage} from "../view/messages.js";
 
 /**
  * @function textMessage

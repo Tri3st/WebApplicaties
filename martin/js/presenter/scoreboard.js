@@ -22,23 +22,20 @@ function drawTable() {
  * @description haalt de scores uit de API (in dit geval van disk) en zet ze
  *              in een array van Objecten met de vorm :
  *              {string} name, {number} score, {date} date
- * @returns {array} array score Objecten
+ * @returns {Array} scores (array van score objecten)
  */
-function getScores () {
-    let scores = [];
-    fetch('../js/model/scores.json', {
+async function getScores () {
+    const response = await fetch('../js/model/scores.json', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
         }})
-    .then((response) => {
-        return response.json();
-    })
-    .then((json) => {
-        json.forEach((s) => scores.push(s));
-        return json;
-    })
-    return scores;
+    if (response.ok) {
+        const jsonValue = await response.json();
+        return Promise.resolve(jsonValue);
+    } else {
+        return Promise.reject("There was an error");
+    }
 }
 
 function formatDate (someDate) {

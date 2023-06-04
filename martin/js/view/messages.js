@@ -2,7 +2,7 @@
  * @module messages
  * @description Module die zich bezighoudt met het tonen van berichten.
  */
-import {formatDate} from '../controller/scoreboard.js';
+import {formatDate} from '../presenter/scoreboard.js';
 /**
  * @function showMessage
  * @description toont het bericht in de daarvoor bestemde plek.
@@ -23,7 +23,7 @@ function showMessage(head, message) {
  * @description Laten zien of niet laten zien van het bericht.
  *
  */
-function textToggle() {
+function infoBoxTextToggle() {
     const box = $('#infoBox');
     if (box.css("visibility") === 'hidden') box.css('visibility', 'visible');
     else box.css('visibility', 'hidden');
@@ -55,4 +55,4 @@ function showScoreboard(scores) {
     $('#scoreboard').append($(tableMain));
 }
 
-export {showMessage, textToggle, showScoreboard};
+export {showMessage, infoBoxTextToggle, showScoreboard};

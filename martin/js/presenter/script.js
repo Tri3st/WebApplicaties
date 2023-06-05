@@ -1,5 +1,4 @@
 // Hier komt de code voor de pagina te staan
-import {drawTable} from "./scoreboard.js";
 
 const myButtons = [
     {
@@ -18,7 +17,7 @@ const myButtons = [
         id: 3,
         buttonId: 'button3',
         name: 'Snake',
-        ref: './snake.html'
+        ref: '../snake.html'
     },
     {
         id: 4,

@@ -55,3 +55,19 @@ function showScoreboard(scores) {
     // add table to DOM
     $('#scoreboard').append($(tableMain));
 }
+
+/**
+ @function draw()
+ @description Teken de slang en het voedsel
+ */
+function draw() {
+    $('#mySnakeCanvas').clearCanvas();
+    for (var i = 0; i < foods.length; i++) {
+        var food = foods[i];
+        drawElement(food);
+    }
+    for (var j = 0; j < snake.segments.length; j++) {
+        var segment = snake.segments[j];
+        drawElement(segment);
+    }
+}

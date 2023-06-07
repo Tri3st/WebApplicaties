@@ -16,16 +16,6 @@ export function showMessage(head, message) {
     const header = '<h3>' + head + '</h3>';
     const inside = '<p>' + message + '</p>';
     box.html(header + inside);
-    box.css("visibility", "visible");
-}
-
-/**
- * @function textToggle
- * @description Laten zien of niet laten zien van het bericht.
- *
- */
-function infoBoxTextToggle() {
-    const box = $('#infoBox');
     if (box.css("visibility") === 'hidden') box.css('visibility', 'visible');
     else box.css('visibility', 'hidden');
 }

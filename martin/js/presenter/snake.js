@@ -106,7 +106,8 @@ function move(direction) {
 	}
 	else {
 		console.log("snake cannot move " + direction);
-        clearInterval(snakeTimer);
+        textMessage("Je hebt de muur geraakt!", 'GAMEOVER');
+        stop();
 	}
 }
 

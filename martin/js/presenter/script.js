@@ -17,7 +17,7 @@ const myButtons = [
         id: 3,
         buttonId: 'button3',
         name: 'Snake',
-        ref: '../snake.html'
+        ref: './snake.html'
     },
     {
         id: 4,
@@ -52,7 +52,7 @@ const myButtons = [
 
 ]
 let loggedInUser = localStorage.getItem('currentLoggedIn');
-if (!loggedInUser) loggedInUser = '';
+if (!loggedInUser) loggedInUser = '?';
 
 let all_users = [];
 

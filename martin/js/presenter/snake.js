@@ -1,8 +1,8 @@
-import {showMessage} from "../view/snakeView.js";
 /**
  * @module snake
  * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
  */
+import {draw, showMessage, showScoreboard} from "../view/snakeView.js";
 
 const R        = 10,          // straal van een element
       STEP     = 2*R,         // stapgrootte
@@ -102,7 +102,7 @@ function init() {
 function move(direction) {
 	if (snake.canMove(direction)) {
 		snake.doMove(direction);
-        draw();
+        draw(foods, snake);
 	}
 	else {
 		console.log("snake cannot move " + direction);
@@ -165,7 +165,6 @@ function Snake(segments) {
         this.head = this.segments[this.segments.length - 1];
         // Als de slang een 'food' raakt, halen we deze uit de foods array.
         // Ook doen we dan geen shift, omdat de slang langer wordt.
-        // TODO als de slang zichzelf raakt (bijv als deze heel lang is)
         if (this.head.collidesWithOneOf(foods)) {
             const foodIndex = foods.findIndex((food) => food.x === head.x && food.y === head.y);
             foods.splice(foodIndex, 1);
@@ -222,7 +221,7 @@ function Element(radius, x, y, color) {
   @return: slang volgens specificaties
 */
 function createStartSnake() {
-	var segments   = [createSegment(R + width/2, R + height/2),
+	const segments   = [createSegment(R + width/2, R + height/2),
 	                  createSegment(R + width/2, height/2 - R)];
      return new Snake(segments);
 }
@@ -246,20 +245,7 @@ function createSegment(x, y) {
 function createFood(x, y) {
 	return new Element(R, x, y, FOOD);
 }
-/**
-  @function drawElement(element, canvas) -> void
-  @description Een element tekenen
-  @param {Element} element een Element object
-*/
- function drawElement(element) {
-     $('#mySnakeCanvas').drawArc({
-         draggable: false,
-         fillStyle: element.color,
-         x: element.x,
-         y: element.y,
-         radius: element.radius
-     });
-}
+
 
 /**
   @function getRandomInt(min: number, max: number) -> number
@@ -278,7 +264,7 @@ function getRandomInt(min, max) {
   @return [Element] array met food
 */
 function createFoods() {   
-   var  i = 0,    
+   let  i = 0,
         food,
         tempFoods = [];
    //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
@@ -296,10 +282,19 @@ function createFoods() {
    return tempFoods;
 }
 
+/**
+ * @function stop
+ * @description Stopt de timer. En dus ook het spel. Maakt alle tekstvelden leeg. En toont een bericht.
+ */
 function stop() {
+    // TODO : zie beschrijving
     clearInterval(snakeTimer);
 }
 
+/**
+ * @function checkGamIsOver
+ * @description Kijkt of de slang gebotst heeft met zichzelf of dat al het voedsel op is.
+ */
 function checkGameIsOver(){
     // checkt alleen of de slang bots met 4e segment of meer
     // minder is gewoon niet mogelijk
@@ -375,7 +370,7 @@ async function getScores () {
     }
 }
 
-function formatDate (someDate) {
+export function formatDate (someDate) {
     let tempDate = someDate.split("T")
     tempDate = tempDate[0].split("-");
     return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;

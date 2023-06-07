@@ -11,7 +11,7 @@ import {formatDate} from '../presenter/snake.js';
  * @param head
  * @param message
  */
-function showMessage(head, message) {
+export function showMessage(head, message) {
     const box = $('#infoBox');
     const header = '<h3>' + head + '</h3>';
     const inside = '<p>' + message + '</p>';
@@ -36,7 +36,7 @@ function infoBoxTextToggle() {
  *
  * @param {object} scores
  */
-function showScoreboard(scores) {
+export function showScoreboard(scores) {
     const tableHeaderHTML = '<tr><th>Naam</th><th>Score</th><th>Datum</th></tr>';
     let tableMain = $('<table></table>').append(tableHeaderHTML);
     $.each(scores, function (index, score) {
@@ -60,7 +60,7 @@ function showScoreboard(scores) {
  @function draw()
  @description Teken de slang en het voedsel
  */
-function draw() {
+export function draw(foods, snake) {
     $('#mySnakeCanvas').clearCanvas();
     for (var i = 0; i < foods.length; i++) {
         var food = foods[i];
@@ -70,4 +70,19 @@ function draw() {
         var segment = snake.segments[j];
         drawElement(segment);
     }
+}
+
+/**
+  @function drawElement(element, canvas) -> void
+  @description Een element tekenen
+  @param {Element} element een Element object
+*/
+ function drawElement(element) {
+     $('#mySnakeCanvas').drawArc({
+         draggable: false,
+         fillStyle: element.color,
+         x: element.x,
+         y: element.y,
+         radius: element.radius
+     });
 }

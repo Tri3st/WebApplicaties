@@ -12,8 +12,6 @@ const R        = 10,          // straal van een element
       UP       = "up",
       DOWN     = "down",
 
-      NUMFOODS = 15,          // aantal voedselelementen       
-
       XMIN     = R,           // minimale x waarde 
       YMIN     = R,           // minimale y waarde 
 	  
@@ -27,7 +25,8 @@ const R        = 10,          // straal van een element
       MAIN_BG = 'Gray'
 	
 var snake,
-	foods = [],		          // voedsel voor de slang
+    numfoods = 15,    // aantal voedselelementen
+	foods = [],		  // voedsel voor de slang
 	width,                    // breedte van het tekenveld
 	height,                   // hoogte van het tekenveld
 	xMax,                     // maximale waarde van x = width - R
@@ -36,6 +35,8 @@ var snake,
 	direction = UP;
 
 $( document ).ready(() => {
+    // getUserInfo()
+    drawTable();
 	$("#startSnake").click(init);
 	$("#stopSnake").click(stop);
 })
@@ -48,7 +49,7 @@ $( document ).ready(() => {
 */
 function init() {
     console.log("inside INIT()");
-    drawTable();
+    numfoods = parseInt($('#food-select option:selected').text());
     width = $('#mySnakeCanvas')[0].width;
     height = $('#mySnakeCanvas')[0].height;
     xMax = width - R;
@@ -87,10 +88,6 @@ function init() {
     snakeTimer = setInterval(() => {
         move(direction);
     }, SLEEPTIME);
-
-    // lees events (keypress) en beweeg slang in de juiste richting
-
-
 }
 
 /**
@@ -269,7 +266,7 @@ function createFoods() {
         food,
         tempFoods = [];
    //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
-   while (i < NUMFOODS ) {
+   while (i < numfoods ) {
      const xsteps = (xMax - (2 * XMIN)) / STEP
      const xval = XMIN + (getRandomInt(0, xsteps) * STEP);
      const ysteps = (yMax - (2 * YMIN)) / STEP;
@@ -344,8 +341,9 @@ function textMessage(message, type) {
  */
 function drawTable() {
     const scores = getScores()
-        .then(() => {
-            showScoreboard(scores);
+        .then((score) => {
+            showScoreboard(score);
+            return score;
         })
         .catch((err) => console.log("Er was een fout in drawTable : ", err))
 }
@@ -376,3 +374,5 @@ export function formatDate (someDate) {
     tempDate = tempDate[0].split("-");
     return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;
 }
+
+export {Element, Snake, getScores, textMessage, move, createStartSnake}

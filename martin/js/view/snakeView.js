@@ -8,17 +8,26 @@ import {formatDate} from '../presenter/snake.js';
  * @function showMessage
  * @description toont het bericht in de daarvoor bestemde plek.
  *
- * @param head
- * @param message
+ * @param {string} head Titel
+ * @param {string} message Bericht zelf
  */
 export function showMessage(head, message) {
     const box = $('#infoBox');
     const header = '<h3>' + head + '</h3>';
     const inside = '<p>' + message + '</p>';
     box.html(header + inside);
-    if (box.css("visibility") === 'hidden') box.css('visibility', 'visible');
-    else box.css('visibility', 'hidden');
+    box.css('visibility', 'visible');
 }
+
+/**
+ * @function clearMessage
+ * @description Maakt het de infoBox weer leeg en niet zichtbaar voor de gebruiker.
+ */
+export function clearMessage() {
+    const box = $('#infoBox');
+    box.html("<p></p>");
+    box.css('visibility', 'hidden');
+};
 
 /**
  * @function showScoreboard

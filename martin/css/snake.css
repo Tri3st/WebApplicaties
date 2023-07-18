@@ -58,12 +58,20 @@
     margin: 0.5em auto;
 }
 
+#food-keuze {
+    padding: 5px;
+    margin: 2px 5px 2px 5px;
+}
+
 #infoBox {
     padding: 5px;
     border: 1px solid red;
     margin-top: 5px;
     border-radius: 5px;
-    visibility: hidden;
+}
+
+#infoBox h3 {
+    /* TODO */
 }
 
 .pijl-aktief {

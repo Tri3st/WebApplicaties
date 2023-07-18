@@ -2,12 +2,12 @@
  * @module snake
  * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
  */
-import {draw, showMessage, showScoreboard} from "../view/snakeView.js";
+import {clearMessage, draw, showMessage, showScoreboard} from "../view/snakeView.js";
 
 const R        = 10,          // straal van een element
       STEP     = 2*R,         // stapgrootte
-                              // er moet gelden: WIDTH = HEIGHT
-      LEFT     = "left",      // bewegingsrichtingen 
+                                       // er moet gelden: WIDTH = HEIGHT
+      LEFT     = "left",       // bewegingsrichtingen
       RIGHT    = "right",
       UP       = "up",
       DOWN     = "down",
@@ -64,24 +64,28 @@ function init() {
                     direction = LEFT;
                     $('#pijl-links').addClass('pijl-aktief');
                 }
+                e.preventDefault();
                 break;
             case 38:
                 if (direction !== DOWN) {
                     direction = UP;
                     $('#pijl-omhoog').addClass('pijl-aktief');
                 }
+                e.preventDefault();
                 break;
             case 39:
                 if (direction !== LEFT) {
                     direction = RIGHT;
                     $('#pijl-rechts').addClass('pijl-aktief');
                 }
+                e.preventDefault();
                 break;
             case 40:
                 if (direction !== UP){
                     direction = DOWN;
                     $('#pijl-omlaag').addClass('pijl-aktief');
                 }
+                e.preventDefault();
                 break;
         }
     });
@@ -286,6 +290,7 @@ function createFoods() {
  */
 function stop() {
     // TODO : zie beschrijving
+    clearMessage();
     clearInterval(snakeTimer);
 }
 
@@ -341,11 +346,12 @@ function textMessage(message, type) {
  */
 function drawTable() {
     const scores = getScores()
-        .then((score) => {
-            showScoreboard(score);
-            return score;
-        })
-        .catch((err) => console.log("Er was een fout in drawTable : ", err))
+        // .then((score) => {
+        //     showScoreboard(score);
+        //     return score;
+        // })
+        // .catch((err) => console.log("Er was een fout in drawTable : ", err))
+    console.log(scores);
 }
 
 /**
@@ -356,7 +362,7 @@ function drawTable() {
  * @returns {Array} scores (array van score objecten)
  */
 async function getScores () {
-    const response = await fetch('../js/model/scores.json', {
+    const response = await fetch('js/model/scores.JSON', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',

@@ -12,11 +12,13 @@ import {formatDate} from '../presenter/snake.js';
  * @param {string} message Bericht zelf
  */
 export function showMessage(head, message) {
-    const box = $('#infoBox');
+    const box2 = $('#infoBox');
+    box2.css("visibility", "visible");
     const header = '<h3>' + head + '</h3>';
     const inside = '<p>' + message + '</p>';
-    box.html(header + inside);
-    box.css('visibility', 'visible');
+    console.log("DONE IN SHOWMESSAGE !!", head);
+    const body = header + inside;
+    box2.html(body);
 }
 
 /**
@@ -26,8 +28,8 @@ export function showMessage(head, message) {
 export function clearMessage() {
     const box = $('#infoBox');
     box.html("<p></p>");
-    box.css('visibility', 'hidden');
-};
+    box.css("visibility", "hidden");
+}
 
 /**
  * @function showScoreboard

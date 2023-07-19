@@ -68,9 +68,14 @@
     border: 1px solid red;
     margin-top: 5px;
     border-radius: 5px;
+    visibility: hidden;
 }
 
 #infoBox h3 {
+    /* TODO */
+}
+
+#infoBox p {
     /* TODO */
 }
 

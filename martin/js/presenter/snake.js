@@ -49,6 +49,7 @@ $( document ).ready(() => {
 */
 function init() {
     console.log("inside INIT()");
+    clearMessage();
     numfoods = parseInt($('#food-select option:selected').text());
     width = $('#mySnakeCanvas')[0].width;
     height = $('#mySnakeCanvas')[0].height;
@@ -290,7 +291,6 @@ function createFoods() {
  */
 function stop() {
     // TODO : zie beschrijving
-    clearMessage();
     clearInterval(snakeTimer);
 }
 
@@ -346,12 +346,11 @@ function textMessage(message, type) {
  */
 function drawTable() {
     const scores = getScores()
-        // .then((score) => {
-        //     showScoreboard(score);
-        //     return score;
-        // })
-        // .catch((err) => console.log("Er was een fout in drawTable : ", err))
-    console.log(scores);
+    .then((score) => {
+        showScoreboard(score);
+        return score;
+    })
+    .catch((err) => console.log("Er was een fout in drawTable : ", err))
 }
 
 /**

@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  web:
+    restart: on-failure
+    build: .
+    ports:
+      - '81:8090'
+    volumes:
+      - ./js/:/app/js
+      - ./css/:/app/css
+      - ./test/:/app/test
+  nginx:
+    build: ./nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - web

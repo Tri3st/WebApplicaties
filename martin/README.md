@@ -13,6 +13,8 @@ docker run -p 80:8090 -it -d --name webapps1 webapps1
 
 docker run -p 80:8090 -it -d --name webapps1 -v ${PWD}:/app webapps1
 
+docker run -p 80:80 -dit --name webapps2 -v ${PWD}:/usr/local/apache2/htdocs webapps2
+
 (deze laatste moet je vanuit de directory runnen waarin je files staan.
 En de ${PWD} werkt alleen met PowerShell)
 ----

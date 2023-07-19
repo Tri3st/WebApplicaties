@@ -12,6 +12,4 @@ COPY . .
 
 RUN npm run generate-docs
 
-EXPOSE 8090
-
 CMD ["node", "index.js"]

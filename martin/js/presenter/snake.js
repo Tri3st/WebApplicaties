@@ -375,6 +375,13 @@ async function getScores () {
     }
 }
 
+/**
+ * @function formatDate
+ * @description Geeft de datumstring een iets leesbaardere vorm
+ *
+ * @param {string} someDate string van een datum in ISO stijl
+ * @returns {string} geformateerde string
+ */
 export function formatDate (someDate) {
     let tempDate = someDate.split("T")
     tempDate = tempDate[0].split("-");

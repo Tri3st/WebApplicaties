@@ -1,4 +1,5 @@
 // Hier komt de code voor de pagina te staan
+import {getLoggedInUser} from './inloggen.js';
 
 const myButtons = [
     {
@@ -51,8 +52,6 @@ const myButtons = [
     },
 
 ]
-let loggedInUser = localStorage.getItem('currentLoggedIn');
-if (!loggedInUser) loggedInUser = '?';
 
 let all_users = [];
 
@@ -63,6 +62,7 @@ let all_users = [];
  */
 $( document ).ready(() => {
     console.log('READY! in script.js');
+    const loggedInUser = getLoggedInUser();
     $('#username').html(`Ingelogd als : <span class="ingelogde-user">${loggedInUser}</span>`);
 
 

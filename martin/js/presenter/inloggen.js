@@ -83,7 +83,32 @@ const logOut = function (){
 };
 
 const register = function() {
-    // TODO
+    // TODO implement
 }
 
-export {init, logIn, logOut, register};
+function checkLoggedIn() {
+    const user = localStorage.getItem('currentLoggedIn');
+    return user !== '';
+}
+
+function getLoggedInUser(){
+    let user = '';
+    if (checkLoggedIn()) {
+        user = localStorage.getItem('currentLoggedIn');
+    }
+    return user;
+}
+
+function setLoggedInUser(user) {
+    localStorage.setItem('currentLoggedIn', user);
+}
+
+function saveUser(user) {
+    // TODO implement
+}
+
+function saveScore(user) {
+    // TODO implement
+}
+
+export {init, logIn, logOut, register, getLoggedInUser, setLoggedInUser, saveUser, saveScore};

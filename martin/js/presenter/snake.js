@@ -348,6 +348,7 @@ function drawTable() {
     const scores = getScores()
     .then((score) => {
         showScoreboard(score);
+        console.log(score);
         return score;
     })
     .catch((err) => console.log("Er was een fout in drawTable : ", err))
@@ -361,7 +362,7 @@ function drawTable() {
  * @returns {Array} scores (array van score objecten)
  */
 async function getScores () {
-    const response = await fetch('js/model/scores.JSON', {
+    const response = await fetch('/js/model/scores.json', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -380,4 +381,4 @@ export function formatDate (someDate) {
     return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;
 }
 
-export {Element, Snake, getScores, textMessage, move, createStartSnake}
+export {Element, Snake, createSegment, createFood, getScores, textMessage, move, createStartSnake}

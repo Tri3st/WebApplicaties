@@ -1,4 +1,5 @@
 import {createFood, createSegment, Element, formatDate, getScores, textMessage} from "../js/presenter/snake.js";
+import {getCanvasSizes} from "../js/view/snakeView.js";
 
 QUnit.module("Test een paar Snake functies");
 
@@ -45,6 +46,7 @@ QUnit.test("of createSegment werkt.", (assert) => {
     const expected = new Element(10, 0, 0, 'DarkRed');
     const actual = createSegment(0, 0);
     const falseActual = createSegment(1, 1);
+
     assert.deepEqual(actual, expected);
     assert.notDeepEqual(falseActual, expected);
 });
@@ -53,6 +55,45 @@ QUnit.test("of createFood werkt.", (assert) => {
     const expected = new Element(10, 0, 0, 'Olive');
     const actual = createFood(0, 0);
     const falseActual = createFood(1, 1);
+
     assert.deepEqual(actual, expected);
     assert.notDeepEqual(falseActual, expected);
+});
+
+QUnit.test("of getCanvasSize werkt.", (assert) => {
+    const expected = {width: 600, height: 480};
+    const actual = getCanvasSizes();
+    const falseActual = {width: 0, height: 0};
+
+    assert.deepEqual(actual, expected);
+    assert.notDeepEqual(falseActual, expected);
+});
+
+QUnit.test("of doKeydown werkt.", (assert) => {
+    const LEFT     = "left",
+          RIGHT    = "right",
+          UP       = "up",
+          DOWN     = "down";
+
+    const expected = 'up';
+    const falseExpected = 'down';
+
+    const done = assert.async();
+
+    let keydown = '';
+    const event = $(document).on("keydown", function() {
+        console.log("simulate key pressed UP");
+        keydown = 'up';
+    })
+
+    event.trigger("keydown");
+
+    console.log("event : ", event);
+    console.log('keydown : ', keydown)
+
+    setTimeout(function() {
+        assert.equal(keydown, expected);
+        assert.notEqual(keydown, falseExpected);
+        done();
+    });
 });

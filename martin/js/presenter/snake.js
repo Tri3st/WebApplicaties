@@ -2,12 +2,12 @@
  * @module snake
  * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
  */
-import {clearMessage, draw, showMessage, showScoreboard} from "../view/snakeView.js";
+import {clearMessage, draw, getCanvasSizes, showMessage, showScoreboard, doKeydown} from "../view/snakeView.js";
 
 const R        = 10,          // straal van een element
       STEP     = 2*R,         // stapgrootte
                                        // er moet gelden: WIDTH = HEIGHT
-      LEFT     = "left",       // bewegingsrichtingen
+      LEFT     = "left",        // bewegingsrichtingen
       RIGHT    = "right",
       UP       = "up",
       DOWN     = "down",
@@ -19,13 +19,10 @@ const R        = 10,          // straal van een element
 
       SNAKE   = "DarkRed" ,    // kleur van een slangsegment
       FOOD    = "Olive",       // kleur van voedsel
-	  HEAD    = "DarkOrange",  // kleur van de kop van de slang
-      MAINTEXT = "Black",
-      ALERTTEXT = "Red",
-      MAIN_BG = 'Gray'
+	  HEAD    = "DarkOrange";  // kleur van de kop van de slang
 	
 var snake,
-    numfoods = 15,    // aantal voedselelementen
+    numfoods = 15,   // aantal voedselelementen
 	foods = [],		  // voedsel voor de slang
 	width,                    // breedte van het tekenveld
 	height,                   // hoogte van het tekenveld
@@ -51,45 +48,17 @@ function init() {
     console.log("inside INIT()");
     clearMessage();
     numfoods = parseInt($('#food-select option:selected').text());
-    width = $('#mySnakeCanvas')[0].width;
-    height = $('#mySnakeCanvas')[0].height;
+    width = getCanvasSizes().width;
+    height = getCanvasSizes().height;
     xMax = width - R;
     yMax = height - R;
 	snake = createStartSnake();
     foods = createFoods();
-    jQuery(document).keydown(function(e) {
-        $('.pijl').removeClass('pijl-aktief');
-        switch(e.which) {
-            case 37:
-                if (direction !== RIGHT){
-                    direction = LEFT;
-                    $('#pijl-links').addClass('pijl-aktief');
-                }
-                e.preventDefault();
-                break;
-            case 38:
-                if (direction !== DOWN) {
-                    direction = UP;
-                    $('#pijl-omhoog').addClass('pijl-aktief');
-                }
-                e.preventDefault();
-                break;
-            case 39:
-                if (direction !== LEFT) {
-                    direction = RIGHT;
-                    $('#pijl-rechts').addClass('pijl-aktief');
-                }
-                e.preventDefault();
-                break;
-            case 40:
-                if (direction !== UP){
-                    direction = DOWN;
-                    $('#pijl-omlaag').addClass('pijl-aktief');
-                }
-                e.preventDefault();
-                break;
-        }
+    jQuery(document).keydown(function(event) {
+        direction = doKeydown(event, direction);
     });
+    console.log(direction);
+
     snakeTimer = setInterval(() => {
         move(direction);
     }, SLEEPTIME);
@@ -233,7 +202,7 @@ function createStartSnake() {
   @description Slangsegment creeren op een bepaalde plaats
   @param {number} x x-coordinaat middelpunt
   @param {number} y y-coordinaart middelpunt
-  @return: {Element} met straal R en color SNAKE
+  @return {Element} met straal R en color SNAKE
 */
 function createSegment(x, y) {
 	return new Element(R, x, y, SNAKE);
@@ -290,8 +259,8 @@ function createFoods() {
  * @description Stopt de timer. En dus ook het spel. Maakt alle tekstvelden leeg. En toont een bericht.
  */
 function stop() {
-    // TODO : zie beschrijving
     clearInterval(snakeTimer);
+    // TODO toon score ?
 }
 
 /**

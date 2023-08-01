@@ -78,7 +78,7 @@ export function draw(foods, snake) {
   @description Een element tekenen
   @param {Element} element een Element object
 */
- function drawElement(element) {
+function drawElement(element) {
      $('#mySnakeCanvas').drawArc({
          draggable: false,
          fillStyle: element.color,
@@ -86,4 +86,69 @@ export function draw(foods, snake) {
          y: element.y,
          radius: element.radius
      });
+}
+
+/**
+ * @function getCanvasSizes
+ * @description Haalt de breedte en hoogte van het canvas element op.
+ *
+ * @returns {object} Object met {width: breedte, height: hoogte}
+ */
+export function getCanvasSizes() {
+    const canvas = $('#mySnakeCanvas');
+    return {
+        width: canvas[0].width,
+        height: canvas[0].height
+    }
+}
+
+/**
+ * @function doKeydown
+ * @description Bepaalt de nieuwe richting die de slang op moet gaan. Dit wordt bepaalt door
+ *              door wat de gebruiker voor toets indrukt. Dit event wordt meegestuurd evenals de
+ *              'oude' richting. Hieruit komt de nieuwe richting terug. Ook wordt er grafisch
+ *              weergegeven wat de nieuwe richting is.
+ *
+ * @param {object} event Het event
+ * @param {string} dir De oude richting
+ * @returns {string} De nieuwe richting
+ */
+export function doKeydown(event, dir) {
+    const LEFT     = "left",
+          RIGHT    = "right",
+          UP       = "up",
+          DOWN     = "down";
+    let newDirection = '';
+    $('.pijl').removeClass('pijl-aktief');
+    switch(event.which) {
+        case 37:
+            if (dir !== RIGHT){
+                newDirection = LEFT;
+                $('#pijl-links').addClass('pijl-aktief');
+            }
+            event.preventDefault();
+            break;
+        case 38:
+            if (dir !== DOWN) {
+                newDirection = UP;
+                $('#pijl-omhoog').addClass('pijl-aktief');
+            }
+            event.preventDefault();
+            break;
+        case 39:
+            if (dir !== LEFT) {
+                newDirection = RIGHT;
+                $('#pijl-rechts').addClass('pijl-aktief');
+            }
+            event.preventDefault();
+            break;
+        case 40:
+            if (dir !== UP){
+                newDirection = DOWN;
+                $('#pijl-omlaag').addClass('pijl-aktief');
+            }
+            event.preventDefault();
+            break;
+    }
+    return newDirection;
 }

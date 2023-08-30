@@ -1,114 +1,102 @@
+import {CURRENTLOGGEDIN, ALLUSERS, USERMODEL, DBNAME} from '../constanten.js';
 /**
  * @module inloggen
  */
 
-let all_users = [];
+let all_users = [],
+    user = USERMODEL,
+    currentlyLoggedInUser = '',
+    db;
 
-$( document ).ready(() => {
-    console.log('READY!');
+const request = indexedDB.open(DBNAME, 1);
 
-    let  currentLoggedin = localStorage.getItem('currentLoggedIn');
-    if (currentLoggedin) {
-         $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`);
-         $('#inlogBTN').attr('disabled', 'disabled');
-         $('#logoutBTN').removeAttr('disabled');
-    } else {
-         $('#logoutBTN').attr('disabled', 'disabled');
-         $('#inlogBTN').removeAttr('disabled');
-    }
-    const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
-
-    $('#inlogBTN').click(() => {
-        const username = $('#username-input').val();
-        const password = $('#password-input').val();
-        const users = usersArray.map((user) => user.username);
-        console.log(users, username)
-        const loginBool = users.includes(username)
-        console.log(loginBool)
-        if (usersArray.map((user) => user.username).includes(`${username}`)){
-            console.log("login succesvol")
-            if (usersArray.findIndex((user) => user.username === username && user.password === password)){
-                const infoBoxBericht = "Succesvol ingelogd";
-                $('#username-input').val('');
-                $('#password-input').val('');
-                $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
-                $('.infoBox').css('visibility', 'visible');
-                localStorage.setItem('currentLoggedIn', username)
-                $('#inlogBTN').attr('disabled', 'disabled');
-                $('#logoutBTN').removeAttr('disabled');
-                $('#username').html(`Ingelogd als : <span class="ingelogde-user">${username}</span>`);
-            }
-        }
-    });
-    $('#registerBTN').click(() => {
-        const username = $('#username-input').val();
-        const password = $('#password-input').val();
-        if (username !== '' && password !== '') {
-            const user = {
-                "username": username,
-                "password": password,
-                "userData": {
-                    "nrOfFoods": 15,
-                    "highscore": 0
-                },
-            };
-            console.log(user)
-            if (usersArray.map((user) => user.username).includes(username)){
-                // username already exists
-                // kies een andere username
-            }
-            else {
-                usersArray.push(user);
-            }
-            localStorage.setItem('all_users', JSON.stringify(usersArray));
-        }
-    })
-
-});
-
-const init = function() {
-    // TODO
+request.onerror = (event) => {
+    console.error("An error occurred with IndexedDB.");
+    console.error(event);
 };
 
-const logIn = function() {
-    // TODO
+const init = function() {
+    console.log("Inside init() >>>");
+    // get all users
+    all_users = JSON.parse(localStorage.getItem(ALLUSERS));
+    // get currentlyLoggedInUser
+    currentlyLoggedInUser = localStorage.getItem(CURRENTLOGGEDIN);
+    request.onupgradeneeded = () => {
+        const db = request.result;
+        const store = db.createObjectStore("users", {autoIncrement: true});
+        store.createIndex("users_id", ["username"], {unique: true});
+    };
+    request.onsuccess = () => {
+        console.log("Database opened successfully.");
+        const db = request.result;
+        const transaction = db.transaction("users", "readwrite");
+
+        const store = transaction.objectStore("users");
+        const usersIndex = store.index("users_id");
+    };
+
+
+};
+
+const logIn = function(user) {
+    localStorage.setItem(CURRENTLOGGEDIN, user.username);
 };
 
 const logOut = function (){
-    $('#logoutBTN').click(() => {
-        localStorage.setItem('currentLoggedIn', '')
-        $('#logoutBTN').attr('disabled', 'disabled');
-        $('#inlogBTN').removeAttr('disabled');$('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
-    });
+    localStorage.setItem(CURRENTLOGGEDIN, null);
 };
 
-const register = function() {
-    // TODO implement
+const register = function(user) {
+    // TODO
+}
+
+function checkLogIn(user) {
+    init();
+    console.log("all users : ", all_users);
+    if (all_users.map((thisUser) => thisUser.username).includes(user.username)){
+        const currUser = all_users.find((savedUser) => savedUser.username === user.username);
+        return (currUser.password === user.password);
+    }
+    return false;
 }
 
 function checkLoggedIn() {
-    const user = localStorage.getItem('currentLoggedIn');
-    return user !== '';
+    init();
+    return currentlyLoggedInUser !== null;
 }
 
 function getLoggedInUser(){
     let user = '';
     if (checkLoggedIn()) {
-        user = localStorage.getItem('currentLoggedIn');
+        user = localStorage.getItem(CURRENTLOGGEDIN);
     }
     return user;
 }
 
-function setLoggedInUser(user) {
-    localStorage.setItem('currentLoggedIn', user);
-}
-
 function saveUser(user) {
-    // TODO implement
+    init();
+    let newUser = {
+        username: user.username,
+        password: user.password,
+        userData: {
+            nrOfFoods: user.userData.nrOfFoods,
+            highScore: -1,
+            dateOfHighScore: ''
+        }
+    };
+    const currentUserIndex = all_users.findIndex((currUser) => currUser.username === user.username);
+    const currentUser = all_users[currentUserIndex];
+
+    newUser.userData.nrOfFoods = user.userData.nrOfFoods;
+    if (currentUser.userData.highScore < user.userData.highScore){
+        newUser.userData.highScore = user.userData.highScore;
+        newUser.userData.dateOfHighScore = new Date();
+    } else {
+        newUser.userData.highScore = currentUser.userData.highScore;
+        newUser.userData.dateOfHighScore = currentUser.userData.dateOfHighScore;
+    }
+    all_users.splice(currentUserIndex, 1, newUser);
+    localStorage.setItem(ALLUSERS, JSON.stringify(all_users));
 }
 
-function saveScore(user) {
-    // TODO implement
-}
-
-export {init, logIn, logOut, register, getLoggedInUser, setLoggedInUser, saveUser, saveScore};
+export {init, logIn, logOut, register, getLoggedInUser, saveUser, checkLogIn};

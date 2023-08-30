@@ -3,23 +3,7 @@
  * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
  */
 import {clearMessage, draw, getCanvasSizes, showMessage, showScoreboard, doKeydown} from "../view/snakeView.js";
-
-const R        = 10,          // straal van een element
-      STEP     = 2*R,         // stapgrootte
-                                       // er moet gelden: WIDTH = HEIGHT
-      LEFT     = "left",        // bewegingsrichtingen
-      RIGHT    = "right",
-      UP       = "up",
-      DOWN     = "down",
-
-      XMIN     = R,           // minimale x waarde 
-      YMIN     = R,           // minimale y waarde 
-	  
-	  SLEEPTIME = 500,        // aantal milliseconde voor de timer
-
-      SNAKE   = "DarkRed" ,    // kleur van een slangsegment
-      FOOD    = "Olive",       // kleur van voedsel
-	  HEAD    = "DarkOrange";  // kleur van de kop van de slang
+import {R, STEP, LEFT, RIGHT, UP, DOWN, XMIN, YMIN, SLEEPTIME, SNAKE, FOOD, HEAD} from '../constanten.js';
 	
 var snake,
     numfoods = 15,   // aantal voedselelementen

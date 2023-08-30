@@ -1,5 +1,6 @@
 import {createFood, createSegment, Element, formatDate, getScores, textMessage} from "../js/presenter/snake.js";
 import {getCanvasSizes} from "../js/view/snakeView.js";
+import {UP, DOWN} from '../js/constanten.js';
 
 QUnit.module("Test een paar Snake functies");
 
@@ -35,8 +36,7 @@ QUnit.test("of getScores werkt.", (assert) => {
 
     getScores()
     .then(function(result){
-        const result2 = JSON.stringify(result)
-        assert.equal(result2,expected);
+        const result2 = JSON.stringify(result)assert.equal(result2,expected);
         done();
     })
     .catch(done);
@@ -70,20 +70,16 @@ QUnit.test("of getCanvasSize werkt.", (assert) => {
 });
 
 QUnit.test("of doKeydown werkt.", (assert) => {
-    const LEFT     = "left",
-          RIGHT    = "right",
-          UP       = "up",
-          DOWN     = "down";
 
-    const expected = 'up';
-    const falseExpected = 'down';
+    const expected = UP;
+    const falseExpected = DOWN;
 
     const done = assert.async();
 
     let keydown = '';
     const event = $(document).on("keydown", function() {
         console.log("simulate key pressed UP");
-        keydown = 'up';
+        keydown = UP;
     })
 
     event.trigger("keydown");

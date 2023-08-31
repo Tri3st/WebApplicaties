@@ -4,7 +4,7 @@
   "description": "Opdracht van de OU",
   "main": "index.js",
   "scripts": {
-    "generate-docs": "jsdoc -c ./jsdoc/conf.json -t ./node_modules/ink-docstrap/templatee -R README.md -r ./js",
+    "generate-docs": "node_modules/.bin/jsdoc -c jsdoc/jsdoc.json",
     "test": "qunit"
   },
   "keywords": [
@@ -18,7 +18,7 @@
     "jsdoc": "^4.0.2"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "ink-docstrap": "^1.3.2"
+    "docdash": "^2.0.1",
+    "express": "^4.18.2"
   }
 }

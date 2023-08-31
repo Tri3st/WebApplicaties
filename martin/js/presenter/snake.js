@@ -70,21 +70,32 @@ function move(direction) {
 /***************************************************************************
  **                 Constructors                                          **
  ***************************************************************************/
+
 /**
-   @constructor Snake
-   @description Klasse Snake met 2 functies:
-                    - canMove : controlleer of slang niet van het canvas af loopt.
-                    - doMove  : doe de beweging
-   @param {array} segments een array met aaneengesloten slangsegmenten
-                   Het laatste element van segments wordt de kop van de slang 
-*/ 
+    @class Snake
+    @classdesc Klasse Snake met 2 functies: canMove (controlleer of slang niet van het canvas af loopt)
+     en doMove (voer de beweging uit)
+    @param {array} segments een array met aaneengesloten slangsegmenten
+                            Het laatste element van segments wordt de KOP van de slang
+    @example
+    new Snake([Segment(), Segment()];
+*/
 function Snake(segments) {
+    /** segments */
     this.segments = segments;
+    /** kop van de slang */
     this.head = segments[segments.length - 1];
     this.head.color = HEAD;
+    /** staart van de slang */
     this.tail = segments[0];
     this.tail.color = SNAKE;
+    /** direction */
     this.direction = direction;
+    /**
+     * kijkt of de slang kan bewegen in de opgegeven richting
+     * @param direction richting
+     * @returns {boolean} true = wel
+     */
     this.canMove = function(direction) {
         let head2 = Object.assign({}, this.head);
         switch (direction) {
@@ -98,6 +109,10 @@ function Snake(segments) {
                 return head2.x + STEP <= xMax;
         }
     }
+    /**
+     * beweegt in de opgegeven richting
+     * @param direction de richting waarin bewogen moet worden
+     */
     this.doMove = function(direction) {
         let head = Object.assign({}, this.head); // Maak een deep-copy van het object.
         switch (direction) {
@@ -131,6 +146,10 @@ function Snake(segments) {
         this.head.color = HEAD;
         checkGameIsOver();
   }
+    /**
+     * Geeft een string representatie van het Snake object
+     * @returns {string}
+     */
     this.toString = function () {
         return this.segments.join(" - ");
     }
@@ -174,7 +193,7 @@ function Element(radius, x, y, color) {
   @function createStartSnake() -> Snake
   @description Slang creëren, bestaande uit  twee segmenten,
                in het midden van het veld
-  @return: slang volgens specificaties
+  @return {Snake} slang volgens specificaties
 */
 function createStartSnake() {
 	const segments   = [createSegment(R + width/2, R + height/2),
@@ -196,7 +215,7 @@ function createSegment(x, y) {
   @description Voedselelement creeren op een bepaalde plaats
   @param {number} x x-coordinaat middelpunt
   @param {number} y y-coordinaart middelpunt
-  @return: {Element} met straal R en color FOOD
+  @return {Element} met straal R en color FOOD
 */
 function createFood(x, y) {
 	return new Element(R, x, y, FOOD);
@@ -312,7 +331,7 @@ function drawTable() {
  * @description haalt de scores uit de API (in dit geval van disk) en zet ze
  *              in een array van Objecten met de vorm :
  *              {string} name, {number} score, {date} date
- * @returns {Array} scores (array van score objecten)
+ * @returns {array} scores (array van score objecten)
  */
 async function getScores () {
     const response = await fetch('/js/model/scores.json', {

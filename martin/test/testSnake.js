@@ -36,7 +36,8 @@ QUnit.test("of getScores werkt.", (assert) => {
 
     getScores()
     .then(function(result){
-        const result2 = JSON.stringify(result)assert.equal(result2,expected);
+        const result2 = JSON.stringify(result);
+        assert.equal(result2,expected);
         done();
     })
     .catch(done);

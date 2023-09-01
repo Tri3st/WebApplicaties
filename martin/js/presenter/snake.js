@@ -267,7 +267,7 @@ function stop() {
 }
 
 /**
- * @function checkGamIsOver
+ * @function checkGameIsOver
  * @description Kijkt of de slang gebotst heeft met zichzelf of dat al het voedsel op is.
  */
 function checkGameIsOver(){

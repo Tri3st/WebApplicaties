@@ -2,3 +2,4 @@
 martin/.dockerignore
 martin/node_modules/
 martin/package-lock.*
+martin/docs/

@@ -12,10 +12,6 @@ COPY . .
 
 WORKDIR /app/jsdoc
 
-RUN ["git", "clone", "https://github.com/clenemt/docdash.git"]
-
-WORKDIR /app
-
 RUN npm run generate-docs
 
 CMD ["node", "index.js"]

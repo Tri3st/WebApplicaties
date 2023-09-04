@@ -6,6 +6,21 @@
 
 ## Starten docker
 
+Eerst halen we de repository binnen :
+```
+git clone https://github.com/Tri3st/WebApplicaties.git
+```
+
+Als je dat eenmaal hebt gedaan kun je met het volgende commando de repo updaten (Nieuwste versie binnenhalen):
+```
+git pull
+```
+
+Ga naar de juiste branch:
+```
+git switch martin
+```
+
 Maak een docker met docker compose: 
 
 ```

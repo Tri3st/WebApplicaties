@@ -51,6 +51,12 @@ De JS-DOCS worden automatisch gegenereerd en zijn te zien als je naar http://loc
 
 ## MVP
 
+### Info uit de Bijeenkomst
+
+![MVP afbeelding 1](./img/MVP1.jpg "MVP afbeelding 1")
+
+![MVP afbeelding 2](./img/MVP2.jpg "MVP afbeelding 1")
+
 ### Model
 
 Je domein. Server communicatie of data. 

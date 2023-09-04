@@ -1,4 +1,5 @@
 const express = require("express");
+const {exec} = require('child_process');
 const app = express();
 const router = express.Router();
 
@@ -23,6 +24,9 @@ app.use(express.static(path));
 app.use('/', router);
 
 app.listen(port, () => {
+    console.log('Generating docs...');
+    exec('npm run generate-docs');
+
     console.log("Nodejs Express listening on port " + port);
 });
 

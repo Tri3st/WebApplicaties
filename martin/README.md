@@ -12,6 +12,10 @@ Maak een docker met docker compose:
 docker compose up --build
 ```
 
+Daarna is de pagina beschikbaar op  [localhost](http://localhost:80) +
+De documentatie op [docs](http://localhost:80/docs) +
+En de tests op [tests](http://localhost:80/test)
+
 ## Beginnetje gemaakt
 
 Ik heb een begin gemaakt met de code voor opdracht 2.

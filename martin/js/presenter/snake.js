@@ -308,7 +308,7 @@ function textMessage(message, type) {
         default:
             break;
     }
-    showMessage(head, message);
+    showMessage(head, message, 'snake');
 }
 
 /**

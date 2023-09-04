@@ -6,13 +6,23 @@ import {formatDate} from '../presenter/snake.js';
 
 /**
  * @function showMessage
- * @description toont het bericht in de daarvoor bestemde plek.
+ * @description toont het bericht in de daarvoor bestemde plek. Afhankelijk van het type.
  *
  * @param {string} head Titel
  * @param {string} message Bericht zelf
+ * @param {string} type Welke soort. 'snake', 'login'
  */
-export function showMessage(head, message) {
-    const box2 = $('#infoBox');
+export function showMessage(head, message, type) {
+    let infoBoxId;
+    switch (type) {
+        case 'snake':
+            infoBoxId = '#snakeInfoBox';
+            break;
+        case 'login':
+            infoBoxId = '#loginInfoBox';
+            break;
+    }
+    const box2 = $(infoBoxId);
     box2.css("visibility", "visible");
     const header = '<h3>' + head + '</h3>';
     const inside = '<p>' + message + '</p>';
@@ -25,10 +35,13 @@ export function showMessage(head, message) {
  * @function clearMessage
  * @description Maakt het de infoBox weer leeg en niet zichtbaar voor de gebruiker.
  */
-export function clearMessage() {
-    const box = $('#infoBox');
+export function clearMessage(type) {
+    const box = $('#snakeInfoBox');
+    const box2 = $('#loginInfoBox');
     box.html("<p></p>");
     box.css("visibility", "hidden");
+    box2.html("<p></p>");
+    box2.css("visibility", "hidden");
 }
 
 /**

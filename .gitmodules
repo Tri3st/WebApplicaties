@@ -1,0 +1,3 @@
+[submodule "martin/jsdoc/jsdoc/docdash"]
+	path = martin/jsdoc/jsdoc/docdash
+	url = https://github.com/clenemt/docdash.git

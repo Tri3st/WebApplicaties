@@ -1,4 +1,4 @@
-import {logIn, logOut, init as loginInit, register} from '../presenter/inloggen.js';
+import {logIn as loginLogin, logOut as loginLogout, init as loginInit, register as loginRegister} from '../presenter/inloggen.js';
 import {clearMessage, showMessage} from "./snakeView.js";
 
 $(document).ready(() => {
@@ -33,7 +33,7 @@ function login() {
     const password = passwordInput.val();
     console.log("user : ", username);
     let head, message;
-    if (logIn(username, password)) {
+    if (loginLogin(username, password)) {
         message = `User ${username} successfully logged in`;
         head = "SUCCESS";
         clearInputFields();
@@ -45,7 +45,7 @@ function login() {
 }
 
 function logout() {
-
+    loginLogout();
 }
 
 function register() {
@@ -55,7 +55,7 @@ function register() {
     const password = passwordInput.val();
     console.log("user : ", username);
     let head, message;
-    if (register(username, password)) {
+    if (loginRegister(username, password)) {
         message = `User ${username} successfully logged in`;
         head = "SUCCESS";
         clearInputFields();

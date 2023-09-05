@@ -1,19 +1,21 @@
 import {createFood, createSegment, Element, formatDate, getScores, textMessage} from "../js/presenter/snake.js";
 import {getCanvasSizes} from "../js/view/snakeView.js";
 import {UP, DOWN} from '../js/constanten.js';
+import {DataBaseManager} from "../js/model/inloggen.js";
+import {init, logIn, logOut, register, db, currentlyLoggedInUser} from '../js/presenter/inloggen.js';
 
 QUnit.module("Test een paar Snake functies");
 
-QUnit.test("of textMessage GAME OVER bericht werkt.", (assert) => {
+QUnit.test("of snake textMessage GAME OVER bericht werkt.", (assert) => {
     const expected = "<h3>GAME OVER</h3><p>test</p>";
-    const box = $('#infoBox');
+    const box = $('#snakeInfoBox');
     textMessage('test', 'GAMEOVER');
     assert.equal(box.html(), expected);
 });
 
-QUnit.test("of textMessage WINNING bericht werkt.", (assert) => {
+QUnit.test("of snake textMessage WINNING bericht werkt.", (assert) => {
     const expected = "<h3>YOU WON</h3><p>andere test</p>";
-    const box = $('#infoBox');
+    const box = $('#snakeInfoBox');
     textMessage('andere test', 'WINNING');
     assert.equal(box.html(), expected);
 });
@@ -79,14 +81,10 @@ QUnit.test("of doKeydown werkt.", (assert) => {
 
     let keydown = '';
     const event = $(document).on("keydown", function() {
-        console.log("simulate key pressed UP");
         keydown = UP;
     })
 
     event.trigger("keydown");
-
-    console.log("event : ", event);
-    console.log('keydown : ', keydown)
 
     setTimeout(function() {
         assert.equal(keydown, expected);
@@ -94,3 +92,78 @@ QUnit.test("of doKeydown werkt.", (assert) => {
         done();
     });
 });
+
+QUnit.module("Test een paar DataBaseManager functies");
+
+QUnit.test("of het maken van een nieuwe DataBaseManager werkt.", (assert) => {
+    localStorage.clear();
+    const dbm = new DataBaseManager();
+    const expectedUsers = [];
+    const actual = dbm.users;
+
+    assert.deepEqual(actual, expectedUsers);
+});
+
+QUnit.test("of het maken van een user werkt.", (assert) => {
+    localStorage.clear();
+    const dbm = new DataBaseManager();
+    // TODO implement
+    assert.equal(1, 1);
+});
+
+
+let dbm;
+
+QUnit.module("Test een paar inlog functies", {
+    beforeEach: function() {
+        localStorage.clear();
+        dbm = new DataBaseManager();
+        dbm.addUser("user1", "password");
+    }
+});
+
+QUnit.test("of login werkt", (assert) => {
+    assert.expect(3);
+    // a log in with the right credentials
+    const login = logIn("user1", "password");
+    // a log in with wrong credentials
+    const falseLogin = logIn("false", "bogus");
+    // and the currently logged in user
+    const current = dbm.getCurrentLoggedIn();
+
+    assert.equal(login, true);
+    assert.notEqual(falseLogin, true);
+    assert.equal(current, "user1");
+});
+
+QUnit.test("of logout werkt", (assert) => {
+    assert.expect(2);
+    // log the user in
+    logIn("user1", "password");
+    // check that we have a currentLoggedIn value
+    const before = dbm.getCurrentLoggedIn();
+    // now log out
+    logOut();
+    // and check that we have NO currentLoggedIn value
+    const after = dbm.getCurrentLoggedIn();
+
+    assert.equal(before, 'user1');
+    assert.equal(after, "");
+});
+
+QUnit.test("of register werkt", (assert) => {
+    assert.expect(3);
+    // register a new user
+    const registered = register("user2", "secret");
+    // check if it is also logged in
+    const current = dbm.getCurrentLoggedIn();
+    // check if the user can be found in the database manager
+    const alsoCurrent = dbm.findUser("user2");
+
+    console.log(dbm, current, alsoCurrent);
+
+    assert.equal(registered, true);
+    assert.equal(current, "user2");
+    assert.equal(typeof alsoCurrent, "number")
+});
+

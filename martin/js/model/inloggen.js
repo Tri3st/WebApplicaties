@@ -33,7 +33,6 @@ class DataBaseManager {
      */
     getUsers() {
         let users = JSON.parse(localStorage.getItem("users"));
-        console.log("users in getUsers: ", users);
         if (!users) this.users = [];
         else {
             this.users.splice(0, 0, ...users);
@@ -46,7 +45,6 @@ class DataBaseManager {
      */
     saveUsers() {
         const stringifiedUsers = JSON.stringify(this.users);
-        console.log("Stringified users : ", stringifiedUsers);
         localStorage.setItem("users", stringifiedUsers);
     }
 
@@ -72,8 +70,8 @@ class DataBaseManager {
      * @returns {boolean} Of de username klopt met het paswoord
      */
     verifyUser(username, password) {
-        const idx = this.findUser(new User(username, password));
-        if (idx) {
+        const idx = this.findUser(username);
+        if (idx !== false && idx > -1) {
             return (
                 this.users[idx].username === username &&
                 this.users[idx].password === password
@@ -90,7 +88,7 @@ class DataBaseManager {
     addUser(username, password) {
         const newUser = new User(username, password);
         const idx = this.findUser(newUser.getUsername());
-        if (!idx) {
+        if (idx === false) {
             this.users.push(newUser);
             this.saveUsers();
         }
@@ -121,6 +119,7 @@ class DataBaseManager {
      */
     setCurrentLoggedIn(username) {
         this.currentLoggedIn = username;
+        localStorage.setItem('currentLoggedIn', username)
     }
 
     /**
@@ -129,8 +128,12 @@ class DataBaseManager {
      * Anders false
      * @return {string|boolean} Username of false
      */
-    getCurrentLoggedIN() {
-        if (this.currentLoggedIn) return this.currentLoggedIn;
+    getCurrentLoggedIn() {
+        const current = localStorage.getItem('currentLoggedIn');
+        if (current) {
+            this.currentLoggedIn = current;
+            return current;
+        }
         else return false;
     }
 }
@@ -165,6 +168,11 @@ class User {
      * wanneer de highscore behaald werd
      */
     dateOfHighscore;
+    /**
+     * houdt bij hoe vaak een user gewonnen dan wel verloren heeft. En wanneer dit voor het laatste
+     * geregitreerd is. (lastUpdated)
+     */
+    winsLosses;
 
     /**
      * Hiermee wordt een nieuwe user aangemaakt.
@@ -179,6 +187,11 @@ class User {
         this.nrOfFoods = 15;
         this.highscore = 0;
         this.dateOfHighscore = "";
+        this.winsLosses = {
+            wins: 0,
+            losses: 0,
+            lastUpdated: ''
+        }
     }
 
     /**
@@ -216,6 +229,13 @@ class User {
     setNrOfFoods(nr) {
         this.nrOfFoods = nr;
     }
+
+    /**
+     *
+     */
+    getWinsLosses() {}
+
+    setWinsLosses(){}
 
     /**
      * getHighscore

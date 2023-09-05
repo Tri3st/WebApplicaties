@@ -28,14 +28,13 @@ const logOut = function (){
 };
 
 const register = function(username, password) {
-    if (!db.findUser(username)){
+    if (db.findUser(username) === false){
         db.addUser(username, password);
         db.setCurrentLoggedIn(username);
         return true;
     } else {
         return false;
     }
-
 }
 
 export {init, logIn, logOut, register, db, currentlyLoggedInUser};

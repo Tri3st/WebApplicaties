@@ -29,8 +29,7 @@ $( document ).ready(() => {
  *       genereer voedsel, en teken alles
 */
 function init() {
-    console.log("inside INIT()");
-    clearMessage();
+    clearMessage('snake');
     numfoods = parseInt($('#food-select option:selected').text());
     width = getCanvasSizes().width;
     height = getCanvasSizes().height;
@@ -41,7 +40,6 @@ function init() {
     jQuery(document).keydown(function(event) {
         direction = doKeydown(event, direction);
     });
-    console.log(direction);
 
     snakeTimer = setInterval(() => {
         move(direction);
@@ -60,7 +58,6 @@ function move(direction) {
         draw(foods, snake);
 	}
 	else {
-		console.log("snake cannot move " + direction);
         textMessage("Je hebt de muur geraakt!", 'GAMEOVER');
         stop();
 	}
@@ -145,7 +142,7 @@ function Snake(segments) {
         this.tail = this.segments[0];
         this.head.color = HEAD;
         checkGameIsOver();
-  }
+    }
     /**
      * Geeft een string representatie van het Snake object
      * @returns {string}
@@ -320,7 +317,6 @@ function drawTable() {
     const scores = getScores()
     .then((score) => {
         showScoreboard(score);
-        console.log(score);
         return score;
     })
     .catch((err) => console.log("Er was een fout in drawTable : ", err))

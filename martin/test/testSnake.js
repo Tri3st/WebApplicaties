@@ -2,7 +2,7 @@ import {createFood, createSegment, Element, formatDate, getScores, textMessage} 
 import {getCanvasSizes} from "../js/view/snakeView.js";
 import {UP, DOWN} from '../js/constanten.js';
 import {DataBaseManager} from "../js/model/inloggen.js";
-import {init, logIn, logOut, register, db, currentlyLoggedInUser} from '../js/presenter/inloggen.js';
+import {logIn, logOut, register} from '../js/presenter/inloggen.js';
 
 QUnit.module("Test een paar Snake functies");
 
@@ -153,6 +153,7 @@ QUnit.test("of logout werkt", (assert) => {
 
 QUnit.test("of register werkt", (assert) => {
     assert.expect(3);
+    console.log(dbm);
     // register a new user
     const registered = register("user2", "secret");
     // check if it is also logged in

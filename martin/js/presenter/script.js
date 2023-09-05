@@ -1,5 +1,5 @@
 // Hier komt de code voor de pagina te staan
-import {currentlyLoggedInUser} from './inloggen.js';
+import {DB} from '../constanten.js';
 
 const myButtons = [
     {
@@ -62,7 +62,8 @@ let all_users = [];
  */
 $( document ).ready(() => {
     console.log('READY! in script.js');
-    $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentlyLoggedInUser}</span>`);
+    const current = DB.getCurrentLoggedIn();
+    $('#username').html(`Ingelogd als : <span class="ingelogde-user">${current}</span>`);
 
 
     const buttons = $('.nav');

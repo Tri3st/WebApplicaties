@@ -25,6 +25,7 @@ class DataBaseManager {
     constructor() {
         this.users = [];
         this.getUsers();
+        this.currentLoggedIn = localStorage.getItem('currentLoggedIn') || '';
     }
 
     /**
@@ -103,7 +104,7 @@ class DataBaseManager {
      */
     removeUser(username) {
         const idx = this.findUser(username);
-        if (idx) {
+        if (idx !== false) {
             this.users.splice(idx, 1);
             this.saveUsers();
             return true;

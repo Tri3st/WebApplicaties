@@ -93,78 +93,107 @@ QUnit.test("of doKeydown werkt.", (assert) => {
     });
 });
 
-QUnit.module("Test een paar DataBaseManager functies");
+QUnit.module("Test een paar DataBaseManager functies", {
+    before: function () {
+        localStorage.clear();
+        this.dbm = new DataBaseManager();
+    },
 
-QUnit.test("of het maken van een nieuwe DataBaseManager werkt.", (assert) => {
-    localStorage.clear();
-    const dbm = new DataBaseManager();
+    after: function () {
+        localStorage.clear();
+    }
+});
+
+QUnit.test("of het maken van een nieuwe DataBaseManager werkt.", function (assert) {
     const expectedUsers = [];
-    const actual = dbm.users;
+    const actual = this.dbm.users;
 
     assert.deepEqual(actual, expectedUsers);
 });
 
-QUnit.test("of het maken van een user werkt.", (assert) => {
-    localStorage.clear();
-    const dbm = new DataBaseManager();
-    // TODO implement
-    assert.equal(1, 1);
+QUnit.test("of het maken van een user werkt.", function (assert) {
+    this.dbm.addUser("testuser2", "secret");
+    const found = this.dbm.findUser("testuser2");
+
+    assert.equal(found, 0);
+});
+
+QUnit.test("of verwijderen van een user werkt.", function (assert) {
+
+    // maak een paar users aan
+    this.dbm.addUser("test1", "secret");
+    this.dbm.addUser("test2", "moreSecret");
+
+    // verwijder de gebruiker met usernaam "test2"
+    this.dbm.removeUser("test1");
+    const found = this.dbm.findUser("test1");
+
+    assert.deepEqual(found, false);
 });
 
 
-let dbm;
-
 QUnit.module("Test een paar inlog functies", {
-    beforeEach: function() {
+    before: function (){
         localStorage.clear();
-        dbm = new DataBaseManager();
-        dbm.addUser("user1", "password");
+        this.dbm = new DataBaseManager();
+    }
+    after: function() {
+        localStorage.clear();
     }
 });
 
-QUnit.test("of login werkt", (assert) => {
+QUnit.test("of login werkt", function (assert) {
     assert.expect(3);
+
+    this.dbm.addUser("user1", "password");
+
     // a log in with the right credentials
     const login = logIn("user1", "password");
     // a log in with wrong credentials
     const falseLogin = logIn("false", "bogus");
     // and the currently logged in user
-    const current = dbm.getCurrentLoggedIn();
+    const current = this.dbm.getCurrentLoggedIn();
 
     assert.equal(login, true);
     assert.notEqual(falseLogin, true);
     assert.equal(current, "user1");
-});
+})
 
-QUnit.test("of logout werkt", (assert) => {
+
+QUnit.test("of logout werkt",function (assert) {
     assert.expect(2);
+
+    this.dbm.addUser("user1", "password");
+
     // log the user in
     logIn("user1", "password");
     // check that we have a currentLoggedIn value
-    const before = dbm.getCurrentLoggedIn();
+    const before = this.dbm.getCurrentLoggedIn();
     // now log out
     logOut();
     // and check that we have NO currentLoggedIn value
-    const after = dbm.getCurrentLoggedIn();
+    const after = this.dbm.getCurrentLoggedIn();
 
     assert.equal(before, 'user1');
     assert.equal(after, "");
 });
 
-QUnit.test("of register werkt", (assert) => {
+QUnit.test("of register werkt", function (assert) {
     assert.expect(3);
-    console.log(dbm);
+    this.dbm.addUser("user1", "password");
     // register a new user
     const registered = register("user2", "secret");
+    console.log(this.dbm);
     // check if it is also logged in
-    const current = dbm.getCurrentLoggedIn();
+    const current = this.dbm.getCurrentLoggedIn();
     // check if the user can be found in the database manager
-    const alsoCurrent = dbm.findUser("user2");
+    const alsoCurrent = this.dbm.findUser("user2");
+    console.log(alsoCurrent);
 
-    console.log(dbm, current, alsoCurrent);
+    console.log(this.dbm, current, alsoCurrent);
 
     assert.equal(registered, true);
     assert.equal(current, "user2");
-    assert.equal(typeof alsoCurrent, "number")
+    assert.equal(typeof alsoCurrent, "number");
 });
 

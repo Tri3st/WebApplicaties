@@ -10,7 +10,14 @@ $(document).ready(() => {
     loginBTN.on('click', (e) => {
         e.preventDefault();
         login();
+    }),
+
+    registerBTN.on('click', (e) => {
+        e.preventDefault();
+        register();
     })
+
+
 });
 
 function init() {
@@ -34,6 +41,11 @@ function login() {
     }
     showMessage(head, message);
 }
+
+
+function register() {
+}
+
 
 function clearInputFields() {
     const username = $('#username-input');

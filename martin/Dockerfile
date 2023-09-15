@@ -10,8 +10,6 @@ WORKDIR /app
 
 COPY . .
 
-WORKDIR /app/jsdoc
-
-RUN npm run generate-docs
+# RUN npm run generate-docs
 
 CMD ["node", "index.js"]

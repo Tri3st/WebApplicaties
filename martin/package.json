@@ -4,7 +4,7 @@
   "description": "Opdracht van de OU",
   "main": "index.js",
   "scripts": {
-    "generate-docs": "jsdoc -c jsdoc/jsdoc.json",
+    "generate-docs": "jsdoc -c jsdoc/jsdoc.json -R README.md",
     "test": "qunit"
   },
   "keywords": [

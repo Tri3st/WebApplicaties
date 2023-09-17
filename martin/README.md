@@ -12,6 +12,11 @@ Maak een docker met docker compose:
 docker compose up --build
 ```
 
+'In' de container gaan :
+```
+docker exec -it martin-web-1 sh
+```
+
 ## Beginnetje gemaakt
 
 Ik heb een begin gemaakt met de code voor opdracht 2.

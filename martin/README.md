@@ -6,6 +6,8 @@
 
 ## Starten docker
 
+Het clonen van de Repository hoeft maar 1 keer! Alleen wanneer je deze nog niet eerde rhebt binnegehaald.
+(als je deze stap al eens hebt uitgevoerd, kun je meteen naar Pull)
 Eerst halen we de repository binnen :
 ```
 git clone https://github.com/Tri3st/WebApplicaties.git

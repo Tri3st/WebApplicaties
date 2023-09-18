@@ -2,9 +2,10 @@ import {createFood, createSegment, Element, formatDate, getScores, textMessage} 
 import {getCanvasSizes} from "../js/view/snakeView.js";
 import {UP, DOWN} from '../js/constanten.js';
 import {DataBaseManager} from "../js/model/inloggen.js";
-import {logIn, logOut, register} from '../js/presenter/inloggen.js';
+import {logIn, logOut, register} from "../js/presenter/inloggen.js";
 
 QUnit.module("Test een paar Snake functies");
+
 
 QUnit.test("of snake textMessage GAME OVER bericht werkt.", (assert) => {
     const expected = "<h3>GAME OVER</h3><p>test</p>";
@@ -66,6 +67,7 @@ QUnit.test("of createFood werkt.", (assert) => {
 QUnit.test("of getCanvasSize werkt.", (assert) => {
     const expected = {width: 600, height: 480};
     const actual = getCanvasSizes();
+    console.log(actual);
     const falseActual = {width: 0, height: 0};
 
     assert.deepEqual(actual, expected);
@@ -131,7 +133,6 @@ QUnit.test("of verwijderen van een user werkt.", function (assert) {
     assert.deepEqual(found, false);
 });
 
-
 QUnit.module("Test een paar inlog functies", {
     before: function (){
         localStorage.clear();
@@ -146,11 +147,14 @@ QUnit.test("of login werkt", function (assert) {
     assert.expect(3);
 
     this.dbm.addUser("user1", "password");
+    console.log("DBM after adding user : ", this.dbm);
 
     // a log in with the right credentials
     const login = logIn("user1", "password");
+    console.log("login : ", login);
     // a log in with wrong credentials
     const falseLogin = logIn("false", "bogus");
+    console.log("false login : ", falseLogin)
     // and the currently logged in user
     const current = this.dbm.getCurrentLoggedIn();
 
@@ -196,4 +200,3 @@ QUnit.test("of register werkt", function (assert) {
     assert.equal(current, "user2");
     assert.equal(typeof alsoCurrent, "number");
 });
-

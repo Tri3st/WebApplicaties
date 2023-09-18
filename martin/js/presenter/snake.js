@@ -78,7 +78,7 @@ function move(direction) {
     new Snake([Segment(), Segment()];
 */
 function Snake(segments) {
-    /** segments */
+    /** De segmenten van de slang (laatste segment in array is de kop) */
     this.segments = segments;
     /** kop van de slang */
     this.head = segments[segments.length - 1];
@@ -86,7 +86,7 @@ function Snake(segments) {
     /** staart van de slang */
     this.tail = segments[0];
     this.tail.color = SNAKE;
-    /** direction */
+    /** richting waarin de slang gaat bewegen */
     this.direction = direction;
     /**
      * kijkt of de slang kan bewegen in de opgegeven richting
@@ -164,10 +164,19 @@ function Snake(segments) {
  * @param {string} color kleur van het element
 */ 
 function Element(radius, x, y, color) {
+    /** Straal van het Element */
     this.radius = radius;
+    /** de x coordinaat */
     this.x = x;
+    /** de y coordinaat */
     this.y = y;
+    /** De kleur die het element krijgt */
     this.color = color;
+    /**
+     * Check of een dit element met andere elementen botst
+     * @param {Element[]} elements om op te checken of dit element botst
+     * @return {boolean} true als dit element botst, anders false
+     */
     this.collidesWithOneOf = function(elements) {
         let result = false;
         elements.forEach((element) => {
@@ -178,6 +187,7 @@ function Element(radius, x, y, color) {
         })
         return result;
     }
+    /** String representatie */
     this.toString = function () {
         return `(${this.x},${this.y})`;
     }

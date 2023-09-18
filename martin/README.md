@@ -70,11 +70,12 @@ De JS-DOCS worden automatisch gegenereerd en zijn te zien als je naar http://loc
 ### Model
 
 Je domein. Server communicatie of data. 
+In ons geval de Snake, Element, Segment klassen.
 
 ### (Passive) View
-
-DOM manipulatie (via jquery) en HTML 
+ 
+CSS en HTML
 
 ## presenter
 
-Event-Handling, User Interactie
+Verbinding met view, reageren op events uit view.

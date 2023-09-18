@@ -1,5 +1,3 @@
-import {DataBaseManager} from "./model/inloggen.js";
-
 const   R        = 10,          // straal van een element
         STEP     = 2*R,         // stapgrootte
         LEFT     = "left",        // bewegingsrichtingen
@@ -14,8 +12,8 @@ const   R        = 10,          // straal van een element
 
         SNAKE   = "DarkRed" ,    // kleur van een slangsegment
         FOOD    = "Olive",       // kleur van voedsel
-        HEAD    = "DarkOrange",  // kleur van de kop van de slang
-        DB = new DataBaseManager();
+        HEAD    = "DarkOrange";  // kleur van de kop van de slang
+
 
 
 export {
@@ -30,6 +28,5 @@ export {
     SLEEPTIME,
     SNAKE,
     FOOD,
-    HEAD,
-    DB
+    HEAD
 };

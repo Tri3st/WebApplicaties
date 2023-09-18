@@ -136,7 +136,7 @@ QUnit.module("Test een paar inlog functies", {
     before: function (){
         localStorage.clear();
         this.dbm = new DataBaseManager();
-    }
+    },
     after: function() {
         localStorage.clear();
     }

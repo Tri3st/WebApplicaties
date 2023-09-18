@@ -1,5 +1,4 @@
 // Hier komt de code voor de pagina te staan
-import {DB} from '../constanten.js';
 
 const myButtons = [
     {
@@ -71,6 +70,7 @@ $( document ).ready(() => {
     const breadcrumbs = $('.crumb');
 
     buttons.click((button) => {
+        button.preventDefault();
 
         // zet de iframe-src zo, dat deze naar de juiste html-pagina wijst.
         const index = myButtons.findIndex((el) => el.buttonId === button.target.id);

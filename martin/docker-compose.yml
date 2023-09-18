@@ -4,7 +4,7 @@ services:
     restart: on-failure
     build: .
     ports:
-      - '81:8090'
+      - '80:8090'
     volumes:
       - ./js/:/app/js
       - ./css/:/app/css

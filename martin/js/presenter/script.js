@@ -61,8 +61,7 @@ let all_users = [];
  */
 $( document ).ready(() => {
     console.log('READY! in script.js');
-    const current = DB.getCurrentLoggedIn();
-    $('#username').html(`Ingelogd als : <span class="ingelogde-user">${current}</span>`);
+    $('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
 
 
     const buttons = $('.nav');
@@ -70,7 +69,6 @@ $( document ).ready(() => {
     const breadcrumbs = $('.crumb');
 
     buttons.click((button) => {
-        button.preventDefault();
 
         // zet de iframe-src zo, dat deze naar de juiste html-pagina wijst.
         const index = myButtons.findIndex((el) => el.buttonId === button.target.id);

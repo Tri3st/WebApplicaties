@@ -1,7 +1,7 @@
 # Mijn Spelletjes Site
 
-[_metadata_:title]:- "Mijn Spelletjes Site"
-[_metadata_:author]:- "Martin van Diest"
+[_metadata_:title]:-"Mijn Spelletjes Site"
+[_metadata_:author]:-"Martin van Diest"
 
 
 ## Starten docker
@@ -52,7 +52,7 @@ MARTIN
 
 Voor de verschillende klassen die we gebruiken hebben we de volgende domein modellen gebruikt :
 
-![Domein modellen](./img/ClasseModels.jpg "Domein modellen")
+![Domein modellen](img/ClasseModels.jpg "Domein modellen")
 
 
 ## DOCS
@@ -63,9 +63,9 @@ De JS-DOCS worden automatisch gegenereerd en zijn te zien als je naar http://loc
 
 ### Info uit de Bijeenkomst
 
-![MVP afbeelding 1](./img/MVP1a.jpg "MVP afbeelding 1")
+![MVP afbeelding 1](img/MVP1a.jpg "MVP afbeelding 1")
 
-![MVP afbeelding 2](./img/MVP2a.jpg "MVP afbeelding 1")
+![MVP afbeelding 2](img/MVP2a.jpg "MVP afbeelding 1")
 
 ### Model
 

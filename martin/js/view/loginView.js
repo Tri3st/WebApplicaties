@@ -11,7 +11,7 @@ $(document).ready(() => {
     loginBTN.on('click', (e) => {
         e.preventDefault();
         login();
-    }),
+    })
 
     registerBTN.on('click', (e) => {
         e.preventDefault();
@@ -36,6 +36,7 @@ function login() {
         message = `User ${username} successfully logged in`;
         head = "SUCCESS";
         clearInputFields();
+
     } else {
         head = "ERROR";
         message = "Incorrect username or password. Try again";
@@ -48,6 +49,29 @@ function logout() {
 }
 
 function register() {
+    const usernameInput = $('#username-input');
+    const passwordInput = $('#password-input');
+    const username = usernameInput.val();
+    const password = passwordInput.val();
+    console.log("user : ", username);
+    let head, message;
+    if (usernameN !== '' && passwordN !== '') {
+            const user = {
+                "username": usernameN,
+                "password": passwordN,
+                "userData": {
+                  "nrOfFoods": 15,
+                  "highscore": 0
+                },
+            };
+            console.log(user);
+        }
+
+    loginRegister();
+
+
+
+
 }
 
 

@@ -85,11 +85,9 @@ $( document ).ready(() => {
                 $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
                 $('.infoBox').css('visibility', 'visible');
                 
-                // username already exists
-                // kies een andere username
+
             }
             else {
-                console.log("else reg");
                 usersArray.push(user);
                 infoBoxBericht = "user met succesvol aangemaakt.";
                 $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
@@ -116,8 +114,30 @@ const init = function() {
 
 };
 
-const logIn = function() {
-    // TODO
+const logIn = function(usernameN, passwordN) {
+    const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
+
+    console.log("logIn as loginLogin");
+            
+    var match = usersArray.findIndex((u) =>
+        u.username === usernameN && u.password === passwordN);
+    console.log(match);
+
+    if(match  > -1) {
+
+        $('#inlogBTN').attr('disabled', 'disabled');
+        $('#logoutBTN').removeAttr('disabled');
+        $('#username').html(`Ingelogd als : <span class="ingelogde-user">${usernameN}</span>`);
+      
+        usersArray.push(usernameN);
+        return true;
+    } else {
+        return false;
+    }
+
+
+    
+              
 };
 
 const logOut = function (){
@@ -129,7 +149,20 @@ const logOut = function (){
 };
 
 const register = function() {
-    // TODO implement
+const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
+
+    const check = usersArray.map((waarde) => waarde.username);
+            if (check.includes(usernameN)){
+                console.log("if reg");
+                infoBoxBericht = "username bestaat al, kies een andere username ingelogd";
+                $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
+                $('.infoBox').css('visibility', 'visible');
+                
+
+            }
+            else {
+                usersArray.push(user);
+
 }
 
 function checkLoggedIn() {

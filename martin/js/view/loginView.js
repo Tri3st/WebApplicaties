@@ -55,10 +55,10 @@ function register() {
     const password = passwordInput.val();
     console.log("user : ", username);
     let head, message;
-    if (usernameN !== '' && passwordN !== '') {
+    if (username !== '' && password !== '') {
             const user = {
-                "username": usernameN,
-                "password": passwordN,
+                "username": username,
+                "password": password,
                 "userData": {
                   "nrOfFoods": 15,
                   "highscore": 0
@@ -66,10 +66,29 @@ function register() {
             };
             console.log(user);
         }
+    console.log("voor");
 
-    loginRegister();
+    //Als deze functie true teruggeeft, bestaat de gebruikersnaam al.
+    if(loginRegister(username, password)) {
+        head = "ERROR";
+        message = "Username already exists!";
 
+        console.log("if loginview");
+    } else {
+        head = "SUCCES";
+        message = "Gebruikersnaam " + username + " is met success aangemaakt.";
+        console.log("if loginview");
+    }
 
+    clearInputFields();
+    //showMessage(head, message, 'register');
+    /* 
+    case 'register':
+            infoBoxId = '#registerInfoBox'; -- bestaat niet denk ik.
+            break;
+            of default
+    */ //voor nu heb ik enkel 2 classes aangeraakt.
+    console.log("eind");
 
 
 }

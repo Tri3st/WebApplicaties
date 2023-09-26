@@ -8,12 +8,6 @@ $( document ).ready(() => {
     console.log('READY!');
     init();
 
-//pagina herlaadt
-//andere pagina = geen login.
-
-
-
-
 
 
     let  currentLoggedin = localStorage.getItem('currentLoggedIn');
@@ -29,7 +23,8 @@ $( document ).ready(() => {
     const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
 
 
-    $('#inlogBTN').click(() => {
+   /* $('#inlogBTN').click(() => {
+        console.log("inlog buiten functie");        
         const username = $('#username-input').val();
         const password = $('#password-input').val();
         const users = usersArray.map((user) => user.username);
@@ -37,32 +32,34 @@ $( document ).ready(() => {
         const loginBool = users.includes(username)
         console.log(loginBool)
        
-//`${username}`
         if (users.includes(username)) {
             console.log("login succesvol");
             
-            //array.findIndex((u) => u.username == "martin" && u.password == "test2");
+            
             if (usersArray.findIndex((u) => u.username === username && u.password === password)){
 
                 console.log(usersArray.findIndex((u) => u.username === username && u.password === password));
                 const infoBoxBericht = "Succesvol ingelogd";
                 console.log("if login");
-                $('#username-input').val('');
-                $('#password-input').val('');
-                $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
-                $('.infoBox').css('visibility', 'visible');
-                setLoggedInUser(username);
-                $('#inlogBTN').attr('disabled', 'disabled');
-                $('#logoutBTN').removeAttr('disabled');
-                $('#username').html(`Ingelogd als : <span class="ingelogde-user">${username}</span>`);
+               // $('#username-input').val('');
+               // $('#password-input').val('');
+               // $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
+               // $('.infoBox').css('visibility', 'visible');
+              //  setLoggedInUser(username);
+               // $('#inlogBTN').attr('disabled', 'disabled');
+               // $('#logoutBTN').removeAttr('disabled');
+                //$('#username').html(`Ingelogd als : <span class="ingelogde-user">${username}</span>`);
                 } else {
                     errorLogin();
                 }
            } else {
                 errorLogin();
            }
-    });
-    $('#registerBTN').click(() => {
+    });*/
+
+
+  /*  $('#registerBTN').click(() => {
+        console.log("register buiten functie");
         let infoBoxBericht = "";
         const usernameN = $('#username-input').val();
         const passwordN = $('#password-input').val();
@@ -93,11 +90,10 @@ $( document ).ready(() => {
                 $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
                 $('.infoBox').css('visibility', 'visible');
 
-                //register();
             }
-            localStorage.setItem('all_users', JSON.stringify(usersArray));
+            //localStorage.setItem('all_users', JSON.stringify(usersArray));
         }
-    })
+    })*/
 
 });
 function errorLogin() {
@@ -111,7 +107,6 @@ const init = function() {
     localStorage.clear;
     localStorage.setItem('currentLoggedIn','');
     console.log("init");
-
 };
 
 const logIn = function(usernameN, passwordN) {
@@ -125,11 +120,15 @@ const logIn = function(usernameN, passwordN) {
 
     if(match  > -1) {
 
-        $('#inlogBTN').attr('disabled', 'disabled');
+        $('#loginBTN').attr('disabled', 'disabled');
+
         $('#logoutBTN').removeAttr('disabled');
         $('#username').html(`Ingelogd als : <span class="ingelogde-user">${usernameN}</span>`);
-      
+      console.log("in if m")
         usersArray.push(usernameN);
+        setLoggedInUser(usernameN);
+
+
         return true;
     } else {
         return false;
@@ -144,25 +143,25 @@ const logOut = function (){
     $('#logoutBTN').click(() => {
         localStorage.setItem('currentLoggedIn', '')
         $('#logoutBTN').attr('disabled', 'disabled');
-        $('#inlogBTN').removeAttr('disabled');$('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
+        $('#loginBTN').removeAttr('disabled');$('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
     });
 };
 
-const register = function() {
+const register = function(usernameN, passwordN) {
 const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
 
     const check = usersArray.map((waarde) => waarde.username);
             if (check.includes(usernameN)){
                 console.log("if reg");
-                infoBoxBericht = "username bestaat al, kies een andere username ingelogd";
-                $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
-                $('.infoBox').css('visibility', 'visible');
+                return true;
                 
 
             }
             else {
-                usersArray.push(user);
-
+                usersArray.push(usernameN);
+                console.log("else reg");
+                return false;
+            }
 }
 
 function checkLoggedIn() {

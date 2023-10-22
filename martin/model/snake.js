@@ -2,7 +2,7 @@
  * @module snake
  * @description De klasse snake
  */
-import {HEAD, SNAKE, STEP, YMIN, XMIN, LEFT, RIGHT, DOWN, UP, R, } from './constanten.js';
+import {HEAD, SNAKE, STEP, YMIN, XMIN, LEFT, RIGHT, DOWN, UP} from './constanten.js';
 import {checkGameIsOver} from '../presenter/snake.js';
 
 /**

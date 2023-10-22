@@ -1,5 +1,5 @@
-import {logIn as loginLogin, logOut as loginLogout, init as loginInit, register as loginRegister} from '../presenter/inloggen.js';
-import {clearMessage, showMessage} from "./snakeView.js";
+import {logIn as loginLogin, logOut as loginLogout, init as loginInit, register as loginRegister} from './inloggen.js';
+import {clearMessage, showMessage} from "./snake.js";
 
 $(document).ready(() => {
     console.log("Ready in loginView.js");

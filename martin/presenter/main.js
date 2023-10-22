@@ -5,49 +5,49 @@ const myButtons = [
         id: 1,
         buttonId: 'button1',
         name: 'Welkom',
-        ref: './welkom.html'
+        ref: './view/welkom.html'
     },
     {
         id: 2,
         buttonId: 'button2',
         name: 'Inloggen',
-        ref: './inloggen.html'
+        ref: './view/inloggen.html'
     },
     {
         id: 3,
         buttonId: 'button3',
         name: 'Snake',
-        ref: './snake.html'
+        ref: './view/snake.html'
     },
     {
         id: 4,
         buttonId: 'button4',
         name: 'Boter, Kaas en Eieren',
-        ref: './bke.html'
+        ref: './view/bke.html'
     },
     {
         id: 5,
         buttonId: 'button5',
         name: 'Sudoku',
-        ref: './sudoku.html'
+        ref: './view/sudoku.html'
     },
     {
         id: 6,
         buttonId: 'button6',
         name: 'Mastermind',
-        ref: './mastermind.html'
+        ref: './view/mastermind.html'
     },
     {
         id: 7,
         buttonId: 'button7',
         name: 'Galgje',
-        ref: './galgje.html'
+        ref: './view/galgje.html'
     },
     {
         id: 8,
         buttonId: 'button8',
         name: 'Cryptogram',
-        ref: './crypto.html'
+        ref: './view/crypto.html'
     },
 
 ]
@@ -60,7 +60,7 @@ let all_users = [];
  * iframe src attribuut en aanpassen van de breadcrumbs.
  */
 $( document ).ready(() => {
-    console.log('READY! in script.js');
+    console.log('READY! in main.js');
     $('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
 
 

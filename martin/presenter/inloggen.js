@@ -8,22 +8,20 @@ $( document ).ready(() => {
     console.log('READY!');
     init();
 
-
-
     let  currentLoggedin = localStorage.getItem('currentLoggedIn');
     if (currentLoggedin) {
          $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`);
-         $('#inlogBTN').attr('disabled', 'disabled');
+         $('#loginBTN').attr('disabled', 'disabled');
          $('#logoutBTN').removeAttr('disabled');
 
     } else {
          $('#logoutBTN').attr('disabled', 'disabled');
-         $('#inlogBTN').removeAttr('disabled');
+         $('#loginBTN').removeAttr('disabled');
     }
     const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
 
 
-   /* $('#inlogBTN').click(() => {
+   /* $('#loginBTN').click(() => {
         console.log("inlog buiten functie");        
         const username = $('#username-input').val();
         const password = $('#password-input').val();
@@ -46,7 +44,7 @@ $( document ).ready(() => {
                // $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
                // $('.infoBox').css('visibility', 'visible');
               //  setLoggedInUser(username);
-               // $('#inlogBTN').attr('disabled', 'disabled');
+               // $('#loginBTN').attr('disabled', 'disabled');
                // $('#logoutBTN').removeAttr('disabled');
                 //$('#username').html(`Ingelogd als : <span class="ingelogde-user">${username}</span>`);
                 } else {
@@ -104,7 +102,7 @@ function errorLogin() {
 }
 const init = function() {
     // TODO
-    localStorage.clear;
+    localStorage.clear();
     localStorage.setItem('currentLoggedIn','');
     console.log("init");
 };

@@ -1,8 +1,8 @@
-import {createFood, createSegment, Element, formatDate, getScores, textMessage} from "../js/presenter/snake.js";
-import {getCanvasSizes} from "../js/view/snakeView.js";
-import {UP, DOWN} from '../js/constanten.js';
-import {DataBaseManager} from "../js/model/inloggen.js";
-import {logIn, logOut, register} from "../js/presenter/inloggen.js";
+import {createFood, createSegment, Element, formatDate, getScores, textMessage} from "../presenter/snake.js";
+import {getCanvasSizes} from "../presenter/snakeView.js";
+import {UP, DOWN} from '../model/constanten.js';
+import {DataBaseManager} from "../model/database.js";
+import {logIn, logOut, register} from "../presenter/inloggen.js";
 
 QUnit.module("Test een paar Snake functies");
 

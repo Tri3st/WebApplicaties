@@ -1,3 +1,3 @@
-import {DataBaseManager} from "../js/model/inloggen.js";
-import {logIn, logOut, register} from "../js/presenter/inloggen.js";
+import {DataBaseManager} from "../model/database.js";
+import {logIn, logOut, register} from "../presenter/inloggen.js";
 

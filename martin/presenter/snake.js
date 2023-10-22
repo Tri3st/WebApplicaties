@@ -1,9 +1,10 @@
 /**
  * @module snake
- * @description Module met functies, klassen en hulpfuncties voor de snake pagina.
+ * @description Module met functies, hulpfuncties voor de snake pagina.
  */
-import {clearMessage, draw, getCanvasSizes, showMessage, showScoreboard, doKeydown} from "../view/snakeView.js";
-import {R, STEP, LEFT, RIGHT, UP, DOWN, XMIN, YMIN, SLEEPTIME, SNAKE, FOOD, HEAD} from '../constanten.js';
+import {R, STEP, UP, XMIN, YMIN, SLEEPTIME, SNAKE, FOOD} from '../model/constanten.js';
+import {Snake} from "../model/snake.js";
+import {Element} from '../model/element.js';
 	
 var snake,
     numfoods = 15,   // aantal voedselelementen
@@ -13,6 +14,7 @@ var snake,
 	xMax,                     // maximale waarde van x = width - R
 	yMax,                     // maximale waarde van y = height - R
     snakeTimer,
+    canvas,
 	direction = UP;
 
 $( document ).ready(() => {
@@ -35,6 +37,7 @@ function init() {
     height = getCanvasSizes().height;
     xMax = width - R;
     yMax = height - R;
+    canvas = {width, height, xMax, yMax};
 	snake = createStartSnake();
     foods = createFoods();
     jQuery(document).keydown(function(event) {
@@ -63,135 +66,6 @@ function move(direction) {
 	}
 }
 
-
-/***************************************************************************
- **                 Constructors                                          **
- ***************************************************************************/
-
-/**
-    @class Snake
-    @classdesc Klasse Snake met 2 functies: canMove (controlleer of slang niet van het canvas af loopt)
-     en doMove (voer de beweging uit)
-    @param {array} segments een array met aaneengesloten slangsegmenten
-                            Het laatste element van segments wordt de KOP van de slang
-    @example
-    new Snake([Segment(), Segment()];
-*/
-function Snake(segments) {
-    /** De segmenten van de slang (laatste segment in array is de kop) */
-    this.segments = segments;
-    /** kop van de slang */
-    this.head = segments[segments.length - 1];
-    this.head.color = HEAD;
-    /** staart van de slang */
-    this.tail = segments[0];
-    this.tail.color = SNAKE;
-    /** richting waarin de slang gaat bewegen */
-    this.direction = direction;
-    /**
-     * kijkt of de slang kan bewegen in de opgegeven richting
-     * @param direction richting
-     * @returns {boolean} true = wel
-     */
-    this.canMove = function(direction) {
-        let head2 = Object.assign({}, this.head);
-        switch (direction) {
-            case UP:
-                return head2.y - STEP >= YMIN;
-            case DOWN:
-                return head2.y + STEP <= yMax;
-            case LEFT:
-                return head2.x - STEP >= XMIN;
-            case RIGHT:
-                return head2.x + STEP <= xMax;
-        }
-    }
-    /**
-     * beweegt in de opgegeven richting
-     * @param direction de richting waarin bewogen moet worden
-     */
-    this.doMove = function(direction) {
-        let head = Object.assign({}, this.head); // Maak een deep-copy van het object.
-        switch (direction) {
-            case UP:
-                head.y -= STEP;
-                break;
-            case DOWN:
-                head.y += STEP;
-                break;
-            case LEFT:
-                head.x -= STEP;
-                break;
-            case RIGHT:
-                head.x += STEP;
-                break;
-            default:
-                break;
-        }
-        this.head.color = SNAKE;
-        this.segments.push(head);
-        this.head = this.segments[this.segments.length - 1];
-        // Als de slang een 'food' raakt, halen we deze uit de foods array.
-        // Ook doen we dan geen shift, omdat de slang langer wordt.
-        if (this.head.collidesWithOneOf(foods)) {
-            const foodIndex = foods.findIndex((food) => food.x === head.x && food.y === head.y);
-            foods.splice(foodIndex, 1);
-        } else {
-           this.segments.shift();
-        }
-        this.tail = this.segments[0];
-        this.head.color = HEAD;
-        checkGameIsOver();
-    }
-    /**
-     * Geeft een string representatie van het Snake object
-     * @returns {string}
-     */
-    this.toString = function () {
-        return this.segments.join(" - ");
-    }
-}
-
-/**
- * @constructor Element
- * @description Klasse Element (segment van slang of food) met 1 functie:
- *              - collidesWithOneOf : controlleert of het element met één van de
- *                                    meegegeven elementen botst.
- *
- * @param {number} radius straal
- * @param {number} x x-coordinaat middelpunt
- * @param {number} y y-coordinaat middelpunt
- * @param {string} color kleur van het element
-*/ 
-function Element(radius, x, y, color) {
-    /** Straal van het Element */
-    this.radius = radius;
-    /** de x coordinaat */
-    this.x = x;
-    /** de y coordinaat */
-    this.y = y;
-    /** De kleur die het element krijgt */
-    this.color = color;
-    /**
-     * Check of een dit element met andere elementen botst
-     * @param {Element[]} elements om op te checken of dit element botst
-     * @return {boolean} true als dit element botst, anders false
-     */
-    this.collidesWithOneOf = function(elements) {
-        let result = false;
-        elements.forEach((element) => {
-            if (Math.abs(this.x - element.x) === 0 && Math.abs(this.y - element.y) === 0) {
-                console.debug("COLLISSION WITH FOOD element ", element.x, element.y)
-                result = true;
-            }
-        })
-        return result;
-    }
-    /** String representatie */
-    this.toString = function () {
-        return `(${this.x},${this.y})`;
-    }
-}
 /***************************************************************************
  **                 Hulpfuncties                                          **
  ***************************************************************************/
@@ -205,7 +79,7 @@ function Element(radius, x, y, color) {
 function createStartSnake() {
 	const segments   = [createSegment(R + width/2, R + height/2),
 	                  createSegment(R + width/2, height/2 - R)];
-     return new Snake(segments);
+     return new Snake(direction, canvas, segments, foods);
 }
 /**
   @function createSegment(x,y) -> Element
@@ -366,4 +240,166 @@ export function formatDate (someDate) {
     return `${tempDate[2]}-${tempDate[1]}-${tempDate[0]}`;
 }
 
-export {Element, Snake, createSegment, createFood, getScores, textMessage, move, createStartSnake}
+/**
+ * @function showMessage
+ * @description toont het bericht in de daarvoor bestemde plek. Afhankelijk van het type.
+ *
+ * @param {string} head Titel
+ * @param {string} message Bericht zelf
+ * @param {string} type Welke soort. 'snake', 'login'
+ */
+function showMessage(head, message, type) {
+    let infoBoxId;
+    switch (type) {
+        case 'snake':
+            infoBoxId = '#snakeInfoBox';
+            break;
+        case 'login':
+            infoBoxId = '#loginInfoBox';
+            break;
+    }
+    const box2 = $(infoBoxId);
+    box2.css("visibility", "visible");
+    const header = '<h3>' + head + '</h3>';
+    const inside = '<p>' + message + '</p>';
+    console.log("DONE IN SHOWMESSAGE !!", head);
+    const body = header + inside;
+    box2.html(body);
+}
+
+/**
+ * @function clearMessage
+ * @description Maakt het de infoBox weer leeg en niet zichtbaar voor de gebruiker.
+ */
+function clearMessage(type) {
+    const box = $('#snakeInfoBox');
+    const box2 = $('#loginInfoBox');
+    box.html("<p></p>");
+    box.css("visibility", "hidden");
+    box2.html("<p></p>");
+    box2.css("visibility", "hidden");
+}
+
+/**
+ * @function showScoreboard
+ * @description Tekent het scorebord op de pagina op de daarvoor bestemde plek.
+ *
+ * @param {object} scores
+ */
+export function showScoreboard(scores) {
+    const tableHeaderHTML = '<tr><th>Naam</th><th>Score</th><th>Datum</th></tr>';
+    let tableMain = $('<table></table>').append(tableHeaderHTML);
+    $.each(scores, function (index, score) {
+        let row = $(`<tr class=\"row${index}\"></tr>`);
+        $.each(score, function (i, value) {
+            let rowData;
+            if (i === 'date') {
+                rowData = $(`<td class=\"row${index}data${i}\"></td>`).text(formatDate(value));
+            } else {
+                rowData = $(`<td class=\"row${index}data${i}\"></td>`).text(value);
+            }
+            row.append(rowData);
+        });
+        tableMain.append(row);
+    });
+    // add table to DOM
+    $('#scoreboard').append($(tableMain));
+}
+
+/**
+ @function draw()
+ @description Teken de slang en het voedsel
+ */
+export function draw(foods, snake) {
+    $('#mySnakeCanvas').clearCanvas();
+    for (var i = 0; i < foods.length; i++) {
+        var food = foods[i];
+        drawElement(food);
+    }
+    for (var j = 0; j < snake.segments.length; j++) {
+        var segment = snake.segments[j];
+        drawElement(segment);
+    }
+}
+
+/**
+  @function drawElement(element, canvas) -> void
+  @description Een element tekenen
+  @param {Element} element een Element object
+*/
+function drawElement(element) {
+     $('#mySnakeCanvas').drawArc({
+         draggable: false,
+         fillStyle: element.color,
+         x: element.x,
+         y: element.y,
+         radius: element.radius
+     });
+}
+
+/**
+ * @function getCanvasSizes
+ * @description Haalt de breedte en hoogte van het canvas element op.
+ *
+ * @returns {object} Object met {width: breedte, height: hoogte}
+ */
+export function getCanvasSizes() {
+    const canvas = $('#mySnakeCanvas');
+    return {
+        width: canvas[0].width,
+        height: canvas[0].height
+    }
+}
+
+/**
+ * @function doKeydown
+ * @description Bepaalt de nieuwe richting die de slang op moet gaan. Dit wordt bepaalt door
+ *              door wat de gebruiker voor toets indrukt. Dit event wordt meegestuurd evenals de
+ *              'oude' richting. Hieruit komt de nieuwe richting terug. Ook wordt er grafisch
+ *              weergegeven wat de nieuwe richting is.
+ *
+ * @param {object} event Het event
+ * @param {string} dir De oude richting
+ * @returns {string} De nieuwe richting
+ */
+export function doKeydown(event, dir) {
+    const LEFT     = "left",
+          RIGHT    = "right",
+          UP       = "up",
+          DOWN     = "down";
+    let newDirection = '';
+    $('.pijl').removeClass('pijl-aktief');
+    switch(event.which) {
+        case 37:
+            if (dir !== RIGHT){
+                newDirection = LEFT;
+                $('#pijl-links').addClass('pijl-aktief');
+            }
+            event.preventDefault();
+            break;
+        case 38:
+            if (dir !== DOWN) {
+                newDirection = UP;
+                $('#pijl-omhoog').addClass('pijl-aktief');
+            }
+            event.preventDefault();
+            break;
+        case 39:
+            if (dir !== LEFT) {
+                newDirection = RIGHT;
+                $('#pijl-rechts').addClass('pijl-aktief');
+            }
+            event.preventDefault();
+            break;
+        case 40:
+            if (dir !== UP){
+                newDirection = DOWN;
+                $('#pijl-omlaag').addClass('pijl-aktief');
+            }
+            event.preventDefault();
+            break;
+    }
+    return newDirection;
+}
+
+export { textMessage, showMessage, clearMessage, checkGameIsOver}

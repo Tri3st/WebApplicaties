@@ -39,7 +39,7 @@ function init() {
     xMax = width - R;
     yMax = height - R;
     canvas = {width, height, xMax, yMax};
-	snake = createStartSnake();
+    snake = createStartSnake();
     foods = createFoods();
     jQuery(document).keydown(function(event) {
         direction = doKeydown(event, direction);
@@ -80,7 +80,7 @@ function move(direction) {
 function createStartSnake() {
 	const segments   = [createSegment(R + width/2, R + height/2),
 	                  createSegment(R + width/2, height/2 - R)];
-     return new Snake(direction, canvas, segments, foods);
+     return new Snake(direction, canvas, segments);
 }
 /**
   @function createSegment(x,y) -> Element

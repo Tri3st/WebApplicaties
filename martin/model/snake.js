@@ -17,7 +17,7 @@ import {checkGameIsOver} from '../presenter/snake.js';
  @example
  new Snake([Segment(), Segment()];
  */
-function Snake(direction, canvas, segments, foods) {
+function Snake(direction, canvas, segments, foods = []) {
     /** De segmenten van de slang (laatste segment in array is de kop) */
     this.segments = segments;
     /** kop van de slang */
@@ -73,7 +73,7 @@ function Snake(direction, canvas, segments, foods) {
         this.head = this.segments[this.segments.length - 1];
         // Als de slang een 'food' raakt, halen we deze uit de foods array.
         // Ook doen we dan geen shift, omdat de slang langer wordt.
-        if (this.head.collidesWithOneOf(foods)) {
+        if (foods && this.head.collidesWithOneOf(foods)) {
             const foodIndex = foods.findIndex((food) => food.x === head.x && food.y === head.y);
             foods.splice(foodIndex, 1);
         } else {

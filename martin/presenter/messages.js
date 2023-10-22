@@ -49,7 +49,7 @@ function drawTable() {
  * @returns {array} scores (array van score objecten)
  */
 async function getScores () {
-    const response = await fetch('/js/model/scores.json', {
+    const response = await fetch('/model/scores.json', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',

@@ -58,7 +58,7 @@ function init() {
 */
 function move(direction) {
 	if (snake.canMove(direction)) {
-		snake.doMove(direction);
+		foods = snake.doMove(direction, foods);
         draw(foods, snake);
 	}
 	else {

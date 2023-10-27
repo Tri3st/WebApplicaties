@@ -50,7 +50,7 @@ function Snake(direction, canvas, segments, foods = []) {
      * beweegt in de opgegeven richting
      * @param direction de richting waarin bewogen moet worden
      */
-    this.doMove = function(direction) {
+    this.doMove = function(direction, localFoods) {
         let head = Object.assign({}, this.head); // Maak een deep-copy van het object.
         switch (direction) {
             case UP:
@@ -73,15 +73,17 @@ function Snake(direction, canvas, segments, foods = []) {
         this.head = this.segments[this.segments.length - 1];
         // Als de slang een 'food' raakt, halen we deze uit de foods array.
         // Ook doen we dan geen shift, omdat de slang langer wordt.
-        if (foods && this.head.collidesWithOneOf(foods)) {
-            const foodIndex = foods.findIndex((food) => food.x === head.x && food.y === head.y);
-            foods.splice(foodIndex, 1);
+        if (localFoods && this.head.collidesWithOneOf(localFoods)) {
+            console.log("Eten gevonden!");
+            const foodIndex = localFoods.findIndex((food) => food.x === head.x && food.y === head.y);
+            localFoods.splice(foodIndex, 1);
         } else {
            this.segments.shift();
         }
         this.tail = this.segments[0];
         this.head.color = HEAD;
         checkGameIsOver();
+        return localFoods;
     }
     /**
      * Geeft een string representatie van het Snake object. Voor debugging.

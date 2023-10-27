@@ -6,55 +6,58 @@ let all_users = [];
 $( document ).ready(() => {
 
     console.log('READY!');
+    const loginBTN = $('#loginBTN');
+    const logoutBTN = $('#logoutBTN');
+    const registerBTN = $('#registerBTN');
+
     init();
 
     let  currentLoggedin = localStorage.getItem('currentLoggedIn');
     if (currentLoggedin) {
          $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`);
-         $('#loginBTN').attr('disabled', 'disabled');
-         $('#logoutBTN').removeAttr('disabled');
+         loginBTN.attr('disabled', 'disabled');
+         logoutBTN.removeAttr('disabled');
 
     } else {
-         $('#logoutBTN').attr('disabled', 'disabled');
-         $('#loginBTN').removeAttr('disabled');
+         logoutBTN.attr('disabled', 'disabled');
+         loginBTN.removeAttr('disabled');
     }
     const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
 
 
-   /* $('#loginBTN').click(() => {
-        console.log("inlog buiten functie");        
+   logBTN.click(() => {
+        console.log("inlog buiten functie");
         const username = $('#username-input').val();
         const password = $('#password-input').val();
         const users = usersArray.map((user) => user.username);
         console.log(users, username)
         const loginBool = users.includes(username)
         console.log(loginBool)
-       
+
         if (users.includes(username)) {
             console.log("login succesvol");
-            
-            
+
+
             if (usersArray.findIndex((u) => u.username === username && u.password === password)){
 
                 console.log(usersArray.findIndex((u) => u.username === username && u.password === password));
                 const infoBoxBericht = "Succesvol ingelogd";
                 console.log("if login");
-               // $('#username-input').val('');
-               // $('#password-input').val('');
-               // $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
-               // $('.infoBox').css('visibility', 'visible');
-              //  setLoggedInUser(username);
-               // $('#loginBTN').attr('disabled', 'disabled');
-               // $('#logoutBTN').removeAttr('disabled');
-                //$('#username').html(`Ingelogd als : <span class="ingelogde-user">${username}</span>`);
-                } else {
-                    errorLogin();
-                }
-           } else {
+                $('#username-input').val('');
+                $('#password-input').val('');
+                $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
+                $('.infoBox').css('visibility', 'visible');
+                setLoggedInUser(username);
+                $('#loginBTN').attr('disabled', 'disabled');
+                $('#logoutBTN').removeAttr('disabled');
+                $('#username').html(`Ingelogd als : <span class="ingelogde-user">${username}</span>`);
+            } else {
                 errorLogin();
-           }
-    });*/
-
+            }
+       } else {
+            errorLogin();
+       }
+    });
 
   /*  $('#registerBTN').click(() => {
         console.log("register buiten functie");

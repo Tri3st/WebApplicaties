@@ -1,8 +1,12 @@
 /**
  * @module inloggen
  */
+import {DataBaseManager} from "../model/database.js";
+import {showMessage} from "./messages.js";
 
 let all_users = [];
+let dbm;
+
 $( document ).ready(() => {
 
     console.log('READY!');
@@ -12,9 +16,11 @@ $( document ).ready(() => {
 
     init();
 
-    let  currentLoggedin = localStorage.getItem('currentLoggedIn');
+    let  currentLoggedin = dbm.getCurrentLoggedIn();
+    console.log("Currentlogged in : ", currentLoggedin);
     if (currentLoggedin) {
-         $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`);
+        console.log("We have a logged in user!");
+         $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`).show();
          loginBTN.attr('disabled', 'disabled');
          logoutBTN.removeAttr('disabled');
 
@@ -22,41 +28,14 @@ $( document ).ready(() => {
          logoutBTN.attr('disabled', 'disabled');
          loginBTN.removeAttr('disabled');
     }
-    const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
 
-
-   logBTN.click(() => {
+   loginBTN.click(() => {
         console.log("inlog buiten functie");
         const username = $('#username-input').val();
         const password = $('#password-input').val();
-        const users = usersArray.map((user) => user.username);
-        console.log(users, username)
-        const loginBool = users.includes(username)
-        console.log(loginBool)
+        console.log("Username : ", username);
+        logIn(username, password);
 
-        if (users.includes(username)) {
-            console.log("login succesvol");
-
-
-            if (usersArray.findIndex((u) => u.username === username && u.password === password)){
-
-                console.log(usersArray.findIndex((u) => u.username === username && u.password === password));
-                const infoBoxBericht = "Succesvol ingelogd";
-                console.log("if login");
-                $('#username-input').val('');
-                $('#password-input').val('');
-                $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
-                $('.infoBox').css('visibility', 'visible');
-                setLoggedInUser(username);
-                $('#loginBTN').attr('disabled', 'disabled');
-                $('#logoutBTN').removeAttr('disabled');
-                $('#username').html(`Ingelogd als : <span class="ingelogde-user">${username}</span>`);
-            } else {
-                errorLogin();
-            }
-       } else {
-            errorLogin();
-       }
     });
 
   /*  $('#registerBTN').click(() => {
@@ -98,49 +77,28 @@ $( document ).ready(() => {
 
 });
 function errorLogin() {
-            const infoBoxBericht = "Username en password combinatie bestaat niet.";
-            console.log("else login");
-            $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
-            $('.infoBox').css('visibility', 'visible');
+            showMessage('ERROR', 'There was an error while logging in.', 'login')
 }
-const init = function() {
-    // TODO
-    localStorage.clear();
-    localStorage.setItem('currentLoggedIn','');
-    console.log("init");
-};
+function init() {
+    dbm = new DataBaseManager();
+}
 
-const logIn = function(usernameN, passwordN) {
-    const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
-
-    console.log("logIn as loginLogin");
-            
-    var match = usersArray.findIndex((u) =>
-        u.username === usernameN && u.password === passwordN);
-    console.log(match);
-
-    if(match  > -1) {
-
-        $('#loginBTN').attr('disabled', 'disabled');
-
-        $('#logoutBTN').removeAttr('disabled');
-        $('#username').html(`Ingelogd als : <span class="ingelogde-user">${usernameN}</span>`);
-      console.log("in if m")
-        usersArray.push(usernameN);
-        setLoggedInUser(usernameN);
-
-
-        return true;
-    } else {
-        return false;
-    }
-
-
-    
+function logIn(usernameN, passwordN) {
+    if (dbm.verifyUser(usernameN, passwordN)) {
+        console.log("login succesvol");
+        $('#username-input').val('');
+        $('#password-input').val('');
+        showMessage('Log In Succesful', 'Je bent ingelogd!', 'login')
+        dbm.setCurrentLoggedIn(usernameN);
+        loginBTN.attr('disabled', 'disabled');
+        logoutBTN.removeAttr('disabled');
+   } else {
+        errorLogin();
+   }
               
-};
+}
 
-const logOut = function (){
+function logOut (){
     $('#logoutBTN').click(() => {
         localStorage.setItem('currentLoggedIn', '')
         $('#logoutBTN').attr('disabled', 'disabled');
@@ -148,7 +106,7 @@ const logOut = function (){
     });
 };
 
-const register = function(usernameN, passwordN) {
+function register (usernameN, passwordN) {
 const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
 
     const check = usersArray.map((waarde) => waarde.username);
@@ -164,29 +122,3 @@ const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
                 return false;
             }
 }
-
-function checkLoggedIn() {
-    const user = localStorage.getItem('currentLoggedIn');
-    return user !== '';
-}
-
-function getLoggedInUser(){
-    let user = '';
-    if (checkLoggedIn()) {
-        user = localStorage.getItem('currentLoggedIn');
-    }
-    return user;
-}
-
-function setLoggedInUser(user) {
-    localStorage.setItem('currentLoggedIn', user);
-}
-function saveUser(user) {
-    // TODO implement
-}
-
-function saveScore(user) {
-    // TODO implement
-}
-
-export {init, logIn, logOut, register, getLoggedInUser, setLoggedInUser, saveUser, saveScore};

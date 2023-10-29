@@ -49,6 +49,8 @@ function Snake(direction, canvas, segments, foods = []) {
     /**
      * beweegt in de opgegeven richting
      * @param direction de richting waarin bewogen moet worden
+     * @param localFoods we geven de foods mee
+     * @return en geven de foods ook weer terug.
      */
     this.doMove = function(direction, localFoods) {
         let head = Object.assign({}, this.head); // Maak een deep-copy van het object.

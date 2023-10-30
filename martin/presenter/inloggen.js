@@ -16,64 +16,20 @@ $( document ).ready(() => {
 
     init();
 
-    let  currentLoggedin = dbm.getCurrentLoggedIn();
-    console.log("Currentlogged in : ", currentLoggedin);
-    if (currentLoggedin) {
-        console.log("We have a logged in user!");
-         $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`).show();
-         loginBTN.attr('disabled', 'disabled');
-         logoutBTN.removeAttr('disabled');
+    checkLoggedin();
 
-    } else {
-         logoutBTN.attr('disabled', 'disabled');
-         loginBTN.removeAttr('disabled');
-    }
+    const username = $('#username-input').val();
+    const password = $('#password-input').val();
 
-   loginBTN.click(() => {
-        console.log("inlog buiten functie");
-        const username = $('#username-input').val();
-        const password = $('#password-input').val();
-        console.log("Username : ", username);
+    loginBTN.click(() => {
         logIn(username, password);
-
     });
 
-  /*  $('#registerBTN').click(() => {
-        console.log("register buiten functie");
-        let infoBoxBericht = "";
-        const usernameN = $('#username-input').val();
-        const passwordN = $('#password-input').val();
-        if (usernameN !== '' && passwordN !== '') {
-            const user = {
-                "username": usernameN,
-                "password": passwordN,
-                "userData": {
-                    "nrOfFoods": 15,
-                    "highscore": 0
-                },
-            };
-            console.log(user)
-
-
-            const check = usersArray.map((waarde) => waarde.username);
-            if (check.includes(usernameN)){
-                console.log("if reg");
-                infoBoxBericht = "username bestaat al, kies een andere username ingelogd";
-                $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
-                $('.infoBox').css('visibility', 'visible');
-                
-
-            }
-            else {
-                usersArray.push(user);
-                infoBoxBericht = "user met succesvol aangemaakt.";
-                $('.infoBox').append(`<p>${infoBoxBericht}</p>`);
-                $('.infoBox').css('visibility', 'visible');
-
-            }
-            //localStorage.setItem('all_users', JSON.stringify(usersArray));
+    registerBTN.click(() => {
+        if (username !== '' && password !== '') {
+            register(username, password);
         }
-    })*/
+    })
 
 });
 function errorLogin() {
@@ -104,21 +60,24 @@ function logOut (){
         $('#logoutBTN').attr('disabled', 'disabled');
         $('#loginBTN').removeAttr('disabled');$('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
     });
-};
+}
 
 function register (usernameN, passwordN) {
-const usersArray = JSON.parse(localStorage.getItem("all_users")) || [];
+    dbm.addUser(usernameN, passwordN)
+}
 
-    const check = usersArray.map((waarde) => waarde.username);
-            if (check.includes(usernameN)){
-                console.log("if reg");
-                return true;
-                
+function checkLoggedin() {
+    let  currentLoggedin = dbm.getCurrentLoggedIn();
+    console.log("Currentlogged in : ", currentLoggedin);
+    if (currentLoggedin) {
+        console.log("We have a logged in user!");
+        $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`);
+        loginBTN.attr('disabled', 'disabled');
+        logoutBTN.removeAttr('disabled');
 
-            }
-            else {
-                usersArray.push(usernameN);
-                console.log("else reg");
-                return false;
-            }
+    } else {
+        $('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
+        logoutBTN.attr('disabled', 'disabled');
+        loginBTN.removeAttr('disabled');
+    }
 }

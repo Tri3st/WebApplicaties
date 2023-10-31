@@ -22,36 +22,32 @@ $( document ).ready(() => {
     const password = $('#password-input').val();
 
     loginBTN.click(() => {
-        logIn(username, password);
+        if (dbm.verifyUser(username, password)) {
+            console.log("login succesvol");
+            $('#username-input').val('');
+            $('#password-input').val('');
+            showMessage('Log In Succesful', 'Je bent ingelogd!', 'login')
+            dbm.setCurrentLoggedIn(username);
+            loginBTN.attr('disabled', 'disabled');
+            logoutBTN.removeAttr('disabled');
+        } else {
+            errorLogin();
+        }
     });
 
     registerBTN.click(() => {
-        if (username !== '' && password !== '') {
-            register(username, password);
+        if (username !== '' && password !== ''){
+            dbm.addUser(username, password)
         }
+
     })
 
 });
 function errorLogin() {
-            showMessage('ERROR', 'There was an error while logging in.', 'login')
+    showMessage('ERROR', 'There was an error while logging in.', 'login')
 }
 function init() {
     dbm = new DataBaseManager();
-}
-
-function logIn(usernameN, passwordN) {
-    if (dbm.verifyUser(usernameN, passwordN)) {
-        console.log("login succesvol");
-        $('#username-input').val('');
-        $('#password-input').val('');
-        showMessage('Log In Succesful', 'Je bent ingelogd!', 'login')
-        dbm.setCurrentLoggedIn(usernameN);
-        loginBTN.attr('disabled', 'disabled');
-        logoutBTN.removeAttr('disabled');
-   } else {
-        errorLogin();
-   }
-              
 }
 
 function logOut (){
@@ -62,9 +58,7 @@ function logOut (){
     });
 }
 
-function register (usernameN, passwordN) {
-    dbm.addUser(usernameN, passwordN)
-}
+
 
 function checkLoggedin() {
     let  currentLoggedin = dbm.getCurrentLoggedIn();
@@ -72,12 +66,12 @@ function checkLoggedin() {
     if (currentLoggedin) {
         console.log("We have a logged in user!");
         $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`);
-        loginBTN.attr('disabled', 'disabled');
-        logoutBTN.removeAttr('disabled');
+        $('#loginBTN').attr('disabled', 'disabled');
+        $('#logoutBTN').removeAttr('disabled');
 
     } else {
         $('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
-        logoutBTN.attr('disabled', 'disabled');
-        loginBTN.removeAttr('disabled');
+        $('#logoutBTN').attr('disabled', 'disabled');
+        $('#loginBTN').removeAttr('disabled');
     }
 }

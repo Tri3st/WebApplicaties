@@ -37,7 +37,11 @@ $( document ).ready(() => {
 
     registerBTN.click(() => {
         if (username !== '' && password !== ''){
-            dbm.addUser(username, password)
+            if(!dbm.findUser(username)){
+                dbm.addUser(username, password);
+            } else {
+                showMessage('ERROR', 'Username already exists.', 'login')
+            }
         }
 
     })

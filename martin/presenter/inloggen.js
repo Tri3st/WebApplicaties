@@ -31,7 +31,7 @@ $( document ).ready(() => {
             loginBTN.attr('disabled', 'disabled');
             logoutBTN.removeAttr('disabled');
         } else {
-            errorLogin();
+            showMessage('ERROR', 'There was an error while logging in.', 'login')
         }
     });
 
@@ -47,9 +47,7 @@ $( document ).ready(() => {
     })
 
 });
-function errorLogin() {
-    showMessage('ERROR', 'There was an error while logging in.', 'login')
-}
+
 function init() {
     dbm = new DataBaseManager();
 }

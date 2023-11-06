@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    border: 1px solid gray;
+    border: 1px solid rgb(128, 128, 128);
     border-radius: 5px;
 }
 
@@ -19,8 +19,18 @@ form label {
     width: 60px;
 }
 
-.infoBox {
+#loginInfoBox {
     border: 1px dotted red;
     border-radius: 5px;
     visibility: hidden;
+    margin: 20px 0 10px 0;
+    padding: 0 10px 0 10px;
+}
+
+#loginInfoBox h3 {
+    color: red;
+}
+
+#loginInfoBox p {
+    /* TODO */
 }

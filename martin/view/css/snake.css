@@ -63,7 +63,7 @@
     margin: 2px 5px 2px 5px;
 }
 
-#infoBox {
+#snakeInfoBox {
     padding: 5px;
     border: 1px solid red;
     margin-top: 5px;
@@ -71,11 +71,11 @@
     visibility: hidden;
 }
 
-#infoBox h3 {
+#snakeInfoBox h3 {
     /* TODO */
 }
 
-#infoBox p {
+#snakeInfoBox p {
     /* TODO */
 }
 

@@ -26,10 +26,11 @@ $( document ).ready(() => {
             console.log("login succesvol");
             $('#username-input').val('');
             $('#password-input').val('');
-            showMessage('Log In Succesful', 'Je bent ingelogd!', 'login')
+            showMessage('Log In Successful', 'Je bent ingelogd!', 'login')
             dbm.setCurrentLoggedIn(username);
             loginBTN.attr('disabled', 'disabled');
             logoutBTN.removeAttr('disabled');
+            checkLoggedin();
         } else {
             showMessage('ERROR', 'There was an error while logging in.', 'login')
         }
@@ -46,18 +47,16 @@ $( document ).ready(() => {
 
     })
 
+    logoutBTN.click(() => {
+        showMessage('UITGELOGD', 'Je bent uitgelogd.', 'login')
+        dbm.setCurrentLoggedIn('');
+        checkLoggedin();
+    })
+
 });
 
 function init() {
     dbm = new DataBaseManager();
-}
-
-function logOut (){
-    $('#logoutBTN').click(() => {
-        localStorage.setItem('currentLoggedIn', '')
-        $('#logoutBTN').attr('disabled', 'disabled');
-        $('#loginBTN').removeAttr('disabled');$('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
-    });
 }
 
 
@@ -67,12 +66,11 @@ function checkLoggedin() {
     console.log("Currentlogged in : ", currentLoggedin);
     if (currentLoggedin) {
         console.log("We have a logged in user!");
-        $('#username').html(`Ingelogd als : <span class="ingelogde-user">${currentLoggedin}</span>`);
+        $('#username').html('<span>' + currentLoggedin + '</span>');
         $('#loginBTN').attr('disabled', 'disabled');
         $('#logoutBTN').removeAttr('disabled');
-
     } else {
-        $('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
+        $('#username').html('<span></span>');
         $('#logoutBTN').attr('disabled', 'disabled');
         $('#loginBTN').removeAttr('disabled');
     }

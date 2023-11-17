@@ -14,6 +14,12 @@ class DataBaseManager {
      * staat hier dan vermeld.
      */
     currentLoggedIn;
+
+    /**
+     * Als er iemand ingelogd is, wordt hier het User object van die persoon opgeslagen.
+     * Hier kunnen we dan functies op los laten.
+     */
+    currentLoggedInUser;
     /**
      * constructor
      * Maakt de lege lijst van users en roept getUsers aan om bestaande users van localStorage
@@ -26,6 +32,7 @@ class DataBaseManager {
         this.users = [];
         this.getUsers();
         this.currentLoggedIn = localStorage.getItem('currentLoggedIn') || '';
+        this.currentLoggedInUser = this.users[this.findUser(this.currentLoggedIn)] || null;
     }
 
     /**
@@ -34,9 +41,14 @@ class DataBaseManager {
      */
     getUsers() {
         let users = JSON.parse(localStorage.getItem("users"));
-        if (!users) this.users = [];
-        else {
-            this.users.splice(0, 0, ...users);
+        if (users) {
+            for (let user in users){
+                const newUser = new User(user['username'], user['password'], user['nrOfFoods'], user['highscore'],
+                    user['dateOfHighscore'], user['winsLosses']);
+
+                this.users.splice(0, 0, newUser);
+            }
+
         }
     }
 
@@ -121,6 +133,7 @@ class DataBaseManager {
     setCurrentLoggedIn(username) {
         this.currentLoggedIn = username;
         localStorage.setItem('currentLoggedIn', username)
+        this.currentLoggedInUser = this.users[this.findUser(username)];
     }
 
     /**
@@ -132,6 +145,7 @@ class DataBaseManager {
     getCurrentLoggedIn() {
         const current = localStorage.getItem('currentLoggedIn');
         if (current) {
+            this.currentLoggedInUser = this.users[this.findUser(current)];
             this.currentLoggedIn = current;
             return current;
         }
@@ -140,16 +154,77 @@ class DataBaseManager {
 
     /**
      * getCurrentLoggedInUser
-     * Haalt de user op die op dit moment is ingelogd.
-     * Hier kunnen we dan informatie van opvragen.
-     * @see User
-     * @return {User|boolean}
+     * haalt de user op die op dit moment is ingelogd en de daarbij behorende
+     * aantal Food elementen die de user (als laatste) gekozen heeft.
+     * @return {number} aantal Food elementen
      */
-    getCurrentLoggedInUser() {
-        const idx = this.findUser(this.currentLoggedIn);
-        if (idx !== false) {
-            return this.users[idx];
-        } else return false;
+    getCurrentLoggedInUserNrOfFoods() {
+        const current = this.currentLoggedInUser;
+        if (current) {
+            return current.getNrOfFoods();
+        }
+    }
+
+    /**
+     * setCurrentLoggedInUserNrOfFoods
+     * zet het aantal Food elementen voor de user die op dit moment is ingelogd.
+     * @param {number} nrOfFoods aantal Food elementen
+     */
+    setCurrentLoggedInUserNrOfFoods(nrOfFoods) {
+        const current = this.currentLoggedIn;
+        if (current) {
+            return current.setNrOfFoods(nrOfFoods);
+        }
+    }
+
+    /**
+     * getCurrentLoggedInUserHighscore
+     * haalt de highscore op van de user die op dit moment is ingelogd.
+     * @return {number} highscore
+     */
+    getCurrentLoggedInUserHighscore() {
+        const current = this.currentLoggedIn;
+        if (current) {
+            return current.getHighscore();
+        }
+    }
+
+    /**
+     * setCurrentLoggedInUserHighscore
+     * zet de highscore voor de user die op dit moment is ingelogd.
+     * @param {number} highscore
+     */
+    setCurrentLoggedInUserHighscore(highscore) {
+        const current = this.currentLoggedIn;
+        if (current) {
+            return current.setHighscore(highscore);
+        }
+    }
+
+    /**
+     * getCurrentLoggedInUserWinsLosses
+     * haalt de wins en losses op van de user die op dit moment is ingelogd.
+     * Let OP! DIt is een winsLosses object: {wins: number, losses: number, lastUpdated: date}
+     * @return {object} winsLosses object
+     */
+    getCurrentLoggedInUserWinsLosses() {
+        const current = this.currentLoggedIn;
+        if (current) {
+            return current.getWinsLosses();
+        }
+    }
+
+    /**
+     * setCurrentLoggedInUserWinsLosses
+     * zet de wins en losses voor de user die op dit moment is ingelogd.
+     * Let OP! dit is een winsLosses object : {wins: number, losses: number, lastUpdated: date}
+     * @param {object} winsLosses object
+     */
+    setCurrentLoggedInUserWinsLosses(winsLosses) {
+        const current = this.currentLoggedIn;
+        if (current) {
+            return current.setWinsLosses(winsLosses);
+        }
     }
 }
 
@@ -186,6 +261,7 @@ class User {
     /**
      * houdt bij hoe vaak een user gewonnen dan wel verloren heeft. En wanneer dit voor het laatste
      * geregitreerd is. (lastUpdated)
+     * Dit is een winsLosses object : {wins: number, losses: number, lastUpdated: date}
      */
     winsLosses;
 
@@ -194,19 +270,21 @@ class User {
      * Standaard wordt de highscore op 0 gezet en nrOfFoods op 15.
      * @param {string} username Username
      * @param {string} password Paswoord
+     * @param {number} nrOfFoods Aantal Food elementen (default = 15)
+     * @param {number} highscore Highscore (default = 0)
+     * @param {date} dateOfHighscore Datum waarop de highscore behaald werd (default = null)
+     * @param {object} winsLosses Object met wins, losses en lastUpdated (default = {wins: 0, losses: 0, lastUpdated: ''})
+     *
      */
-    constructor(username, password) {
+    constructor(username, password, nrOfFoods = 15, highscore = 0,
+                dateOfHighscore = null, winsLosses = {wins: 0, losses: 0, lastUpdated: ''}) {
         this.username = username;
         this.password = password;
         this.created = new Date();
-        this.nrOfFoods = 15;
-        this.highscore = 0;
-        this.dateOfHighscore = "";
-        this.winsLosses = {
-            wins: 0,
-            losses: 0,
-            lastUpdated: ''
-        }
+        this.nrOfFoods = nrOfFoods;
+        this.highscore = highscore;
+        this.dateOfHighscore = dateOfHighscore;
+        this.winsLosses = winsLosses;
     }
 
     /**
@@ -246,11 +324,18 @@ class User {
     }
 
     /**
-     *
+     * getWinsLosses
      */
-    getWinsLosses() {}
+    getWinsLosses() {
+        return this.winsLosses;
+    }
 
-    setWinsLosses(){}
+    /**
+     * setWinsLosses
+     */
+    setWinsLosses(winsLosses){
+        this.winsLosses = winsLosses;
+    }
 
     /**
      * getHighscore
@@ -272,4 +357,4 @@ class User {
     }
 }
 
-export { DataBaseManager, User };
+export { DataBaseManager };

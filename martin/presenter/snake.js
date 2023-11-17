@@ -6,6 +6,7 @@ import {R, STEP, UP, XMIN, YMIN, SLEEPTIME, SNAKE, FOOD} from '../model/constant
 import {clearMessage, drawTable, textMessage} from './messages.js';
 import {Snake} from "../model/snake.js";
 import {Element} from '../model/element.js';
+import {DataBaseManager} from "../model/database.js";
 	
 let snake,
     numfoods = 15,   // aantal voedselelementen
@@ -16,11 +17,20 @@ let snake,
 	yMax,                     // maximale waarde van y = height - R
     snakeTimer,
     canvas,
+    dbm,
 	direction = UP;
 
 $( document ).ready(() => {
-    // getUserInfo()
+    dbm = new DataBaseManager();
     drawTable();
+    $('#food-select').on('change', function () {
+        numfoods = parseInt($('#food-select option:selected').text());
+        if (dbm.getCurrentLoggedIn()){
+            console.log("Found LogedIN user! : ", dbm.getCurrentLoggedIn());
+            console.log("Found LogedIN user! : ", dbm.getCurrentLoggedInUserNrOfFoods());
+            dbm.setCurrentLoggedInUserNrOfFoods(numfoods);
+        }
+    });
 	$("#startSnake").click(init);
 	$("#stopSnake").click(stop);
 })
@@ -33,7 +43,9 @@ $( document ).ready(() => {
 */
 function init() {
     clearMessage('snake');
-    numfoods = parseInt($('#food-select option:selected').text());
+    if (dbm.getCurrentLoggedIn()){
+        numfoods = dbm.getCurrentLoggedInUserNrOfFoods();
+    }
     width = getCanvasSizes().width;
     height = getCanvasSizes().height;
     xMax = width - R;

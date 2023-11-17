@@ -137,6 +137,20 @@ class DataBaseManager {
         }
         else return false;
     }
+
+    /**
+     * getCurrentLoggedInUser
+     * Haalt de user op die op dit moment is ingelogd.
+     * Hier kunnen we dan informatie van opvragen.
+     * @see User
+     * @return {User|boolean}
+     */
+    getCurrentLoggedInUser() {
+        const idx = this.findUser(this.currentLoggedIn);
+        if (idx !== false) {
+            return this.users[idx];
+        } else return false;
+    }
 }
 
 /**

@@ -6,51 +6,33 @@ import {showMessage} from "./messages.js";
 
 let all_users = [];
 let dbm;
+const loginBTN = $('#loginBTN');
+const logoutBTN = $('#logoutBTN');
+const registerBTN = $('#registerBTN');
 
 $( document ).ready(() => {
 
-    console.log('READY!');
-    const loginBTN = $('#loginBTN');
-    const logoutBTN = $('#logoutBTN');
-    const registerBTN = $('#registerBTN');
+    console.log('READY in inloggen.js!');
+
 
     init();
 
     checkLoggedin();
 
-    const username = $('#username-input').val();
-    const password = $('#password-input').val();
-
-    loginBTN.click(() => {
-        if (dbm.verifyUser(username, password)) {
-            console.log("login succesvol");
-            $('#username-input').val('');
-            $('#password-input').val('');
-            showMessage('Log In Successful', 'Je bent ingelogd!', 'login')
-            dbm.setCurrentLoggedIn(username);
-            loginBTN.attr('disabled', 'disabled');
-            logoutBTN.removeAttr('disabled');
-            checkLoggedin();
-        } else {
-            showMessage('ERROR', 'There was an error while logging in.', 'login')
-        }
+    loginBTN.on("click", function (){
+        const username = $('#username-input').val();
+        const password = $('#password-input').val();
+        login(username, password);
     });
 
-    registerBTN.click(() => {
-        if (username !== '' && password !== ''){
-            if(!dbm.findUser(username)){
-                dbm.addUser(username, password);
-            } else {
-                showMessage('ERROR', 'Username already exists.', 'login')
-            }
-        }
-
+    registerBTN.on("click", function (){
+        const username = $('#username-input').val();
+        const password = $('#password-input').val();
+        register(username, password);
     })
 
-    logoutBTN.click(() => {
-        showMessage('UITGELOGD', 'Je bent uitgelogd.', 'login')
-        dbm.setCurrentLoggedIn('');
-        checkLoggedin();
+    logoutBTN.on("click", function (){
+        logout();
     })
 
 });
@@ -59,19 +41,54 @@ function init() {
     dbm = new DataBaseManager();
 }
 
-
-
 function checkLoggedin() {
     let  currentLoggedin = dbm.getCurrentLoggedIn();
     console.log("Currentlogged in : ", currentLoggedin);
     if (currentLoggedin) {
         console.log("We have a logged in user!");
         $('#username').html('<span>' + currentLoggedin + '</span>');
-        $('#loginBTN').attr('disabled', 'disabled');
-        $('#logoutBTN').removeAttr('disabled');
+        loginBTN.attr('disabled', 'disabled');
+        registerBTN.attr('disabled', 'disabled');
+        logoutBTN.removeAttr('disabled');
     } else {
         $('#username').html('<span></span>');
-        $('#logoutBTN').attr('disabled', 'disabled');
-        $('#loginBTN').removeAttr('disabled');
+        logoutBTN.attr('disabled', 'disabled');
+        loginBTN.removeAttr('disabled');
+        registerBTN.removeAttr('disabled');
     }
+}
+
+function register(username, password) {
+    if (username !== '' && password !== ''){
+        console.log("registering ", username);
+        if(!dbm.findUser(username)){
+            dbm.addUser(username, password);
+            showMessage('SUCCESS', 'User successfully registered.', 'login')
+        } else {
+            showMessage('ERROR', 'Username already exists.', 'login')
+        }
+    }
+}
+
+function login(username, password) {
+    if (dbm.verifyUser(username, password)) {
+        console.log("login succesvol");
+        $('#username-input').val('');
+        $('#password-input').val('');
+        showMessage('Log In Successful', 'Je bent ingelogd!', 'login')
+        dbm.setCurrentLoggedIn(username);
+        loginBTN.attr('disabled', 'disabled');
+        logoutBTN.removeAttr('disabled');
+        checkLoggedin();
+    } else {
+        showMessage('ERROR', 'There was an error while logging in.', 'login')
+    }
+}
+
+function logout(){
+    const username = dbm.getCurrentLoggedIn();
+    showMessage('UITGELOGD', `Je bent uitgelogd ${username}.`, 'login');
+    dbm.setCurrentLoggedIn('');
+
+    checkLoggedin();
 }

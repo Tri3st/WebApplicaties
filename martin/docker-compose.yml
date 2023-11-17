@@ -6,9 +6,10 @@ services:
     ports:
       - '81:8090'
     volumes:
-      - ./js/:/app/js
-      - ./css/:/app/css
-      - ./test/:/app/test
+      - ./model/:/app/model
+      - ./presenter/:/app/presenter
+      - ./view/:/app/view
+      - ./test:/app/test
   nginx:
     build: ./nginx
     ports:

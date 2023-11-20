@@ -26,9 +26,10 @@ $( document ).ready(() => {
     $('#food-select').on('change', function () {
         numfoods = parseInt($('#food-select option:selected').text());
         if (dbm.getCurrentLoggedIn()){
-            console.log("Found LogedIN user! : ", dbm.getCurrentLoggedIn());
+            console.log("User : ", dbm.currentLoggedInUser);
             console.log("Found LogedIN user! : ", dbm.getCurrentLoggedInUserNrOfFoods());
             dbm.setCurrentLoggedInUserNrOfFoods(numfoods);
+            dbm.saveUsers();
         }
     });
 	$("#startSnake").click(init);
@@ -44,8 +45,10 @@ $( document ).ready(() => {
 function init() {
     clearMessage('snake');
     if (dbm.getCurrentLoggedIn()){
+        console.log("currentuser : ", dbm.currentLoggedInUser);
         numfoods = dbm.getCurrentLoggedInUserNrOfFoods();
     }
+    $('#food-select').val(numfoods);
     width = getCanvasSizes().width;
     height = getCanvasSizes().height;
     xMax = width - R;
@@ -74,6 +77,11 @@ function move(direction) {
         draw(foods, snake);
 	}
 	else {
+        const wnl = dbm.getCurrentLoggedInUserWinsLosses();
+        wnl.losses++;
+        dbm.setCurrentLoggedInUserWinsLosses(wnl);
+        dbm.saveUsers();
+        console.log("userin checkGameIsOIver : ", dbm.currentLoggedInUser);
         textMessage("Je hebt de muur geraakt!", 'GAMEOVER');
         stop();
 	}
@@ -171,12 +179,26 @@ function checkGameIsOver(){
         const botsBareSlang = snake.segments.slice(0,-4);
         if (snake.head.collidesWithOneOf(botsBareSlang)){
             textMessage("Je hebt de slang geraakt!", 'GAMEOVER');
+            if(dbm.getCurrentLoggedIn()){
+                const wnl = dbm.getCurrentLoggedInUserWinsLosses();
+                wnl.losses++;
+                dbm.setCurrentLoggedInUserWinsLosses(wnl)
+                console.log("userin checkGameIsOIver : ", dbm.currentLoggedInUser);
+                dbm.saveUsers()
+            }
             stop();
         }
     }
 
     if (foods.length === 0) {
         textMessage("Al het voedsel is weg! Je hebt gewonnen!!", 'WINNING');
+        if(dbm.getCurrentLoggedIn()){
+            dbm.setCurrentLoggedInUserScore(numfoods);
+            const wnl = dbm.getCurrentLoggedInUserWinsLosses();
+            wnl.wins++;
+            dbm.setCurrentLoggedInUserWinsLosses(wnl)
+            dbm.saveUsers();
+        }
         stop();
     }
 }
@@ -185,7 +207,7 @@ function checkGameIsOver(){
  @function draw()
  @description Teken de slang en het voedsel
  */
-export function draw(foods, snake) {
+function draw(foods, snake) {
     $('#mySnakeCanvas').clearCanvas();
     for (var i = 0; i < foods.length; i++) {
         var food = foods[i];
@@ -218,7 +240,7 @@ function drawElement(element) {
  *
  * @returns {object} Object met {width: breedte, height: hoogte}
  */
-export function getCanvasSizes() {
+function getCanvasSizes() {
     const canvas = $('#mySnakeCanvas');
     return {
         width: canvas[0].width,
@@ -277,4 +299,4 @@ export function doKeydown(event, dir) {
     return newDirection;
 }
 
-export {checkGameIsOver}
+export {checkGameIsOver, move, createStartSnake, createSegment, createFood, createFoods, getCanvasSizes, draw}

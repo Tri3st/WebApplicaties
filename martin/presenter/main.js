@@ -61,7 +61,7 @@ let all_users = [];
  */
 $( document ).ready(() => {
     console.log('READY! in main.js');
-    $('#username').html(`Ingelogd als : <span class="ingelogde-user"></span>`);
+    $('#loggedInUsername').html("-");
 
 
     const buttons = $('.nav');

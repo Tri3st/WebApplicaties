@@ -38,17 +38,16 @@ class DataBaseManager {
     /**
      * getUsers
      * Haalt de users binnen van localStorage.
+     * En zet deze om naar Objecten van de User klasse.
      */
     getUsers() {
         let users = JSON.parse(localStorage.getItem("users"));
         if (users) {
-            for (let user in users){
-                const newUser = new User(user['username'], user['password'], user['nrOfFoods'], user['highscore'],
-                    user['dateOfHighscore'], user['winsLosses']);
-
+            for (let user of users){
+                const newUser = new User();
+                newUser.applyDataFromJSON(user);
                 this.users.splice(0, 0, newUser);
             }
-
         }
     }
 
@@ -171,7 +170,7 @@ class DataBaseManager {
      * @param {number} nrOfFoods aantal Food elementen
      */
     setCurrentLoggedInUserNrOfFoods(nrOfFoods) {
-        const current = this.currentLoggedIn;
+        const current = this.currentLoggedInUser;
         if (current) {
             return current.setNrOfFoods(nrOfFoods);
         }
@@ -183,7 +182,7 @@ class DataBaseManager {
      * @return {number} highscore
      */
     getCurrentLoggedInUserHighscore() {
-        const current = this.currentLoggedIn;
+        const current = this.currentLoggedInUser;
         if (current) {
             return current.getHighscore();
         }
@@ -195,7 +194,7 @@ class DataBaseManager {
      * @param {number} highscore
      */
     setCurrentLoggedInUserHighscore(highscore) {
-        const current = this.currentLoggedIn;
+        const current = this.currentLoggedInUser;
         if (current) {
             return current.setHighscore(highscore);
         }
@@ -208,7 +207,7 @@ class DataBaseManager {
      * @return {object} winsLosses object
      */
     getCurrentLoggedInUserWinsLosses() {
-        const current = this.currentLoggedIn;
+        const current = this.currentLoggedInUser;
         if (current) {
             return current.getWinsLosses();
         }
@@ -221,7 +220,7 @@ class DataBaseManager {
      * @param {object} winsLosses object
      */
     setCurrentLoggedInUserWinsLosses(winsLosses) {
-        const current = this.currentLoggedIn;
+        const current = this.currentLoggedInUser;
         if (current) {
             return current.setWinsLosses(winsLosses);
         }
@@ -276,7 +275,7 @@ class User {
      * @param {object} winsLosses Object met wins, losses en lastUpdated (default = {wins: 0, losses: 0, lastUpdated: ''})
      *
      */
-    constructor(username, password, nrOfFoods = 15, highscore = 0,
+    constructor(username = '', password = '', nrOfFoods = 15, highscore = 0,
                 dateOfHighscore = null, winsLosses = {wins: 0, losses: 0, lastUpdated: ''}) {
         this.username = username;
         this.password = password;
@@ -285,6 +284,17 @@ class User {
         this.highscore = highscore;
         this.dateOfHighscore = dateOfHighscore;
         this.winsLosses = winsLosses;
+    }
+
+    /**
+     * applyDataDeomJSON
+     * Voeg JSON data toe en maak een nieuw object
+     * JSON moet de vorm hebben van het User object.
+     *
+     * @param {string} json string
+     */
+    applyDataFromJSON(json) {
+        Object.assign(this, json);
     }
 
     /**

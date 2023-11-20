@@ -46,12 +46,12 @@ function checkLoggedin() {
     console.log("Currentlogged in : ", currentLoggedin);
     if (currentLoggedin) {
         console.log("We have a logged in user!");
-        $('#username').html('<span>' + currentLoggedin + '</span>');
+        $('#loggedInUsername').html(`${currentLoggedin}`);
         loginBTN.attr('disabled', 'disabled');
         registerBTN.attr('disabled', 'disabled');
         logoutBTN.removeAttr('disabled');
     } else {
-        $('#username').html('<span></span>');
+        $('#loggedInUsername').html("");
         logoutBTN.attr('disabled', 'disabled');
         loginBTN.removeAttr('disabled');
         registerBTN.removeAttr('disabled');
@@ -92,3 +92,5 @@ function logout(){
 
     checkLoggedin();
 }
+
+export {login, logout, register, checkLoggedin};
